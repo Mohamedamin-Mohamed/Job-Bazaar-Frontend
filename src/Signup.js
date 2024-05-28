@@ -5,16 +5,13 @@ import { IoClose } from "react-icons/io5";
 import {useSelector, useDispatch} from "react-redux";
 import {setLoginShow, setSignupShow} from "./Redux/UserSlice";
 import {useState} from "react";
-import { MdOutlineDangerous } from "react-icons/md";
-import {defaultMethod} from "react-router-dom/dist/dom";
-
-
 
 const Login = ()=>{
     const usr = useSelector(state => state.userInfo)
 
     const dispatch = useDispatch()
     const[passMatch, setPassMatch] = useState(true)
+    const[userExists, setUserExists] = useState(false);
     const handleClose = ()=>{
         dispatch(setSignupShow(false))
     }
@@ -39,7 +36,7 @@ const Login = ()=>{
             email: formData.get('email'),
             password: pass1
         }
-        const response = await fetch('http://localhost:8081/accounts/signup', {
+        const response = await fetch('http://localhost:8080/accounts/signup', {
             method: 'post',
             headers: {
                 'Content-type': 'application/json'
@@ -48,17 +45,24 @@ const Login = ()=>{
     }
         )
         //in here we should return if either the password was incorrect or the email was incorrect
-        if(response.statusCode === 401) { //unauthorised
+        if(response.statusCode === 409) { //unauthorised
+            setUserExists(true)
             return;
+        }
+        else if(response.ok){
+            //we hide the Signup component and show the Login component
+            setSignupShow(false)
+            setLoginShow(true)
         }
     }
 
     return(
-        <div className= 'fixed items-center border h-[530px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg'>
+        <div className= {userExists ? 'fixed items-center border h-[600px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg' : 'fixed items-center border h-[530px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg'}>
             <IoClose size={30}  className='ml-auto hover:cursor-pointer hover:scale-110' onClick={ handleClose }/>
             <div className= 'ml-4'>
                 <form onSubmit={ (event)=> handleSubmit(event)}>
                 <h1 className='text-center font-bold text-xl my-2'>Signup</h1>
+                    {userExists && <p>Account already exists</p>}
                 <div className='flex flex-col'>
                     <input placeholder= 'Email' type='email' name='email' className='border rounded-lg p-2 w-[90%] my-3' required/>
                     <input placeholder= 'Create Password' name='pass1' type='password' className='border rounded-lg p-2 w-[90%] mb-4'  required/>
