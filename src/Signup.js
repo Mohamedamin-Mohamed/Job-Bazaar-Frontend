@@ -3,8 +3,9 @@ import { FaFacebook } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { IoClose } from "react-icons/io5";
 import {useSelector, useDispatch} from "react-redux";
-import {setLoginShow, setSignupShow} from "./Redux/UserSlice";
+import {setLoading, setLoginShow, setSignupShow} from "./Redux/UserSlice";
 import {useState} from "react";
+import ClipLoader from "react-spinners/ClipLoader"
 
 const Login = ()=>{
     const usr = useSelector(state => state.userInfo)
@@ -12,6 +13,8 @@ const Login = ()=>{
     const dispatch = useDispatch()
     const[passMatch, setPassMatch] = useState(true)
     const[userExists, setUserExists] = useState(false);
+    const[responseSignup, setResponseSignup] = useState(null)
+
     const handleClose = ()=>{
         dispatch(setSignupShow(false))
     }
@@ -21,6 +24,8 @@ const Login = ()=>{
     }
     const handleSubmit = async(e)=> {
         e.preventDefault()
+        dispatch(setLoading(true))
+
         const formData = new FormData(e.target)
         //the below two fields will contain the first and the second passwords
         const pass1 = formData.get('pass1')
@@ -36,6 +41,7 @@ const Login = ()=>{
             email: formData.get('email'),
             password: pass1
         }
+
         const response = await fetch('http://localhost:8080/accounts/signup', {
             method: 'post',
             headers: {
@@ -44,25 +50,31 @@ const Login = ()=>{
             body: JSON.stringify(requestBody)
     }
         )
-        //in here we should return if either the password was incorrect or the email was incorrect
-        if(response.statusCode === 409) { //unauthorised
-            setUserExists(true)
-            return;
-        }
-        else if(response.ok){
+        dispatch(setLoading(false))
+        const data = await response.text()
+        if(response.ok){
+            alert('Account created successfully')
             //we hide the Signup component and show the Login component
-            setSignupShow(false)
-            setLoginShow(true)
+            dispatch(setSignupShow(false))
+            dispatch(setLoginShow(true))
+        }
+        //in here we should return if either the password was incorrect or the email was incorrect
+        else { //unauthorised
+            setResponseSignup(data)
+            if(response.status === 409) {
+                setUserExists(true)
+            }
+            return;
         }
     }
 
     return(
-        <div className= {userExists ? 'fixed items-center border h-[600px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg' : 'fixed items-center border h-[530px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg'}>
+        <div className= {userExists ? 'fixed items-center border h-[580px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg' : 'fixed items-center border h-[520px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg'}>
             <IoClose size={30}  className='ml-auto hover:cursor-pointer hover:scale-110' onClick={ handleClose }/>
             <div className= 'ml-4'>
-                <form onSubmit={ (event)=> handleSubmit(event)}>
+                <form onSubmit={handleSubmit}>
                 <h1 className='text-center font-bold text-xl my-2'>Signup</h1>
-                    {userExists && <p>Account already exists</p>}
+                    {userExists && <p className='bg-[#ffebe8] p-4 border border-red-600 mr-10 rounded-lg'>{responseSignup}</p>}
                 <div className='flex flex-col'>
                     <input placeholder= 'Email' type='email' name='email' className='border rounded-lg p-2 w-[90%] my-3' required/>
                     <input placeholder= 'Create Password' name='pass1' type='password' className='border rounded-lg p-2 w-[90%] mb-4'  required/>
@@ -70,7 +82,7 @@ const Login = ()=>{
                     {!passMatch && <p className='text-red-500 ml-1 '>Passwords don't match</p>}
                 </div>
 
-                <button className='w-[90%] bg-blue-600 rounded-lg my-4 p-2 text-white'>Signup</button>
+                <button className='w-[90%] bg-blue-600 rounded-lg my-4 p-2 text-white'>{usr.loading ? <ClipLoader color="white" size={35} loading={ usr.loading }/> : 'Signup' }</button>
                 <div className='flex justify-center'>
                     <p className='mr-1'>Already have an account?</p>
                     <button className='text-blue-500 hover:underline' onClick={ handleLogin }>Login</button>
