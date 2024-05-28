@@ -3,7 +3,8 @@ import {createSlice} from "@reduxjs/toolkit";
 const initialState = {
     email: null,
     loginShow: false,
-    signupShow: false
+    signupShow: false,
+    loading: false
 }
 const UserSlice = createSlice({
     name: 'userInfo',
@@ -18,9 +19,12 @@ const UserSlice = createSlice({
 
         setSignupShow : (state, action)=>({
             ...state, signupShow: action.payload
+        }),
+        setLoading : (state, action)=>({
+            ...state, loading: action.payload
         })
     }
 })
 export default UserSlice.reducer
-export const { setEmail, setLoginShow, setSignupShow }  = UserSlice.actions
+export const { setEmail, setLoginShow, setSignupShow, setLoading }  = UserSlice.actions
 
