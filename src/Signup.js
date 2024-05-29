@@ -16,6 +16,9 @@ const Login = ()=>{
     const[passMatch, setPassMatch] = useState(true)
     const[userExists, setUserExists] = useState(false);
     const[responseSignup, setResponseSignup] = useState(null)
+    const[emailAddress, setEmail] = useState("")
+    const[pass1, setPass1] = useState("")
+    const[pass2, setPass2] = useState("")
 
     const handleClose = ()=>{
         dispatch(setSignupShow(false))
@@ -29,9 +32,6 @@ const Login = ()=>{
         dispatch(setLoading(true))
 
         const formData = new FormData(e.target)
-        //the below two fields will contain the first and the second passwords
-        const pass1 = formData.get('pass1')
-        const pass2 = formData.get('pass2')
 
         if (pass1 !== pass2) {
             setPassMatch(false)
@@ -60,11 +60,16 @@ const Login = ()=>{
             setResponseSignup(data)
             if (response.status === 409) {
                 toast.error("Account already exists")
+                setTimeout(()=>{
+                    setEmail("")
+                    setPass1("")
+                    setPass2("")
+                },6000)
                 setUserExists(true)
             }
         }
         else { //201
-            toast.success("Account created successfully", {
+            toast.success("Account created successfully, Login to your account", {
                 onClose: ()=>{
                     //we hide the Signup component and show the Login component
                     dispatch(setSignupShow(false))
@@ -82,9 +87,9 @@ const Login = ()=>{
                 <form onSubmit={handleSubmit}>
                 <h1 className='text-center font-bold text-xl my-2'>Signup</h1>
                 <div className='flex flex-col'>
-                    <input placeholder= 'Email' type='email' name='email' className='border rounded-lg p-2 w-[90%] my-3' required/>
-                    <input placeholder= 'Create Password' name='pass1' type='password' className='border rounded-lg p-2 w-[90%] mb-4'  required/>
-                    <input placeholder= 'Confirm Password' name='pass2' type='password' className='border rounded-lg p-2 w-[90%] mb-1' required/>
+                    <input value={emailAddress} onChange={(e)=> setEmail(e.target.value)} placeholder= 'Email' type='email' name='email' className='border rounded-lg p-2 w-[90%] my-3' required/>
+                    <input value={pass1} onChange={(e)=> setPass1(e.target.value)} placeholder= 'Create Password' name='pass1' type='password' className='border rounded-lg p-2 w-[90%] mb-4'  required/>
+                    <input value={pass2} onChange={(e)=> setPass2(e.target.value)} placeholder='Confirm Password' name='pass2' type='password' className='border rounded-lg p-2 w-[90%] mb-1' required/>
                     {!passMatch && <p className='text-red-500 ml-1 '>Passwords don't match</p>}
                 </div>
 
