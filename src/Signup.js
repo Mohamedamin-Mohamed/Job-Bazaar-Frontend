@@ -64,11 +64,13 @@ const Login = ()=>{
             }
         }
         else { //201
-            toast.error("Account created successfully")
-            //we hide the Signup component and show the Login component
-            dispatch(setSignupShow(false))
-            dispatch(setLoginShow(true))
-
+            toast.success("Account created successfully", {
+                onClose: ()=>{
+                    //we hide the Signup component and show the Login component
+                    dispatch(setSignupShow(false))
+                    dispatch(setLoginShow(true))
+                }
+            })
     }
     }
 
