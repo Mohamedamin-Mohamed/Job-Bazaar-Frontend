@@ -3,7 +3,7 @@ import { FaFacebook } from "react-icons/fa6"
 import { FcGoogle } from "react-icons/fc"
 import { IoClose } from "react-icons/io5"
 import {useSelector, useDispatch} from "react-redux"
-import {setLoading, setLoginShow, setPasswordResetShow, setSignupShow} from "./Redux/UserSlice"
+import {setEmailLookupShow, setLoading, setLoginShow, setSignupShow} from "./Redux/UserSlice"
 import {useState} from "react"
 import ClipLoader from "react-spinners/ClipLoader"
 import { ToastContainer, toast } from 'react-toastify'
@@ -34,11 +34,11 @@ const Login = ()=>{
         }
 
         const response = await fetch('http://localhost:8080/accounts/login', {
-            method: 'post',
-            headers: {
-                'Content-type' : 'application/json'
-            },
-            body: JSON.stringify(requestBody)
+                method: 'post',
+                headers: {
+                    'Content-type' : 'application/json'
+                },
+                body: JSON.stringify(requestBody)
         })
         dispatch(setLoading(false))
 
@@ -63,7 +63,7 @@ const Login = ()=>{
     }
     const handlePasswordReset = ()=>{
         dispatch(setLoginShow(false))
-        dispatch(setPasswordResetShow(true))
+        dispatch(setEmailLookupShow(true))
     }
         return(
         <div className= { statusCode !== null ? 'fixed items-center border h-[560px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg' : 'fixed items-center border h-[500px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg'}>
@@ -81,7 +81,7 @@ const Login = ()=>{
                 <div className='flex justify-center'>
                 <button onClick={handlePasswordReset} className='text-blue-500 hover:underline'>Forgot Password?</button>
                 </div>
-                <button type='submit' className='w-[90%] bg-blue-600 rounded-lg my-4 p-2 text-white'>{usr.loading ? <ClipLoader color="white" size={35} loading={ usr.loading }/> : 'Login' }</button>
+                <button type='submit' className='w-[90%] bg-blue-600 rounded-lg my-4 p-2 text-white'>{usr.loading ? <ClipLoader color="blue" size={35} loading={ usr.loading }/> : 'Login' }</button>
                 <div className='flex justify-center'>
                 <p className='mr-1'>Don't have an account?</p>
                 <button className='text-blue-500 hover:underline' onClick={ handleSignup }>Signup</button>
