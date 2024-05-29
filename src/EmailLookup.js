@@ -4,36 +4,46 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {setLoading, setLoginShow, setPasswordResetShow} from "./Redux/UserSlice";
+import {setEmailLookupShow, setLoading, setLoginShow, setPasswordResetShow} from "./Redux/UserSlice";
 import ClipLoader from "react-spinners/ClipLoader";
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
-const ResetPassword = ()=>{
+const EmailLookup = ()=>{
     const usr = useSelector(state=> state.userInfo)
     const dispatch = useDispatch()
 
     const[emailFound, setEmailFound] = useState(false)
     const handleBacktickLogin = ()=>{
-        dispatch(setPasswordResetShow(false))
+        dispatch(setEmailLookupShow(false))
         dispatch(setLoginShow(true))
     }
     const handleSubmit = async (e)=>{
         e.preventDefault()
-        const formData = new FormData(e.target.value)
+        const formData = new FormData(e.target)
         const email = formData.get('email')
+        console.log(email)
         dispatch(setLoading(true))
 
-        const response = await fetch('http://localhost:8080/accounts/login/password-reset', {
-            method: 'post',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({email: email})
+        const response = await fetch(`http://localhost:8080/accounts/login/${email}/password-reset/`, {
+            method: 'post'
         })
         dispatch(setLoading(false))
+        if(response.ok){
+            toast.success('Email Address found', {
+                onClose: ()=>{
+                    //close the email lookup component and show password reset component so that the user can change their password
+                    dispatch(setEmailLookupShow(false))
+                    dispatch(setPasswordResetShow(true))
+                }
+            })
+
+        }
     }
     return(
         <div className={emailFound ? "fixed items-center border h-[440px] text-black  bg-white w-[450px] backdrop-blur-2x rounded-lg" :"fixed items-center border h-[420px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg"}>
             <div>
+                <ToastContainer position="top-center" />
                 <div className="flex justify-center ">
                 <MdLockReset size={30}  color="blue" className="my-6"/>
                 </div>
@@ -57,4 +67,4 @@ const ResetPassword = ()=>{
         </div>
     )
 }
-export default ResetPassword
+export default EmailLookup
