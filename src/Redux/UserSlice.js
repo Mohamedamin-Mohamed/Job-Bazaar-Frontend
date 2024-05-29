@@ -4,7 +4,8 @@ const initialState = {
     email: null,
     loginShow: false,
     signupShow: false,
-    loading: false
+    loading: false,
+    passwordResetShow: false
 }
 const UserSlice = createSlice({
     name: 'userInfo',
@@ -22,9 +23,12 @@ const UserSlice = createSlice({
         }),
         setLoading : (state, action)=>({
             ...state, loading: action.payload
+        }),
+        setPasswordResetShow: (state, action) =>({
+            ...state, passwordResetShow: action.payload
         })
     }
 })
 export default UserSlice.reducer
-export const { setEmail, setLoginShow, setSignupShow, setLoading }  = UserSlice.actions
+export const { setEmail, setLoginShow, setSignupShow, setLoading, setPasswordResetShow }  = UserSlice.actions
 
