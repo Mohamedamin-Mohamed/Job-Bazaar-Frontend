@@ -59,13 +59,14 @@ const Login = ()=>{
         if (!response.ok) {//unauthorised
             setResponseSignup(data)
             if (response.status === 409) {
-                toast.error("Account already exists")
-                setTimeout(()=>{
-                    setEmail("")
-                    setPass1("")
-                    setPass2("")
-                },6000)
-                setUserExists(true)
+                toast.error("Account already exists", {
+                    onClose: () => {
+                        setEmail("")
+                        setPass1("")
+                        setPass2("")
+                        setUserExists(true)
+                    }
+                })
             }
         }
         else { //201
