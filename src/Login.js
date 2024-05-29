@@ -3,7 +3,7 @@ import { FaFacebook } from "react-icons/fa6"
 import { FcGoogle } from "react-icons/fc"
 import { IoClose } from "react-icons/io5"
 import {useSelector, useDispatch} from "react-redux"
-import {setLoading, setLoginShow, setSignupShow} from "./Redux/UserSlice"
+import {setLoading, setLoginShow, setPasswordResetShow, setSignupShow} from "./Redux/UserSlice"
 import {useState} from "react"
 import ClipLoader from "react-spinners/ClipLoader"
 import { ToastContainer, toast } from 'react-toastify'
@@ -45,6 +45,7 @@ const Login = ()=>{
         const data = await response.text()
         if(response.ok){
             toast.success("Login Successful")
+            setStatusCode(null)
             redirect('/')
         }
         else{
@@ -60,6 +61,10 @@ const Login = ()=>{
         }
 
     }
+    const handlePasswordReset = ()=>{
+        dispatch(setLoginShow(false))
+        dispatch(setPasswordResetShow(true))
+    }
         return(
         <div className= { statusCode !== null ? 'fixed items-center border h-[560px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg' : 'fixed items-center border h-[500px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg'}>
             <IoClose size={30}  className='ml-auto hover:cursor-pointer hover:scale-110' onClick={ handleClose }/>
@@ -74,7 +79,7 @@ const Login = ()=>{
                     {statusCode === 401 && <p className='bg-[#ffebe8] p-2 mb-3 border border-red-600 mr-10 ml-1'>{responseLogin}</p>}
                 </div>
                 <div className='flex justify-center'>
-                <button to='/forgotPass' className='text-blue-500 hover:underline'>Forgot Password?</button>
+                <button onClick={handlePasswordReset} className='text-blue-500 hover:underline'>Forgot Password?</button>
                 </div>
                 <button type='submit' className='w-[90%] bg-blue-600 rounded-lg my-4 p-2 text-white'>{usr.loading ? <ClipLoader color="white" size={35} loading={ usr.loading }/> : 'Login' }</button>
                 <div className='flex justify-center'>
