@@ -1,11 +1,13 @@
 import {redirect, Link, NavLink} from 'react-router-dom'
-import { FaFacebook } from "react-icons/fa6";
-import { FcGoogle } from "react-icons/fc";
-import { IoClose } from "react-icons/io5";
-import {useSelector, useDispatch} from "react-redux";
-import {setLoading, setLoginShow, setSignupShow} from "./Redux/UserSlice";
-import {useState} from "react";
+import { FaFacebook } from "react-icons/fa6"
+import { FcGoogle } from "react-icons/fc"
+import { IoClose } from "react-icons/io5"
+import {useSelector, useDispatch} from "react-redux"
+import {setLoading, setLoginShow, setSignupShow} from "./Redux/UserSlice"
+import {useState} from "react"
 import ClipLoader from "react-spinners/ClipLoader"
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Login = ()=>{
     const usr = useSelector(state => state.userInfo)
@@ -42,6 +44,7 @@ const Login = ()=>{
 
         const data = await response.text()
         if(response.ok){
+            toast.success("Login Successful")
             redirect('/')
         }
         else{
@@ -61,13 +64,14 @@ const Login = ()=>{
         <div className= { statusCode !== null ? 'fixed items-center border h-[560px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg' : 'fixed items-center border h-[500px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg'}>
             <IoClose size={30}  className='ml-auto hover:cursor-pointer hover:scale-110' onClick={ handleClose }/>
             <div className= 'ml-4'>
+                <ToastContainer position={"top-center"}/>
                 <form onSubmit={(event)=>handleSubmit(event)}>
                 <h1 className='text-center font-bold text-xl my-2'>Login</h1>
                 <div className='flex flex-col'>
                 <input placeholder= 'Email' type='email' name='email' className='border rounded-lg p-2 w-[90%] mb-3 mt-2' required/>
-                    {statusCode === 404 && <p className='bg-[#ffebe8] p-2 mb-3 border border-red-600 mr-10'>{responseLogin}</p>}
+                    {statusCode === 404 && <p className='bg-[#ffebe8] p-2 mb-3 border border-red-600 mr-10 ml-1'>{responseLogin}</p>}
                 <input placeholder= 'Password' type='password' name='password' className='border rounded-lg p-2 w-[90%] mb-4' required/>
-                    {statusCode === 401 && <p className='bg-[#ffebe8] p-2 mb-3 border border-red-600 mr-10'>{responseLogin}</p>}
+                    {statusCode === 401 && <p className='bg-[#ffebe8] p-2 mb-3 border border-red-600 mr-10 ml-1'>{responseLogin}</p>}
                 </div>
                 <div className='flex justify-center'>
                 <button to='/forgotPass' className='text-blue-500 hover:underline'>Forgot Password?</button>

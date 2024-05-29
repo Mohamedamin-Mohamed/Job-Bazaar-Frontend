@@ -1,11 +1,13 @@
 import {Link, NavLink} from 'react-router-dom'
-import { FaFacebook } from "react-icons/fa6";
-import { FcGoogle } from "react-icons/fc";
-import { IoClose } from "react-icons/io5";
-import {useSelector, useDispatch} from "react-redux";
-import {setLoading, setLoginShow, setSignupShow} from "./Redux/UserSlice";
+import { FaFacebook } from "react-icons/fa6"
+import { FcGoogle } from "react-icons/fc"
+import { IoClose } from "react-icons/io5"
+import {useSelector, useDispatch} from "react-redux"
+import {setLoading, setLoginShow, setSignupShow} from "./Redux/UserSlice"
 import {useState} from "react";
 import ClipLoader from "react-spinners/ClipLoader"
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Login = ()=>{
     const usr = useSelector(state => state.userInfo)
@@ -43,38 +45,40 @@ const Login = ()=>{
         }
 
         const response = await fetch('http://localhost:8080/accounts/signup', {
-            method: 'post',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
-    }
+                method: 'post',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            }
         )
         dispatch(setLoading(false))
         const data = await response.text()
-        if(response.ok){
-            alert('Account created successfully')
+
+        //in here we should return that users account exists
+        if (!response.ok) {//unauthorised
+            setResponseSignup(data)
+            if (response.status === 409) {
+                toast.error("Account already exists")
+                setUserExists(true)
+            }
+        }
+        else { //201
+            toast.error("Account created successfully")
             //we hide the Signup component and show the Login component
             dispatch(setSignupShow(false))
             dispatch(setLoginShow(true))
-        }
-        //in here we should return if either the password was incorrect or the email was incorrect
-        else { //unauthorised
-            setResponseSignup(data)
-            if(response.status === 409) {
-                setUserExists(true)
-            }
-            return;
-        }
+
+    }
     }
 
     return(
         <div className= {userExists ? 'fixed items-center border h-[580px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg' : 'fixed items-center border h-[520px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg'}>
             <IoClose size={30}  className='ml-auto hover:cursor-pointer hover:scale-110' onClick={ handleClose }/>
             <div className= 'ml-4'>
+                <ToastContainer position={"top-center"} />
                 <form onSubmit={handleSubmit}>
                 <h1 className='text-center font-bold text-xl my-2'>Signup</h1>
-                    {userExists && <p className='bg-[#ffebe8] p-4 border border-red-600 mr-10 rounded-lg'>{responseSignup}</p>}
                 <div className='flex flex-col'>
                     <input placeholder= 'Email' type='email' name='email' className='border rounded-lg p-2 w-[90%] my-3' required/>
                     <input placeholder= 'Create Password' name='pass1' type='password' className='border rounded-lg p-2 w-[90%] mb-4'  required/>
@@ -105,7 +109,6 @@ const Login = ()=>{
                 </form>
             </div>
         </div>
-
     )
 }
 export default Login
