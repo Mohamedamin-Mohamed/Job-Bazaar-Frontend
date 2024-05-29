@@ -4,6 +4,7 @@ import Login from './Login'
 import { useDispatch, useSelector} from "react-redux";
 import {setLoginShow} from "./Redux/UserSlice";
 import Signup from "./Signup";
+import ResetPassword from "./ResetPassword";
 
 const HomeTile = ()=>{
     const dispatch = useDispatch()
@@ -29,6 +30,7 @@ const HomeTile = ()=>{
             </div>
                 {usr.loginShow && <Login />}
                 {usr.signupShow && <Signup /> }
+                {usr.passwordResetShow && <ResetPassword />}
         </div>
         </div>
     );
