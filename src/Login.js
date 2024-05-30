@@ -32,8 +32,8 @@ const Login = ()=>{
             email: formData.get('email'),
             password: formData.get('password')
         }
-
-        const response = await fetch('http://localhost:8080/accounts/login', {
+        console.log(requestBody)
+        const response = await fetch('http://localhost:8080/accounts/login/', {
                 method: 'post',
                 headers: {
                     'Content-type' : 'application/json'
@@ -66,13 +66,14 @@ const Login = ()=>{
         dispatch(setEmailLookupShow(true))
     }
         return(
-        <div className= { statusCode !== null ? 'fixed items-center border h-[560px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg' : 'fixed items-center border h-[500px] text-black  bg-white w-[400px] backdrop-blur-2x rounded-lg'}>
+            <div className="flex flex-col justify-center items-center h-screen">
+        <div className= {`h-${statusCode !== null ? '[560px]' :'[500px]'} border rounded-lg w-[400px]`}>
             <IoClose size={30}  className='ml-auto hover:cursor-pointer hover:scale-110' onClick={ handleClose }/>
-            <div className= 'ml-4'>
-                <ToastContainer position={"top-center"}/>
+            <ToastContainer position={"top-center"}/>
+            <div className= 'ml-4 flex'>
                 <form onSubmit={(event)=>handleSubmit(event)}>
                 <h1 className='text-center font-bold text-xl my-2'>Login</h1>
-                <div className='flex flex-col'>
+                <div className='flex items-center flex-col'>
                 <input placeholder= 'Email' type='email' name='email' className='border rounded-lg p-2 w-[90%] mb-3 mt-2' required/>
                     {statusCode === 404 && <p className='bg-[#ffebe8] p-2 mb-3 border border-red-600 mr-10 ml-1'>{responseLogin}</p>}
                 <input placeholder= 'Password' type='password' name='password' className='border rounded-lg p-2 w-[90%] mb-4' required/>
@@ -104,7 +105,7 @@ const Login = ()=>{
                 </form>
             </div>
             </div>
-
+            </div>
     )
 }
 export default Login
