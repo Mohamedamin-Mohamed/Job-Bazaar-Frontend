@@ -35,7 +35,7 @@ const Login = ()=>{
         }
         console.log(requestBody)
         const response = await fetch('http://localhost:8080/accounts/login/', {
-                method: 'post',
+                methrod: 'post',
                 headers: {
                     'Content-type' : 'application/json'
                 },
