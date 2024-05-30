@@ -3,7 +3,7 @@ import { FaFacebook } from "react-icons/fa6"
 import { FcGoogle } from "react-icons/fc"
 import { IoClose } from "react-icons/io5"
 import {useSelector, useDispatch} from "react-redux"
-import {setEmailLookupShow, setLoading, setLoginShow, setSignupShow} from "./Redux/UserSlice"
+import {setEmailLookupShow, setHomeTileShow, setLoading, setLoginShow, setSignupShow} from "./Redux/UserSlice"
 import {useState} from "react"
 import ClipLoader from "react-spinners/ClipLoader"
 import { ToastContainer, toast } from 'react-toastify'
@@ -18,6 +18,7 @@ const Login = ()=>{
 
     const handleClose = ()=>{
         dispatch(setLoginShow(false))
+        dispatch(setHomeTileShow(true))
     }
     const handleSignup = ()=>{
         dispatch(setLoginShow(false))
@@ -44,7 +45,7 @@ const Login = ()=>{
 
         const data = await response.text()
         if(response.ok){
-            toast.success("Login Successful")
+            toast.success(data)
             setStatusCode(null)
             redirect('/')
         }
@@ -70,19 +71,19 @@ const Login = ()=>{
         <div className= {`h-${statusCode !== null ? '[560px]' :'[500px]'} border rounded-lg w-[400px]`}>
             <IoClose size={30}  className='ml-auto hover:cursor-pointer hover:scale-110' onClick={ handleClose }/>
             <ToastContainer position={"top-center"}/>
-            <div className= 'ml-4 flex'>
+            <div className= 'ml-4 flex-col'>
                 <form onSubmit={(event)=>handleSubmit(event)}>
                 <h1 className='text-center font-bold text-xl my-2'>Login</h1>
                 <div className='flex items-center flex-col'>
-                <input placeholder= 'Email' type='email' name='email' className='border rounded-lg p-2 w-[90%] mb-3 mt-2' required/>
-                    {statusCode === 404 && <p className='bg-[#ffebe8] p-2 mb-3 border border-red-600 mr-10 ml-1'>{responseLogin}</p>}
-                <input placeholder= 'Password' type='password' name='password' className='border rounded-lg p-2 w-[90%] mb-4' required/>
-                    {statusCode === 401 && <p className='bg-[#ffebe8] p-2 mb-3 border border-red-600 mr-10 ml-1'>{responseLogin}</p>}
+                <input placeholder= 'Email' type='email' name='email' className='border rounded-lg p-2 w-[91%] mb-3 mt-2 mr-4 outline-none' required/>
+                    {statusCode === 404 && <p className='bg-[#ffebe8] p-2 mb-3 rounded-md w-[91%] mr-auto ml-2'>{responseLogin}</p>}
+                <input placeholder= 'Password' type='password' name='password' className='border rounded-lg p-2 w-[91%] mb-4 mr-4 outline-none' required/>
+                    {statusCode === 401 && <p className='bg-[#ffebe8] p-2 mb-3 rounded-md w-[91%] mr-auto ml-2'>{responseLogin}</p>}
                 </div>
                 <div className='flex justify-center'>
                 <button onClick={handlePasswordReset} className='text-blue-500 hover:underline'>Forgot Password?</button>
                 </div>
-                <button type='submit' className='w-[90%] bg-blue-600 rounded-lg my-4 p-2 text-white'>{usr.loading ? <ClipLoader color="blue" size={35} loading={ usr.loading }/> : 'Login' }</button>
+                <button type='submit' className='w-[90%] bg-blue-600 rounded-lg my-4 ml-3 p-2 text-white'>{usr.loading ? <ClipLoader color="blue" size={35} loading={ usr.loading }/> : 'Login' }</button>
                 <div className='flex justify-center'>
                 <p className='mr-1'>Don't have an account?</p>
                 <button className='text-blue-500 hover:underline' onClick={ handleSignup }>Signup</button>
@@ -93,14 +94,14 @@ const Login = ()=>{
                     <div className='border-b w-[40%]'></div>
                 </div>
                 <div className='flex'>
-                <div className= 'flex border rounded-lg p-2 mx-4 my-6 w-[90%] bg-blue-500 cursor-pointer'>
+                <div className= 'flex border rounded-lg p-2 mx-4 my-6 w-[90%] ml-3 bg-blue-500 cursor-pointer'>
                      <FaFacebook size={25} color='blue'/>
-                     <p className='ml-10 text-white'>Login with Facebook</p>
+                     <p className='ml-16 text-white'>Login with Facebook</p>
                 </div>
             </div>
-                <div className='flex border p-2 rounded-lg mx-4  w-[90%] cursor-pointer'>
+                <div className='flex border p-2 rounded-lg mx-4  w-[90%] ml-3 cursor-pointer'>
                   <FcGoogle size={25} />
-                  <p className='ml-10 text-gray-400'>Login with Google</p>
+                  <p className='ml-16 text-gray-400'>Login with Google</p>
                 </div>
                 </form>
             </div>
