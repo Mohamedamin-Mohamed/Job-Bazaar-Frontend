@@ -1,10 +1,9 @@
-import HomeTile from "./HomeTile";
-
+import Home from "./Home";
 
 function App() {
   return (
       <div>
-          <HomeTile />
+          <Home />
       </div>
 
   );
