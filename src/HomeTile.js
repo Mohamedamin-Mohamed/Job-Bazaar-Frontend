@@ -1,15 +1,12 @@
 import Image from './images.jfif'
 import React, {useState} from "react";
-import Login from './Login'
 import { useDispatch, useSelector} from "react-redux";
-import {setLoginShow} from "./Redux/UserSlice";
-import Signup from "./Signup";
-import EmailLookup from "./EmailLookup";
-import PasswordReset from "./PasswordReset";
+import {setHomeTileShow, setLoginShow} from "./Redux/UserSlice";
 
 const HomeTile = ()=>{
     const dispatch = useDispatch()
     const handleLogin = ()=>{
+        dispatch(setHomeTileShow(false))
         dispatch(setLoginShow(true))
     }
 
@@ -29,10 +26,6 @@ const HomeTile = ()=>{
                     </div>
                 </div>
             </div>
-                {usr.loginShow && <Login />}
-                {usr.signupShow && <Signup />}
-                {usr.emailLookupShow && <EmailLookup />}
-                {usr.passwordResetShow && <PasswordReset />}
         </div>
         </div>
     );
