@@ -1,9 +1,9 @@
 import { MdLockReset } from "react-icons/md";
 import { TbMailExclamation } from "react-icons/tb";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
+    setEmail,
     setEmailLookupShow,
     setHomeTileShow,
     setLoading,
@@ -14,35 +14,42 @@ import {
 import ClipLoader from "react-spinners/ClipLoader";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
+import {useState} from "react";
+import {SyncLoader} from "react-spinners";
+import {useNavigate} from "react-router-dom";
 
 const EmailLookup = ()=>{
     const usr = useSelector(state=> state.userInfo)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const[disabled, setDisabled] = useState(false)
 
-    const[emailFound, setEmailFound] = useState(false)
     const handleBacktickLogin = ()=>{
-        dispatch(setEmailLookupShow(false))
-        dispatch(setLoginShow(true))
+        // dispatch(setEmailLookupShow(false))
+        // dispatch(setLoginShow(true))
+        navigate("/login")
     }
     const handleSubmit = async (e)=>{
         e.preventDefault()
         const formData = new FormData(e.target)
         const email = formData.get('email')
-        console.log(email)
         dispatch(setLoading(true))
 
-        const response = await fetch(`http://localhost:8080/accounts/login/${email}/password-reset/`, {
+        const response = await fetch(`http://localhost:8080/accounts/login/${email}/email-lookup/`, {
             method: 'post'
         })
         const data = await response.text()
         dispatch(setLoading(false))
         if(response.ok){
+            setDisabled(true)
             toast.success(data, {
                 onClose: ()=>{
                     //close the email lookup component and show password reset component so that the user can change their password
-                    dispatch(setEmailLookupShow(false))
-                    dispatch(setHomeTileShow(false))
-                    dispatch(setPasswordResetShow(true))
+                    // dispatch(setEmailLookupShow(false))
+                    // dispatch(setHomeTileShow(false))
+                    // dispatch(setEmail(email))
+                    // dispatch(setPasswordResetShow(true))
+                    navigate("/login/password-reset")
                 }
             })
         }
@@ -50,9 +57,10 @@ const EmailLookup = ()=>{
             if(response.status === 404){ //404 email not found
                 toast.error(data, {
                     onClose: ()=>{
-                        //hide the email lookup component and show the signup component so that the user can create an account
-                        dispatch(setEmailLookupShow(false))
-                        dispatch(setSignupShow(true))
+                        // //hide the email lookup component and show the signup component so that the user can create an account
+                        // dispatch(setEmailLookupShow(false))
+                        // dispatch(setSignupShow(true))
+                        navigate("../../signup")
                     }
                 })
 
@@ -71,10 +79,10 @@ const EmailLookup = ()=>{
                 <p className="text-center text-gray-500">Enter your email to search for your account.</p>
                 <div className="flex justify-center border border-gray-600 rounded-lg w-[88%] ml-7 p-1 my-8">
                     <TbMailExclamation size={30} color="gray" className="mr-1" />
-                    <input type="email" name="email" placeholder="Email Address" className="outline-none mr-32 text-black"/>
+                    <input type="email" name="email" placeholder="Email Address" disabled={disabled} className="outline-none mr-32 text-black"/>
                 </div>
                     <div className="bg-[#42b72a] text-white ml-8 mr-6 rounded-lg p-1.5">
-                <button type="submit" disabled={usr.loading} className="w-[88%] text-lg">{usr.loading ? <ClipLoader color="green" size={30} loading={usr.loading} />: 'Submit'}</button>
+                <button type="submit" disabled={usr.loading} className="w-[88%] text-lg">{usr.loading ? <SyncLoader size={12} color="#blue" loading={ usr.loading}/>: 'Submit'}</button>
                     </div>
                 </form>
                 <div className="flex justify-center items-center my-8">
