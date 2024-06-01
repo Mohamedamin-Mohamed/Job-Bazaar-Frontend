@@ -4,12 +4,12 @@ import { FcGoogle } from "react-icons/fc"
 import { IoClose } from "react-icons/io5"
 import {useSelector, useDispatch} from "react-redux"
 import {setEmailLookupShow, setHomeTileShow, setLoading, setLoginShow, setSignupShow} from "./Redux/UserSlice"
-import {useState} from "react"
+import React, {useState} from "react"
 import ClipLoader from "react-spinners/ClipLoader"
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import {SyncLoader} from "react-spinners";
-
+import { GoogleLogin } from "react-google-login"
 const Login = ()=>{
     const usr = useSelector(state => state.userInfo)
     const dispatch = useDispatch()
@@ -17,6 +17,7 @@ const Login = ()=>{
     const [responseLogin, setResponseLogin] = useState(null)
     const[statusCode, setStatusCode] = useState(null)
     const[disabled, setDisabled] = useState(false)
+    const clientId = "488140599212-d4r00eq9fl9repl69h8dq7o7083l967j.apps.googleusercontent.com"
 
     const handleClose = ()=>{
         // dispatch(setLoginShow(false))
@@ -73,6 +74,9 @@ const Login = ()=>{
         }
 
     }
+    // const handleGoogleLogin = async ()=> {
+    //
+    // }
     // const handlePasswordReset = ()=>{
     //     // dispatch(setLoginShow(false))
     //     // dispatch(setEmailLookupShow(true))
@@ -94,7 +98,7 @@ const Login = ()=>{
                 </div>
                 <div className='flex justify-center'>
                 {/*<Link disabled={disabled} t className='text-blue-500 hover:underline'>Forgot Password?</Link>*/}
-                    <Link to="email-lookup" className="'text-blue-500 hover:underline'">Forgot Password?</Link>
+                    <Link to="email-lookup" className="text-blue-500 hover:underline">Forgot Password?</Link>
                 </div>
                 <button type='submit' disabled={disabled} className='w-[90%] bg-blue-600 rounded-lg my-4 ml-3 p-2 text-white'>{usr.loading ? <SyncLoader size={10} color="blue" loading={ usr.loading}/> : 'Login' }</button>
                 <div className='flex justify-center'>
@@ -109,18 +113,20 @@ const Login = ()=>{
                 <div className='flex'>
                 <div className= 'flex border rounded-lg p-2 mx-4 my-6 w-[90%] ml-3 bg-blue-500 cursor-pointer'>
                      <FaFacebook size={25} color='blue'/>
-                     <p className='ml-16 text-white'>Login with Facebook</p>
+                     <Link className='ml-16 text-white' to="http://localhost:8080/login/oauth2/code/facebook">Login with Facebook</Link>
                 </div>
             </div>
                 <div className='flex border p-2 rounded-lg mx-4  w-[90%] ml-3 cursor-pointer'>
 
-                  <FcGoogle size={25} />
-                  <p className='ml-16 text-gray-400'>Login with Google</p>
+                  {/*<FcGoogle size={25} />*/}
+                  {/*<Link className='ml-16 text-gray-400'  to="http://localhost:8080/oauth2/authorization/google">Login with Google</Link>*/}
+                    <GoogleLogin
+                        buttonText="Login"
+                    />
                 </div>
                 </form>
             </div>
             </div>
-                <Outlet />
             </div>
     )
 }
