@@ -3,8 +3,8 @@ import { FaFacebook } from "react-icons/fa6"
 import { FcGoogle } from "react-icons/fc"
 import { IoClose } from "react-icons/io5"
 import {useSelector, useDispatch} from "react-redux"
-import {setHomeTileShow, setLoading, setLoginShow, setSignupShow} from "./Redux/UserSlice"
-import {useState} from "react";
+import {setLoading} from "./Redux/UserSlice"
+import {useEffect, useState} from "react";
 import ClipLoader from "react-spinners/ClipLoader"
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -22,6 +22,7 @@ const Login = ()=>{
     const[emailAddress, setEmail] = useState("")
     const[pass1, setPass1] = useState("")
     const[pass2, setPass2] = useState("")
+    const[disabled, setDisabled] = useState(false)
 
     //to be used to check if the password matches the requirement
     const[passRem, setPassRem] = useState(true)
@@ -38,6 +39,7 @@ const Login = ()=>{
     }
     const handleSubmit = async(e)=> {
         e.preventDefault()
+
         const formData = new FormData(e.target)
 
         if (pass1 !== pass2) {
@@ -61,9 +63,8 @@ const Login = ()=>{
             email: formData.get('email'),
             password: pass1
         }
-
         const response = await fetch('http://localhost:8080/accounts/signup', {
-                method: 'post',
+                method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
                 },
@@ -77,6 +78,7 @@ const Login = ()=>{
         if (!response.ok) {//unauthorised
             setResponseSignup(data)
             if (response.status === 409) {
+                disabled(true)
                 toast.error(data, {
                     onClose: () => {
                         setEmail("")
@@ -88,6 +90,7 @@ const Login = ()=>{
             }
         }
         else { //201
+            setDisabled(true)
             toast.success(data, {
                 onClose: ()=>{
                     //we hide the Signup component and show the Login component
@@ -114,7 +117,7 @@ const Login = ()=>{
                     {!passRem && <p className="bg-[#ffebe8] p-2 my-3 rounded-md w-[90%] mr-auto ml-5"> At least 16 characters OR at least 8 characters including a number and a letter.</p>}
                 </div>
                     <div className="flex justify-center">
-                <button className="w-[90%] bg-blue-600 rounded-lg my-4 p-2 text-white">{usr.loading ? <SyncLoader size={12} color="blue" loading={ usr.loading}/> : 'Signup' }</button>
+                <button className="w-[90%] bg-blue-600 rounded-lg my-4 p-2 text-white" disabled={disabled}>{usr.loading ? <SyncLoader size={12} color="blue" loading={ usr.loading}/> : 'Signup' }</button>
                     </div>
                         <div className='flex justify-center'>
                     <p className='mr-1'>Already have an account?</p>
