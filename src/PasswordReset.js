@@ -50,7 +50,8 @@ const PasswordReset = ()=>{
             email: usr.email,
             password: formData.get('pass1')
         }
-        const response = await fetch('http://localhost:8080/accounts/login/password-reset/', {
+        console.log(usr.email)
+        const response = await fetch(`http://localhost:8080/accounts/login/password-reset/`, {
             method: 'post',
             headers: {
                 'Content-type': 'application/json'
@@ -72,9 +73,10 @@ const PasswordReset = ()=>{
         else {//500
             toast.error(data, {
                 onClose: ()=>{
-                    //make the user re-enter the passwords
-                    dispatch(setPass1(""))
-                    dispatch(setPass2(""))
+                    // //make the user re-enter the passwords
+                    // dispatch(setPass1(""))
+                    // dispatch(setPass2(""))
+                    navigate("../../signup")
                 }
             })
         }
