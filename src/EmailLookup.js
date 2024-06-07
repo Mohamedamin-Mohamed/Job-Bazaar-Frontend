@@ -33,7 +33,9 @@ const EmailLookup = ()=>{
         e.preventDefault()
         const formData = new FormData(e.target)
         const email = formData.get('email')
+
         dispatch(setLoading(true))
+        dispatch(setEmail(email))
 
         const response = await fetch(`http://localhost:8080/accounts/login/${email}/email-lookup/`, {
             method: 'post'
