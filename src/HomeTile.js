@@ -1,5 +1,5 @@
 import Image from './images.jfif'
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector} from "react-redux";
 import {setHomeTileShow, setLoginShow} from "./Redux/UserSlice";
 import {NavLink, useNavigate} from "react-router-dom";
@@ -12,7 +12,24 @@ const HomeTile = ()=>{
         // dispatch(setLoginShow(true))
         navigate("/login")
     }
-
+    // useEffect(async () => {
+    //     //after user logs in with their github account, they are redirected to this page, so a code is attached to the endpoint as a query param
+    //     //localhost:3000/accounts?code=AJJSJSHSHHSHS
+    //     const queryString = window.location.search
+    //     const urlParams = new URLSearchParams(queryString)
+    //     const codeParam = urlParams.get("code")
+    //     console.log(codeParam)
+    //
+    //     if(codeParam && (localStorage.getItem("accessTokens") === null)){
+    //            const response =  await fetch("http://localhost:8080/getAccessToken?code=" + codeParam, {
+    //                 method: 'get',
+    //             })
+    //         const data = await response.json()
+    //         if(data.access_token){
+    //             localStorage.setItem("accessToken", data.access_token)
+    //         }
+    //         }
+    // }, []);
    const usr = useSelector(state => state.userInfo)
     return (
         <div className= 'flex justify-center items-center h-screen'>
