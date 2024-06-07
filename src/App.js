@@ -16,6 +16,7 @@ const router = createBrowserRouter(
                 <Route path="/login/password-reset" element={<PasswordReset />} />
                     <Route path="/signup" element={<Signup />} />
             </Route>
+
         )
 )
 const App = ()=>{
