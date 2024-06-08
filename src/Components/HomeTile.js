@@ -1,8 +1,7 @@
-import Image from './images.jfif'
+import Image from '../Images/images.jfif'
 import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector} from "react-redux";
-import {setHomeTileShow, setLoginShow} from "./Redux/UserSlice";
-import {NavLink, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const HomeTile = ()=>{
     const dispatch = useDispatch()
