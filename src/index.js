@@ -4,7 +4,10 @@ import './index.css';
 import App from './App';
 import { Provider } from 'react-redux'
 import Store from './Redux/Store'
+import {GoogleOAuthProvider} from "@react-oauth/google";
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+
 root.render(
     <Provider store={Store} >
     <App />
