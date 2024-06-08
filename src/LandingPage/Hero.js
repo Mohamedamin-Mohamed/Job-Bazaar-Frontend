@@ -1,4 +1,4 @@
-import Image from "./job-seeker.avif";
+import Image from "../Images/job-seeker.avif";
 import {RiCommunityFill} from "react-icons/ri";
 import {MdOutlineAssuredWorkload} from "react-icons/md";
 import {TbClipboardSmile} from "react-icons/tb";
