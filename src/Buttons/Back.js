@@ -1,17 +1,17 @@
 import {useNavigate} from "react-router-dom";
 
-const BackButton = (props)=>{
+const Back = (props)=>{
     const navigate = useNavigate()
     const handleBacktickLogin = ()=>{
         navigate("../accounts/login")
     }
     return (
         <button onClick={ handleBacktickLogin}
-            type="button"
+            type="button" disabled={props.disabled}
             className="w-38 rounded-2xl h-14 relative text-gray-500 font-clear text-xs font-semibold group  "
         >
             <div
-                className="bg-green-400 rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[184px] z-10 duration-500"
+                className={`bg-blue-600 rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] ${props.disabled ? '' :'group-hover:w-[184px] z-10 duration-500'}`}
             >
                 <svg
                     width="25px"
@@ -33,4 +33,4 @@ const BackButton = (props)=>{
         </button>
     )
 }
-export default BackButton
+export default Back

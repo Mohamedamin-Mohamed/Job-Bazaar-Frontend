@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import ClipLoader from "react-spinners/ClipLoader";
 import {BeatLoader, FadeLoader, PropagateLoader, SyncLoader} from "react-spinners";
 import {useNavigate} from "react-router-dom";
+import Back from "./Buttons/Back";
 const PasswordReset = ()=>{
     const usr = useSelector(state=> state.userInfo)
     const dispatch = useDispatch()
@@ -18,16 +19,17 @@ const PasswordReset = ()=>{
     const[pass1, setPass1] = useState("")
     const[pass2, setPass2] = useState("")
     const[disabled, setDisabled] = useState(false)
+
     //to be used to check if the password matches the requirement
     const[passRem, setPassRem] = useState(true)
 
     const handleBacktickLogin = ()=>{
-        // dispatch(setPasswordResetShow(false))
-        // dispatch(setLoginShow(true))
+
         navigate("../login")
     }
     const handleSubmit = async(e)=>{
         e.preventDefault()
+        setDisabled(true)
         if(pass1 !== pass2) {
             setPassMatch(false)
             setPassRem(true)
@@ -61,21 +63,16 @@ const PasswordReset = ()=>{
         dispatch(setLoading(false))
         const data = await response.text()
         if(response.ok){//201 password change successful
-            setDisabled(true)
             toast.success(data, {
                 onClose: ()=>{
-                    // dispatch(setPasswordResetShow(false))
-                    // dispatch(setLoginShow(true))
-                    navigate("../")
+
+                    navigate("../accounts/login")
                 }
             })
         }
         else {//500
             toast.error(data, {
                 onClose: ()=>{
-                    // //make the user re-enter the passwords
-                    // dispatch(setPass1(""))
-                    // dispatch(setPass2(""))
                     navigate("../../signup")
                 }
             })
@@ -93,9 +90,11 @@ const PasswordReset = ()=>{
                 </div>
                 <form onSubmit={(event)=>handleSubmit(event)}>
                 <div className="flex flex-col">
-                    <input value={pass1} disabled={disabled} onChange={(e)=> setPass1(e.target.value)} className="my-3 border rounded-md p-2 w-[90%] mx-4 outline-none" type="password" name="pass1"
+                    <input value={pass1} disabled={disabled} onChange={(e)=> setPass1(e.target.value)}
+                           className="my-3 border rounded-md p-2 w-[90%] mx-4 outline-none focus:border-gray-500" type="password" name="pass1"
                            placeholder="New password"/>
-                    <input value={pass2} disabled={disabled} onChange={(e)=> setPass2(e.target.value)} className="my-3 border rounded-md p-2 w-[90%] mx-4 outline-none" type="password" name="pass2"
+                    <input value={pass2} disabled={disabled} onChange={(e)=> setPass2(e.target.value)}
+                           className="my-3 border rounded-md p-2 w-[90%] mx-4 outline-none focus:border-gray-500" type="password" name="pass2"
                            placeholder="Confirm new password"/>
                 </div>
                 {!passMatch && <p className="bg-[#ffebe8] p-2 mb-3 ml-4 rounded-md 2 w-[90%] font-medium">Password don't match</p>}
@@ -104,9 +103,8 @@ const PasswordReset = ()=>{
                     <button disabled={disabled} className="bg-blue-600 rounded-md p-2 w-[90%] my-3 mr-2 ml-5 text-white" type='submit'>{usr.loading ? <SyncLoader size={12} color="blue" loading={ usr.loading}/>: 'Set Password'}</button>
                 </div>
                 </form>
-                <div className="flex justify-center items-center my-4">
-                    <IoMdArrowRoundBack size={25} color="black" className="mr-2"/>
-                    <button  onClick={handleBacktickLogin} className="text-gray-500 font-clear hover:underline">Found your password</button>
+                <div className="flex justify-center my-6">
+                    <Back text={"Found you Password"} margin={"12"} disabled={disabled}/>
                 </div>
                 <div className="flex justify-center my-6">
                     <MdSecurity size={23} className="mr-2"/>

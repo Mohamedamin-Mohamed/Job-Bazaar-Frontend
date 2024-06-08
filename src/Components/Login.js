@@ -1,17 +1,15 @@
 import {Link, Outlet, redirect, useNavigate} from 'react-router-dom'
 import { FaGithub } from "react-icons/fa"
-import { FcGoogle } from "react-icons/fc"
 import { IoClose } from "react-icons/io5"
 import {useSelector, useDispatch} from "react-redux"
-import {setEmailLookupShow, setHomeTileShow, setLoading, setLoginShow, setSignupShow} from "./Redux/UserSlice"
-import React, {useEffect, useState} from "react"
-import ClipLoader from "react-spinners/ClipLoader"
+import {setLoading} from "./Redux/UserSlice"
+import React, { useState } from "react"
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import {SyncLoader} from "react-spinners";
+
 import {GoogleLogin, GoogleOAuthProvider} from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode"
-import FacebookLogin from "@greatsumini/react-facebook-login";
+import Submit from './Buttons/Submit'
 
 const Login = ()=>{
     const usr = useSelector(state => state.userInfo)
@@ -23,11 +21,11 @@ const Login = ()=>{
     const clientId = 'Ov23li3ucu1gxv0pEdUD'
 
     const handleClose = ()=>{
-        navigate("/accounts")
+        navigate("/")
     }
     const handleSignup = ()=>{
 
-        navigate("/signup")
+        navigate("/accounts/signup")
     }
     const handleSubmit = async(e)=>{
         e.preventDefault()
@@ -102,23 +100,26 @@ return(
                 <h1 className='text-center font-bold text-xl my-2'>Login</h1>
                     <div className='flex items-center flex-col'>
                         <input placeholder='Email' type='email' name='email' disabled={disabled}
-                               className='border rounded-lg p-2 w-[91%] mb-3 mt-2 mr-4 outline-none' required/>
+                               className='border rounded-lg p-2 w-[91%] mb-3 mt-2 mr-4 outline-none focus:border-gray-500' required/>
                         {statusCode === 404 &&
                             <p className='bg-[#ffebe8] p-2 mb-3 rounded-md w-[91%] mr-auto ml-2 font-medium'>{responseLogin}</p>}
                         <input placeholder='Password' type='password' name='password' disabled={disabled}
-                               className='border rounded-lg p-2 w-[91%] mb-4 mr-4 outline-none' required/>
+                               className='border rounded-lg p-2 w-[91%] mb-4 mr-4 outline-none focus:border-gray-500' required/>
 
                         {statusCode === 401 &&
                             <p className='bg-[#ffebe8] p-2 mb-3 rounded-md w-[91%] mr-auto ml-2 font-medium'>{responseLogin}</p>}
                     </div>
                     <div className='flex justify-center'>
-                        {/*<Link disabled={disabled} t className='text-blue-500 hover:underline'>Forgot Password?</Link>*/}
-                    <Link to="email-lookup" className="text-blue-500 hover:underline" >Forgot Password?</Link>
+                        <button disabled={disabled}>
+                    <Link to="./email-lookup" className="text-blue-600 hover:underline" >Forgot Password?</Link>
+                        </button>
                 </div>
-                <button type='submit' disabled={disabled} className='w-[90%] bg-blue-600 rounded-lg my-4 ml-3 p-2 text-white'>{usr.loading ? <SyncLoader size={10} color="blue" loading={ usr.loading}/> : 'Login' }</button>
-                <div className='flex justify-center'>
-                <p className='mr-1'>Don't have an account?</p>
-                <button disabled={disabled} className='text-blue-500 hover:underline' onClick={ handleSignup }>Signup</button>
+                    <button disabled={disabled} className="w-[90%] bg-blue-600 rounded-lg my-4 ml-3 p-2 text-white flex justify-center">
+                        <Submit text={"Log in"}/>
+                    </button>
+                    <div className='flex justify-center'>
+                <p className='mr-1.5'>Don't have an account?</p>
+                <button disabled={disabled} className='text-blue-600 hover:underline' onClick={ handleSignup }>Signup</button>
                 </div>
                 <div className='flex mt-2'>
                 <div className='border-b w-[40%]'></div>
@@ -140,6 +141,7 @@ return(
                 </div>
                 </form>
             </div>
+                    <Outlet />
             </div>
             </div>
     )

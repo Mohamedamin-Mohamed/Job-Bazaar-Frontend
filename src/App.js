@@ -1,22 +1,12 @@
-
-import {createBrowserRouter, createRoutesFromElements, Outlet, Route, RouterProvider, Routes} from "react-router-dom";
-import HomeTile from "./HomeTile";
-import Login from "./Login";
-import Signup from "./Signup";
-import EmailLookup from "./EmailLookup";
-import PasswordReset from "./PasswordReset";
-import Home from "./Home";
+import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Routes} from "react-router-dom";
+import Login from "./Components/Login";
+import Signup from "./Components/Signup";
+import EmailLookup from "./Components/EmailLookup";
+import PasswordReset from "./Components/PasswordReset";
+import Home from "./LandingPage/Home";
 
 const router = createBrowserRouter(
         createRoutesFromElements(
-            //
-            //     <Route path="/" element={<Home />}>
-            //     <Route path="/accounts" element={<HomeTile />}/>
-            //         <Route path="/accounts/login" element={<Login />} />
-            //     <Route path="/accounts/signup" element={<Signup />} />
-            //         <Route index path="/login/email-lookup" element={<EmailLookup />} />
-            //     <Route path="/login/password-reset" element={<PasswordReset />} />
-            // </Route>
             <Route>
                 <Route path="/" element={<Home />} />
                 <Route path="/accounts/login" element={<Login />} />

@@ -4,11 +4,12 @@ import { FcGoogle } from "react-icons/fc"
 import { IoClose } from "react-icons/io5"
 import {useSelector, useDispatch} from "react-redux"
 import {setLoading} from "./Redux/UserSlice"
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import ClipLoader from "react-spinners/ClipLoader"
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import {SyncLoader} from "react-spinners";
+import Submit from "./Buttons/Submit";
 
 const Login = ()=>{
     const usr = useSelector(state => state.userInfo)
@@ -27,15 +28,16 @@ const Login = ()=>{
     //to be used to check if the password matches the requirement
     const[passRem, setPassRem] = useState(true)
 
+
     const handleClose = ()=>{
         // dispatch(setSignupShow(false))
         // dispatch(setHomeTileShow(true))
-        navigate("/accounts")
+        navigate("/")
     }
     const handleLogin = ()=> {
         // dispatch(setSignupShow(false))
         // dispatch(setLoginShow(true))
-        navigate("/login")
+        navigate("../accounts/login")
     }
     const handleSubmit = async(e)=> {
         e.preventDefault()
@@ -76,15 +78,17 @@ const Login = ()=>{
 
         //in here we should return that users account exists
         if (!response.ok) {//unauthorised
+            setDisabled(true)
             setResponseSignup(data)
             if (response.status === 409) {
-                disabled(true)
+                setDisabled(true)
                 toast.error(data, {
                     onClose: () => {
                         setEmail("")
                         setPass1("")
                         setPass2("")
                         setUserExists(true)
+                        setDisabled(false)
                     }
                 })
             }
@@ -96,7 +100,7 @@ const Login = ()=>{
                     //we hide the Signup component and show the Login component
                     // dispatch(setSignupShow(false))
                     // dispatch(setLoginShow(true))
-                    navigate("/login")
+                    navigate("/accounts/login")
                 }
             })
     }
@@ -108,36 +112,47 @@ const Login = ()=>{
                 <IoClose size={30}  className='ml-auto hover:cursor-pointer hover:scale-110' onClick={ handleClose }/>
                 <ToastContainer position={"top-center"} />
                 <form onSubmit={handleSubmit}>
-                <h1 className='text-center font-bold text-xl my-2'>Signup</h1>
-                <div className='flex items-center flex-col'>
-                    <input value={emailAddress} onChange={(e)=> setEmail(e.target.value)} placeholder= 'Email' type='email' name='email' className='border rounded-lg p-2 w-[90%] my-3' required/>
-                    <input value={pass1} onChange={(e)=> setPass1(e.target.value)} placeholder= 'Create Password' name='pass1' type='password' className='border rounded-lg p-2 w-[90%] mb-4'  required/>
-                    <input value={pass2} onChange={(e)=> setPass2(e.target.value)} placeholder='Confirm Password' name='pass2' type='password' className='border rounded-lg p-2 w-[90%] mb-1' required/>
-                    {!passMatch && <p className='bg-[#ffebe8] p-2 my-3 rounded-md w-[90%] mr-auto ml-5'>Passwords don't match</p>}
-                    {!passRem && <p className="bg-[#ffebe8] p-2 my-3 rounded-md w-[90%] mr-auto ml-5"> At least 16 characters OR at least 8 characters including a number and a letter.</p>}
-                </div>
-                    <div className="flex justify-center">
-                <button className="w-[90%] bg-blue-600 rounded-lg my-4 p-2 text-white" disabled={disabled}>{usr.loading ? <SyncLoader size={12} color="blue" loading={ usr.loading}/> : 'Signup' }</button>
+                    <h1 className='text-center font-bold text-xl my-2'>Signup</h1>
+                    <div className='flex items-center flex-col'>
+                        <input value={emailAddress} disabled={disabled} onChange={(e) => setEmail(e.target.value)}
+                               placeholder='Email' type='email' name='email'
+                               className='border rounded-lg p-2 w-[90%] my-3 outline-none focus:border-gray-500' required/>
+                        <input value={pass1} disabled={disabled} onChange={(e) => setPass1(e.target.value)}
+                               placeholder='Create Password' name='pass1' type='password'
+                               className='border rounded-lg p-2 w-[90%] mb-4 outline-none focus:border-gray-500' required/>
+                        <input value={pass2} disabled={disabled} onChange={(e) => setPass2(e.target.value)}
+                               placeholder='Confirm Password' name='pass2' type='password'
+                               className='border rounded-lg p-2 w-[90%] mb-1 outline-none focus:border-gray-500' required/>
+                        {!passMatch &&
+                            <p className='bg-[#ffebe8] p-2 my-3 rounded-md w-[90%] mr-auto ml-5'>Passwords don't
+                                match</p>}
+                        {!passRem &&
+                            <p className="bg-[#ffebe8] p-2 my-3 rounded-md w-[90%] mr-auto ml-5"> At least 16 characters
+                                OR at least 8 characters including a number and a letter.</p>}
                     </div>
-                        <div className='flex justify-center'>
-                    <p className='mr-1'>Already have an account?</p>
-                    <button className='text-blue-500 hover:underline' onClick={ handleLogin }>Login</button>
-                </div>
-                <div className='flex mt-2'>
-                    <div className='border-b w-[40%]'></div>
-                    <p>Or</p>
-                    <div className='border-b w-[40%]'></div>
-                </div>
-                <div className='flex'>
-                    <div className= 'flex border rounded-lg p-2 ml-5 my-5 w-[90%] bg-blue-500 cursor-pointer'>
-                        <FaFacebook size={25} color='blue'/>
-                        <p className='ml-10 text-white'>Login with Facebook</p>
+                    <button disabled={disabled}
+                            className="w-[90%] bg-blue-600 rounded-lg my-4 ml-3 p-2 text-white flex justify-center">
+                        <Submit text={"Signup"} disabled={disabled}/>
+                    </button>
+                    <div className='flex justify-center'>
+                        <p className='mr-1'>Already have an account?</p>
+                        <button className='text-blue-500 hover:underline' onClick={handleLogin}>Login</button>
                     </div>
-                </div>
-                <div className='flex border p-2 rounded-lg ml-5 w-[90%] cursor-pointer'>
-                    <FcGoogle size={25} />
-                    <p className='ml-10 text-gray-400'>Login with Google</p>
-                </div>
+                    <div className='flex mt-2'>
+                        <div className='border-b w-[40%]'></div>
+                        <p>Or</p>
+                        <div className='border-b w-[40%]'></div>
+                    </div>
+                    <div className='flex'>
+                        <div className='flex border rounded-lg p-2 ml-5 my-5 w-[90%] bg-blue-500 cursor-pointer'>
+                            <FaFacebook size={25} color='blue'/>
+                            <p className='ml-10 text-white'>Login with Facebook</p>
+                        </div>
+                    </div>
+                    <div className='flex border p-2 rounded-lg ml-5 w-[90%] cursor-pointer'>
+                        <FcGoogle size={25}/>
+                        <p className='ml-10 text-gray-400'>Login with Google</p>
+                    </div>
                 </form>
             </div>
         </div>
