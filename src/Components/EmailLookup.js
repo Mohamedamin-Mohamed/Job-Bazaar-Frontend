@@ -1,23 +1,13 @@
 import { MdLockReset } from "react-icons/md";
 import { TbMailExclamation } from "react-icons/tb";
-import { IoMdArrowRoundBack } from "react-icons/io";
 import {useDispatch, useSelector} from "react-redux";
-import {
-    setEmail,
-    setEmailLookupShow,
-    setHomeTileShow,
-    setLoading,
-    setLoginShow,
-    setPasswordResetShow,
-    setSignupShow
-} from "./Redux/UserSlice";
-import ClipLoader from "react-spinners/ClipLoader";
+import { setEmail, setLoading,} from "../Redux/UserSlice";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
 import {useState} from "react";
 import {SyncLoader} from "react-spinners";
 import {useNavigate} from "react-router-dom";
-import Back from "./Buttons/Back";
+import Back from "../Buttons/Back";
 
 const EmailLookup = ()=>{
     const usr = useSelector(state=> state.userInfo)
@@ -42,11 +32,6 @@ const EmailLookup = ()=>{
 
             toast.success(data, {
                 onClose: ()=>{
-                    //close the email lookup component and show password reset component so that the user can change their password
-                    // dispatch(setEmailLookupShow(false))
-                    // dispatch(setHomeTileShow(false))
-                    // dispatch(setEmail(email))
-                    // dispatch(setPasswordResetShow(true))
                     navigate("/accounts/login/password-reset")
                 }
             })
@@ -56,9 +41,6 @@ const EmailLookup = ()=>{
 
                 toast.error(data, {
                     onClose: ()=>{
-                        // //hide the email lookup component and show the signup component so that the user can create an account
-                        // dispatch(setEmailLookupShow(false))
-                        // dispatch(setSignupShow(true))
                         navigate("/accounts/signup")
                     }
                 })
