@@ -1,15 +1,14 @@
-import {Link, Outlet, redirect, useNavigate} from 'react-router-dom'
+import {Link, Outlet, useNavigate} from 'react-router-dom'
 import { FaGithub } from "react-icons/fa"
 import { IoClose } from "react-icons/io5"
 import {useSelector, useDispatch} from "react-redux"
-import {setLoading} from "./Redux/UserSlice"
+import {setLoading} from "../Redux/UserSlice"
 import React, { useState } from "react"
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
 import {GoogleLogin, GoogleOAuthProvider} from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode"
-import Submit from './Buttons/Submit'
+import Submit from '../Buttons/Submit'
 
 const Login = ()=>{
     const usr = useSelector(state => state.userInfo)
@@ -18,7 +17,6 @@ const Login = ()=>{
     const [responseLogin, setResponseLogin] = useState(null)
     const[statusCode, setStatusCode] = useState(null)
     const[disabled, setDisabled] = useState(false)
-    const clientId = 'Ov23li3ucu1gxv0pEdUD'
 
     const handleClose = ()=>{
         navigate("/")
@@ -129,15 +127,14 @@ return(
                 <div className='flex'>
                 <div className= 'flex border rounded-lg p-2 mx-4 my-6 w-[90%] ml-3 bg-blue-500 cursor-pointer'>
                   <FaGithub size={30} />
-                    <Link className='ml-16 text-white' to={"https:github.com/login/oauth/authorize?client_id=" + clientId}>Login with GitHub</Link>
+                    {/*<Link className='ml-16 text-white' to={"https:github.com/login/oauth/authorize?client_id="}>Login with GitHub</Link>*/}
                 </div>
             </div>
                 <div className='flex border p-2 rounded-lg mx-4  w-[90%] ml-3 cursor-pointer'>
-
-                      <GoogleOAuthProvider clientId={"488140599212-d4r00eq9fl9repl69h8dq7o7083l967j.apps.googleusercontent.com"}>
+                    <GoogleOAuthProvider clientId={""}>
                           <GoogleLogin onSuccess={(credentialResponse)=>onSuccessHandler(credentialResponse)} onError={errorHandler}
-                          />;
-                      </GoogleOAuthProvider>
+                          />
+                    </GoogleOAuthProvider>
                 </div>
                 </form>
             </div>
