@@ -1,15 +1,13 @@
 import { MdSecurity } from "react-icons/md";
 import { TbPasswordUser } from "react-icons/tb";
-import {IoMdArrowRoundBack} from "react-icons/io";
 import {useDispatch, useSelector} from "react-redux";
-import {setLoading, setLoginShow, setPasswordResetShow} from "./Redux/UserSlice";
+import {setLoading} from "../Redux/UserSlice";
 import {useState} from "react";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
-import ClipLoader from "react-spinners/ClipLoader";
-import {BeatLoader, FadeLoader, PropagateLoader, SyncLoader} from "react-spinners";
+import {SyncLoader} from "react-spinners";
 import {useNavigate} from "react-router-dom";
-import Back from "./Buttons/Back";
+import Back from "../Buttons/Back";
 const PasswordReset = ()=>{
     const usr = useSelector(state=> state.userInfo)
     const dispatch = useDispatch()
@@ -23,10 +21,6 @@ const PasswordReset = ()=>{
     //to be used to check if the password matches the requirement
     const[passRem, setPassRem] = useState(true)
 
-    const handleBacktickLogin = ()=>{
-
-        navigate("../login")
-    }
     const handleSubmit = async(e)=>{
         e.preventDefault()
         setDisabled(true)
