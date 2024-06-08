@@ -1,15 +1,13 @@
-import {Link, NavLink, useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import { FaFacebook } from "react-icons/fa6"
 import { FcGoogle } from "react-icons/fc"
 import { IoClose } from "react-icons/io5"
 import {useSelector, useDispatch} from "react-redux"
-import {setLoading} from "./Redux/UserSlice"
-import React, {useEffect, useState} from "react";
-import ClipLoader from "react-spinners/ClipLoader"
+import {setLoading} from "../Redux/UserSlice"
+import React, {useState} from "react";
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import {SyncLoader} from "react-spinners";
-import Submit from "./Buttons/Submit";
+import Submit from "../Buttons/Submit";
 
 const Login = ()=>{
     const usr = useSelector(state => state.userInfo)
@@ -30,13 +28,9 @@ const Login = ()=>{
 
 
     const handleClose = ()=>{
-        // dispatch(setSignupShow(false))
-        // dispatch(setHomeTileShow(true))
         navigate("/")
     }
     const handleLogin = ()=> {
-        // dispatch(setSignupShow(false))
-        // dispatch(setLoginShow(true))
         navigate("../accounts/login")
     }
     const handleSubmit = async(e)=> {
@@ -97,9 +91,6 @@ const Login = ()=>{
             setDisabled(true)
             toast.success(data, {
                 onClose: ()=>{
-                    //we hide the Signup component and show the Login component
-                    // dispatch(setSignupShow(false))
-                    // dispatch(setLoginShow(true))
                     navigate("/accounts/login")
                 }
             })
