@@ -13,9 +13,9 @@ const NavBar = ()=>{
 
     const handleNavigation = (path)=>{
         if(path === 'login')
-        navigate('accounts/login')
+        navigate('/accounts/login')
         else
-            navigate('accounts/signup')
+            navigate('/accounts/signup')
     }
     return (
         <div>
@@ -36,8 +36,8 @@ const NavBar = ()=>{
                               onClick={() => setNavShow(false)}/>
                 )}
                 <div className={`${isMediumScreen ? "flex flex-row gap-x-8 mx-4 font-medium text-lg" : navShow ? "flex flex-col space-y-4  py-1 px-3 h-[120px] mt-7" : "hidden"} 
-                mt-8 relative`} onClick={()=>handleNavigation('signup')}>
-                    <button className="hover:underline">Join now</button>
+                mt-8 relative`}>
+                    <button className="hover:underline" onClick={()=>handleNavigation('signup')}>Join now</button>
                     <div className="flex bg-black w-[120px] h-[42px] justify-center hover:bg-blue-600 rounded-md" onClick={()=>handleNavigation('login')}>
                         <BsBoxArrowInRight className="mt-2.5 mr-4 hover:cursor-pointer" color="white" size={25}/>
                         <button className="text-white mr-3" >Sign in</button>
