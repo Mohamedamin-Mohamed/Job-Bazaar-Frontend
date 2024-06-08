@@ -38,5 +38,5 @@ const UserSlice = createSlice({
     }
 })
 export default UserSlice.reducer
-export const { setEmail, setLoginShow, setSignupShow, setLoading, setEmailLookupShow, setPasswordResetShow, setHomeTileShow }  = UserSlice.actions
+export const { setEmail, setLoading }  = UserSlice.actions
 
