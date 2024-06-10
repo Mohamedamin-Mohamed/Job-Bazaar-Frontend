@@ -1,7 +1,21 @@
 import {FcGoogle} from "react-icons/fc";
 import {FaGithub} from "react-icons/fa";
+import {useState} from "react";
+import {setEmail} from "../Redux/UserSlice";
 
-const LoginPanel2 = ()=>{
+const LoginPanel = ()=>{
+    const[email, showEmail] = useState("")
+    const handleValidation = async ()=>{
+        //make an email lookup, if the email is valid replace the LoginPanel with
+        const response = await fetch(`http://localhost:8080/accounts/login/${email}/emailLookup`)
+        if(response.ok){
+
+        }
+        else{
+
+        }
+
+    }
     return(
         <>
             <div className="flex flex-col justify-center mb-4 mx-14 ml-12 ">
@@ -16,16 +30,14 @@ const LoginPanel2 = ()=>{
                     <p className="mx-12 font-medium">Continue with GitHub</p>
                 </button>
                 <p className="mt-4 mb-2 text-[#00060c]">Enter Email</p>
-                <input className="w-[350px] border p-2 border-gray-600 rounded-md outline-none"/>
+                <input value={email} onChange={(e)=> setEmail(e.target.value)} className="w-[350px] border p-2 border-gray-600 rounded-md outline-none"/>
                 <p className="my-3">Please enter a valid email address</p>
-                <button
-                    className="hover:bg-blue-600 p-3 border border-gray-600 rounded-md font-medium">Continue
-                    with email
-                </button>
+                <button className="hover:bg-blue-600 p-3 border border-gray-600 rounded-md font-medium"
+                onClick={handleValidation}>Continue with email</button>
 
 
             </div>
         </>
     )
 }
-export default LoginPanel2
+export default LoginPanel
