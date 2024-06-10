@@ -1,42 +1,33 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    email: null,
-    loginShow: false,
-    signupShow: false,
     loading: false,
-    emailLookupShow: false,
-    passwordResetShow: false,
-    homeTileShow: true
-}
-const UserSlice = createSlice({
-    name: 'userInfo',
-    initialState: initialState,
-    reducers: {
-        setEmail: (state, action) => ({
-            ...state, email: action.payload
-        }),
-        setLoginShow: (state, action)=>({
-            ...state, loginShow: action.payload
-        }),
-
-        setSignupShow : (state, action)=>({
-            ...state, signupShow: action.payload
-        }),
+    firstPanel: true,
+    secondPanel: false,
+    credentials: true,
+    usrEmail: ''
+    }
+    const UserSlice = createSlice({
+        name: 'userInfo',
+        initialState: initialState,
+        reducers: {
         setLoading : (state, action)=>({
             ...state, loading: action.payload
         }),
-        setEmailLookupShow: (state, action) =>({
-            ...state, emailLookupShow: action.payload
+        setFirstPanel: (state, action) =>({
+            ...state, firstPanel: action.payload
+            }),
+        setSecondPanel: (state, action) =>({
+            ...state, secondPanel: action.payload
         }),
-        setPasswordResetShow: (state, action) =>({
-            ...state, passwordResetShow: action.payload
+        setCredentials: (state, action) =>({
+            ...state, credentials: action.payload
         }),
-        setHomeTileShow: (state, action) =>({
-            ...state, homeTileShow: action.payload
-        })
+            setUsrEmail: (state, action) =>({
+                ...state, usrEmail: action.payload
+            })
     }
 })
 export default UserSlice.reducer
-export const { setEmail, setLoading }  = UserSlice.actions
+export const { setUsrEmail, setLoading, setFirstPanel, setSecondPanel, setCredentials }  = UserSlice.actions
 
