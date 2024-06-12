@@ -60,7 +60,7 @@ const Login = ()=>{
             password: pass1
         }
         const response = await fetch('http://localhost:8080/accounts/signup', {
-                method: 'POST',
+                method: 'post',
                 headers: {
                     'Content-type': 'application/json'
                 },

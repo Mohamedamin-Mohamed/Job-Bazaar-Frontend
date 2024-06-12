@@ -25,6 +25,7 @@ const PasswordReset = ()=>{
         e.preventDefault()
         setDisabled(true)
         if(pass1 !== pass2) {
+            setDisabled(false)
             setPassMatch(false)
             setPassRem(true)
             return
@@ -36,6 +37,7 @@ const PasswordReset = ()=>{
             const hasNumber = /[0-9]/.test(pass1)
 
             if (!pass1.length >= 16 || !(pass1.length >= 8 && hasLetter && hasNumber)) {
+                setDisabled(false)
                 setPassRem(false)
                 return
             }
@@ -43,7 +45,7 @@ const PasswordReset = ()=>{
         dispatch(setLoading(true))
         const formData = new FormData(e.target)
         const requestBody = {
-            email: usr.email,
+            email: usr.usrEmail,
             password: formData.get('pass1')
         }
         console.log(usr.email)
@@ -67,7 +69,7 @@ const PasswordReset = ()=>{
         else {//500
             toast.error(data, {
                 onClose: ()=>{
-                    navigate("../../signup")
+                    navigate("../accounts/login")
                 }
             })
         }

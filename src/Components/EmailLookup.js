@@ -1,7 +1,7 @@
 import { MdLockReset } from "react-icons/md";
 import { TbMailExclamation } from "react-icons/tb";
 import {useDispatch, useSelector} from "react-redux";
-import { setEmail, setLoading,} from "../Redux/UserSlice";
+import {setLoading, setUsrEmail,} from "../Redux/UserSlice";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
 import {useState} from "react";
@@ -21,10 +21,10 @@ const EmailLookup = ()=>{
         const email = formData.get('email')
 
         dispatch(setLoading(true))
-        dispatch(setEmail(email))
+        dispatch(setUsrEmail(email))
         setDisabled(true)
         const response = await fetch(`http://localhost:8080/accounts/login/${email}/email-lookup/`, {
-            method: 'post'
+            method: 'get'
         })
         const data = await response.text()
         dispatch(setLoading(false))
