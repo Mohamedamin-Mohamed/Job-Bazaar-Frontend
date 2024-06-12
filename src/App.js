@@ -1,8 +1,8 @@
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Routes} from "react-router-dom";
-import Login from "./Components/Login";
-import Signup from "./Components/Signup";
-import EmailLookup from "./Components/EmailLookup";
-import PasswordReset from "./Components/PasswordReset";
+import Login from "./Authentication/Login";
+import Signup from "./Authentication/Signup";
+import EmailLookup from "./Authentication/EmailLookup";
+import PasswordReset from "./Authentication/PasswordReset";
 import Home from "./LandingPage/Home";
 
 const router = createBrowserRouter(

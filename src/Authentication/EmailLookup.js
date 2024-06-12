@@ -24,7 +24,7 @@ const EmailLookup = ()=>{
         dispatch(setUsrEmail(email))
         setDisabled(true)
         const response = await fetch(`http://localhost:8080/accounts/login/${email}/email-lookup/`, {
-            method: 'get'
+            method: 'post'
         })
         const data = await response.text()
         dispatch(setLoading(false))
