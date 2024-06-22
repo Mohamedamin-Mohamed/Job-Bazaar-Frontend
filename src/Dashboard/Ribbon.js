@@ -1,12 +1,23 @@
 import {useSelector} from "react-redux";
 
-const ColorGrid = ()=>{
+const Ribbon = ()=>{
     const usr = useSelector(state => state.userInfo)
     return(
-           <div className="flex flex-col justify-center items-center bg-[#367c2b] border h-[250px] mx-8">
-                   <h1 className="text-xl font-medium text-[#292929]">Hi {usr.usrEmail}</h1>
-                   <p className="text-[#757575] bg-white">Welcome to your Career Hub</p>
-           </div>
+        <div className="relative mx-20 h-60 flex items-center justify-center overflow-hidden mt-0.5">
+            <div className="absolute inset-0 flex">
+                <div className="w-1/2 h-full bg-[#ffde00]" style={{clipPath: 'polygon(0 0, 100% 0, 0 100%'}}></div>
+                <div className="w-1/2 h-full bg-[#367c2b]" style={{clipPath: 'polygon(0 0, 100% 0, 100% 100%'}}></div>
+            </div>
+            <div className="relative z-10 flex items-center space-x-4">
+                <div className="w-16 h-16 rounded-full bg-[#367c2b] flex items-center justify-center text-white text-xl font-bold">
+                    MM
+                </div>
+                <div>
+                    <h1 className="text-2xl font-bold">Hi Mohamedamin</h1>
+                    <p className="text-[#757575] font-bold text-sm">Welcome to your Career Hub</p>
+                </div>
+            </div>
+        </div>
     )
 }
-export default ColorGrid
+export default Ribbon
