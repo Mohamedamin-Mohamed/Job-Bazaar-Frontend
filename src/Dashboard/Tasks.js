@@ -1,0 +1,52 @@
+import { IoIosArrowRoundForward } from "react-icons/io";
+import { TbBulb } from "react-icons/tb";
+import { CiFilter } from "react-icons/ci";
+
+const Tasks = ()=>{
+    return(
+        <div className="flex flex-col text-[#367c2b] mt-10 border w-[345px] h-[290px] p-4 ml-40">
+            <div className="flex justify-between mb-4">
+                <div className="flex">
+                    <h1 className="mr-2 text-black font-bold">My Tasks </h1>
+                    <p className="bg-[#cfd9cc] rounded-md px-1">4</p>
+                </div>
+
+                <button className="text-[#9b9b9b] font-medium">View all tasks</button>
+            </div>
+            <div className="flex">
+                <IoIosArrowRoundForward size={25} color="green"/>
+                <p className="ml-4 mb-4 text-black font-semibold">Update your Profile</p>
+            </div>
+            <div className="flex mx-6 mb-4">
+                <div className="w-[65px] h-[6px] bg-[#367c2b] rounded-md mr-1"></div>
+                <div className="w-[65px] h-[6px] bg-[#367c2b] rounded-md mr-1"></div>
+                <div className="w-[65px] h-[6px] bg-[#367c2b] rounded-md mr-1"></div>
+                <div className="w-[65px] h-[6px] bg-[#367c2b] rounded-md"></div>
+            </div>
+            <div className="flex justify-between">
+                <div className="flex bg-[#fff89c] ">
+                    <TbBulb size={16} className="mt-0.5" />
+                    <p className="text-[#5c5500] font-medium">Improves recommendations</p>
+                </div>
+                <p className="text-[#4f5666">0/4 steps</p>
+            </div>
+
+            <div className="flex mt-4">
+                <IoIosArrowRoundForward size={25} color="green"/>
+                <p className="ml-4 mb-4 text-black font-semibold">Update your Career Interests</p>
+            </div>
+            <div className="flex mb-4 ml-6">
+                <div className="w-[130px] h-[6px] bg-[#e6f0e1] rounded-md mr-2 border border-green-700"></div>
+                <div className="w-[127px] h-[6px] bg-[#e6f0e1] rounded-md mr-2 border  border-green-700"></div>
+            </div>
+            <div className="flex justify-between">
+                <div className="flex bg-[#fff89c] p-0.5">
+                    <CiFilter size={16} color="black" className="mt-0.5" />
+                    <p className="text-[#5c5500] font-medium">Improves personalization</p>
+                </div>
+                <p className="text-[#4f5666">0/2 steps</p>
+            </div>
+        </div>
+    )
+}
+export default Tasks
