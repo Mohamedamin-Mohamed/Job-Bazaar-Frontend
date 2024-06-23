@@ -1,19 +1,26 @@
 import {NavLink, useNavigate} from "react-router-dom";
 import { CgMenuGridO } from "react-icons/cg";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import { IoMdArrowDropup } from "react-icons/io";
 import {useMediaQuery} from "react-responsive";
+import {setFirstName, setLastName, setUsrEmail} from "../Redux/UserSlice";
 
 const NavBar = ()=>{
-    const usr = useSelector(state => state.userInfo);
+    const usrInfo = useSelector(state => state.userInfo);
+    const dispatch = useDispatch()
     const[userSettingDropDown, setUserSettingDropDown] = useState(false)
     const[menuGrid, setMenuGrid] = useState(false)
     const[referrals, setReferrals] = useState(false)
     const navigate = useNavigate()
+    console.log(usrInfo)
     const isMediumScreen = useMediaQuery({ minWidth:993 }); // Set the breakpoint for md screens
+    const abbreviatedName = usrInfo.firstName.substring(0,1) + usrInfo.lastName.substring(0,1)
+
     const handleLogout = ()=>{
+        dispatch(setFirstName(''))
+        dispatch(setLastName(''))
         navigate('/')
     }
     const handleMenuGrid = ()=>{
@@ -33,7 +40,7 @@ const NavBar = ()=>{
     }
     return(
         <div className="flex justify-between items-center p-4 mt-2">
-            <NavLink to="/careerhub" className="text-xl ml-4 text-[#367c2b]">Job Bazaar</NavLink>
+            <NavLink to="/careerhub" className="text-3xl ml-16 text-[#367c2b] font-bold">Job Bazaar</NavLink>
             <nav className={`${isMediumScreen ? "flex space-x-5" : "hidden"}`}>
                 <NavLink to='/careerhub' className="hover:text-[#367c2b] font-medium">Home</NavLink>
                 <NavLink to='careerinterests' className="hover:text-[#367c2b] font-medium">Career Interests</NavLink>
@@ -62,8 +69,8 @@ const NavBar = ()=>{
                     )
                 }
                 <div className="flex hover:cursor-pointer text-white" onClick={ handleUserSettingDropDown }>
-                    <p className="bg-[#367c2b] rounded-lg p-2">{usr.usrEmail}</p>
-                    { !userSettingDropDown ? <MdArrowDropDown size={28} color="black"/> : <IoMdArrowDropup size={24} color="black"/> }
+                    <p className="bg-[#367c2b] rounded-3xl p-2 text-lg">{abbreviatedName}</p>
+                    { !userSettingDropDown ? <MdArrowDropDown size={28} color="black" className="mt-2"/> : <IoMdArrowDropup size={24} color="black" className="mt-2"/> }
                 </div>
                 {userSettingDropDown && (
                     <nav className="flex flex-col absolute right-0 mt-52 mr-4 w-[350px] h-[133px] border p-4 bg-white z-50">
