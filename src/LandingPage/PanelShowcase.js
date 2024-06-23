@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink, useNavigate} from "react-router-dom";import {useState} from "react";
-import {setFirstPanel, setLoading, setSecondPanel} from "../Redux/UserSlice";
+import {setFirstName, setFirstPanel, setLastName, setLoading, setSecondPanel} from "../Redux/UserSlice";
 import { IoClose } from "react-icons/io5"
 import {MdOutlineDoNotDisturb, MdOutlineDoNotDisturbAlt} from "react-icons/md";
 import {ClipLoader} from "react-spinners";
@@ -16,6 +16,7 @@ const PanelShowcase = ()=>{
     const[close, setClose] = useState(false)
     const[passRem, setPassRem] = useState(true)
     const[disabled, setDisabled] = useState(false)
+    const[name, setName] = useState({firstName: '', lastName: ''})
 
     const handleSubmit = async ()=>{
         //check if the password is at least 16 characters OR at least 8 characters including a number and a letter
@@ -30,6 +31,7 @@ const PanelShowcase = ()=>{
         //in here we primarily check if the password is correct or not
         if(usr.credentials){
             dispatch(setLoading(true))
+            console.log('First name is ', name.firstName, name.lastName)
 
             //make a login request
             const response = await fetch('http://localhost:8080/accounts/login/', {
@@ -42,14 +44,18 @@ const PanelShowcase = ()=>{
             dispatch(setLoading(false))
             const text = await response.text()
             if(response. ok){
+                //make a request to grab the users firstName and lastName
+                const response = await fetch(`http://localhost:8080/api/person/${usr.usrEmail}`);
+                const names = await response.json();
                 setDisabled(true)
                 setPassIncorrectShow(false)
                 toast.success(text, {
                     onClose: ()=>{
-                        navigate('/accounts/login')
+                        dispatch(setFirstName(names.firstName))
+                        dispatch(setLastName(names.lastName))
+                        navigate('careerhub')
                     }
                 })
-                navigate('/')
             }
             else if(response.status === 401){ //incorrect password
                 setPassIncorrectShow(true)
@@ -63,7 +69,7 @@ const PanelShowcase = ()=>{
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify({email: usr.usrEmail, password: pass})
+                body: JSON.stringify({email: usr.usrEmail, password: pass, firstName: name.firstName, lastName: name.lastName})
             })
             const data = await response.text()
 
@@ -72,7 +78,16 @@ const PanelShowcase = ()=>{
                 setDisabled(true)
                 toast.success(data.substring(0, 28), {
                     onClose: ()=>{
+                        dispatch(setFirstName(name.firstName))
+                        dispatch(setLastName(name.lastName))
                         navigate('/accounts/login')
+                    }
+                })
+            }
+            else{
+                toast.error(data, {
+                    onClose: ()=>{
+                        window.location.reload()
                     }
                 })
             }
@@ -82,6 +97,12 @@ const PanelShowcase = ()=>{
         console.log('Received')
         dispatch(setSecondPanel(false))
         dispatch(setFirstPanel(true))
+    }
+    const handleChange = (e)=>{
+        const { name, value } = e.target;
+        setName((prevName) =>({
+            ...prevName, [name]: value
+        }))
     }
     return(
         <>
@@ -100,6 +121,18 @@ const PanelShowcase = ()=>{
                     <IoClose size={30} className="ml-auto hover:cursor-pointer"
                              onClick={() => setPassIncorrectShow(false)}/>
                 </div>
+                {!usr.credentials && (
+                    <div>
+                    <div className="flex flex-col mt-4">
+                        <label>First Name</label>
+                        <input type="text" name="firstName" value={name.firstName} onChange={handleChange} placeholder="First Name" className="w-[350px] border p-2 border-gray-600 rounded-md outline-none" required/>
+                    </div>
+                    <div className="flex flex-col my-4">
+                    <label>Last Name</label>
+                    <input type="text" name="lastName" value={name.lastName} onChange={handleChange} placeholder="Last Name" className="w-[350px] border p-2 border-gray-600 rounded-md outline-none" required/>
+                    </div>
+                    </div>
+                )}
 
                 <p className="mt-4 mb-2 text-[#00060c]">Password</p>
 
