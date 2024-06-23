@@ -31,6 +31,8 @@ const LoginPanel = ()=>{
                 dispatch(setCredentials(true))
                 dispatch(setFirstPanel(false))
                 dispatch(setSecondPanel(true))
+                dispatch(setUsrEmail(email))
+                console.log(email)
         }
             else{
                 dispatch(setCredentials(false))
