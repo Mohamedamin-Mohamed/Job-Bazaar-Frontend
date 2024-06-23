@@ -3,13 +3,13 @@ import { FaFacebook } from "react-icons/fa6"
 import { FcGoogle } from "react-icons/fc"
 import { IoClose } from "react-icons/io5"
 import {useSelector, useDispatch} from "react-redux"
-import {setLoading} from "../Redux/UserSlice"
+import {setFirstName, setLastName, setLoading} from "../Redux/UserSlice"
 import React, {useState} from "react";
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Submit from "../Buttons/Submit";
 
-const Login = ()=>{
+const Signup = ()=>{
     const usr = useSelector(state => state.userInfo)
 
     const dispatch = useDispatch()
@@ -22,6 +22,7 @@ const Login = ()=>{
     const[pass1, setPass1] = useState("")
     const[pass2, setPass2] = useState("")
     const[disabled, setDisabled] = useState(false)
+    const[name, setName] = useState({firstName: '', lastName: ''})
 
     //to be used to check if the password matches the requirement
     const[passRem, setPassRem] = useState(true)
@@ -57,7 +58,9 @@ const Login = ()=>{
         dispatch(setLoading(true))
         const requestBody = {
             email: formData.get('email'),
-            password: pass1
+            password: pass1,
+            firstName: formData.get('firstName'),
+            lastName: formData.get('lastName')
         }
         const response = await fetch('http://localhost:8080/accounts/signup', {
                 method: 'POST',
@@ -81,7 +84,9 @@ const Login = ()=>{
                         setEmail("")
                         setPass1("")
                         setPass2("")
+                        setName({firstName: '', lastName: ''})
                         setUserExists(true)
+                        setPassRem(true)
                         setDisabled(false)
                     }
                 })
@@ -91,15 +96,23 @@ const Login = ()=>{
             setDisabled(true)
             toast.success(data, {
                 onClose: ()=>{
+                    dispatch(setFirstName(name.firstName))
+                    dispatch(setLastName(name.lastName))
                     navigate("/accounts/login")
                 }
             })
+        }
     }
+    const handleChange = (e)=>{
+        const { name, value } = e.target;
+        setName((prevName) =>({
+            ...prevName, [name]: value
+        }))
     }
 
     return(
         <div className= 'flex flex-col justify-center items-center h-screen'>
-            <div className= {`${!passMatch || !passRem  ? 'h-[608px]' :'h-[525px]'} border rounded-lg w-[400px]`}>
+            <div className= {`${!passMatch || !passRem  ? 'h-[740px]' :'h-[660px]'} border rounded-lg w-[400px]`}>
                 <IoClose size={30}  className='ml-auto hover:cursor-pointer hover:scale-110' onClick={ handleClose }/>
                 <ToastContainer position={"top-center"} />
                 <form onSubmit={handleSubmit}>
@@ -107,13 +120,22 @@ const Login = ()=>{
                     <div className='flex items-center flex-col'>
                         <input value={emailAddress} disabled={disabled} onChange={(e) => setEmail(e.target.value)}
                                placeholder='Email' type='email' name='email'
-                               className='border rounded-lg p-2 w-[90%] my-3 outline-none focus:border-gray-500' required/>
+                               className='border rounded-lg p-2 w-[90%] my-3 outline-none focus:border-gray-500'
+                               required/>
+                        <input value={name.firstName} disabled={disabled} onChange={handleChange}
+                               placeholder="First Name" name="firstName" type="text"
+                               className="border rounded-lg p-2 w-[90%] mb-4 outline-none focus:border-gray-500"/>
+                        <input value={name.lastName} disabled={disabled} onChange={handleChange}
+                               placeholder="Last Name" name="lastName" type="text"
+                               className="border rounded-lg p-2 w-[90%] mb-4 outline-none focus:border-gray-500"/>
                         <input value={pass1} disabled={disabled} onChange={(e) => setPass1(e.target.value)}
                                placeholder='Create Password' name='pass1' type='password'
-                               className='border rounded-lg p-2 w-[90%] mb-4 outline-none focus:border-gray-500' required/>
+                               className='border rounded-lg p-2 w-[90%] mb-4 outline-none focus:border-gray-500'
+                               required/>
                         <input value={pass2} disabled={disabled} onChange={(e) => setPass2(e.target.value)}
                                placeholder='Confirm Password' name='pass2' type='password'
-                               className='border rounded-lg p-2 w-[90%] mb-1 outline-none focus:border-gray-500' required/>
+                               className='border rounded-lg p-2 w-[90%] mb-1 outline-none focus:border-gray-500'
+                               required/>
                         {!passMatch &&
                             <p className='bg-[#ffebe8] p-2 my-3 rounded-md w-[90%] mr-auto ml-5'>Passwords don't
                                 match</p>}
@@ -149,4 +171,4 @@ const Login = ()=>{
         </div>
     )
 }
-export default Login
+export default Signup
