@@ -1,9 +1,9 @@
 
-import {Link, Outlet, useNavigate} from 'react-router-dom'
+import {Link, NavLink, Outlet, useNavigate} from 'react-router-dom'
 import { FaGithub } from "react-icons/fa"
 import { IoClose } from "react-icons/io5"
 import {useSelector, useDispatch} from "react-redux"
-import {setLoading} from "../Redux/UserSlice"
+import {setLoading, setUsrEmail} from "../Redux/UserSlice"
 import React, { useState } from "react"
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -50,7 +50,8 @@ const Login = ()=>{
             setDisabled(true)
             toast.success(data, {
                 onClose: ()=>{
-                    navigate("/")
+                    dispatch(setUsrEmail(requestBody.email))
+                    navigate("/careerhub")
                 }
             })
             setStatusCode(null)
@@ -88,18 +89,21 @@ const Login = ()=>{
     const handleProfileSuccess = (response => {
         console.log('Get Profile Success!', response);
     })
+    const handlePasswordLookup = ()=>{
+        navigate("./email-lookup")
+    }
 
     return(
-        <div className="flex flex-col justify-center items-center h-screen">
-            <div className= {`${statusCode !== null ? "h-[560px]" : "h-[520px]"} border rounded-lg w-[400px]`}>
-                <IoClose size={30}  className='ml-auto hover:cursor-pointer hover:scale-110' onClick={ handleClose }/>
+        <div className="flex flex-col justify-center items-center h-screen bg-[#f0f2f5]">
+            <div className= {`${statusCode !== null ? "h-[600px]" : "h-[540px]"} border rounded-lg w-[400px] bg-white`}>
+                <IoClose size={30}  className='ml-auto hover:cursor-pointer hover:scale-110 mt-2 mr-2 hover:rounded-lg hover:border' onClick={ handleClose }/>
                 <ToastContainer position={"top-center"}/>
                 <div className= 'ml-4 flex-col'>
                     <form onSubmit={(event)=>handleSubmit(event)}>
                         <h1 className='text-center font-bold text-xl my-2'>Login</h1>
                         <div className='flex items-center flex-col'>
                             <input placeholder='Email' type='email' name='email' disabled={disabled}
-                                   className='border rounded-lg p-2 w-[91%] mb-3 mt-2 mr-4 outline-none focus:border-gray-500' required/>
+                                   className='border rounded-lg p-2 w-[91%] mb-6 mt-2 mr-4 outline-none focus:border-gray-500' required/>
                             {statusCode === 404 &&
                                 <p className='bg-[#ffebe8] p-2 mb-3 rounded-md w-[91%] mr-auto ml-2 font-medium'>{responseLogin}</p>}
                             <input placeholder='Password' type='password' name='password' disabled={disabled}
@@ -109,12 +113,10 @@ const Login = ()=>{
                                 <p className='bg-[#ffebe8] p-2 mb-3 rounded-md w-[91%] mr-auto ml-2 font-medium'>{responseLogin}</p>}
                         </div>
                         <div className='flex justify-center'>
-                            <button disabled={disabled}>
-                                <Link to="./email-lookup" className="text-blue-600 hover:underline" >Forgot Password?</Link>
-                            </button>
+                                <button disabled={disabled} onClick={handlePasswordLookup} className="text-blue-600 hover:underline" >Forgot Password?</button>
                         </div>
                         <button disabled={disabled} className="w-[90%] bg-blue-600 rounded-lg my-4 ml-3 p-2 text-white flex justify-center">
-                            <Submit text={"Log in"}/>
+                            <Submit text={"Log in"} disabled={disabled}/>
                         </button>
                         <div className='flex justify-center'>
                             <p className='mr-1.5'>Don't have an account?</p>
@@ -131,8 +133,8 @@ const Login = ()=>{
                                 {/*<Link className='ml-16 text-white' to={"https:github.com/login/oauth/authorize?client_id="}>Login with GitHub</Link>*/}
                             </div>
                         </div>
-                        <div className='flex border p-2 rounded-lg mx-4  w-[90%] ml-3 cursor-pointer'>
-                            <GoogleOAuthProvider clientId={""}>
+                        <div className='flex  justify-center'>
+                            <GoogleOAuthProvider  clientId={""}>
                                 <GoogleLogin onSuccess={(credentialResponse)=>onSuccessHandler(credentialResponse)} onError={errorHandler}
                                 />
                             </GoogleOAuthProvider>
