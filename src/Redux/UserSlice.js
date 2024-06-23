@@ -7,7 +7,9 @@ const initialState = {
     credentials: true,
     usrEmail: null,
     firstPanel2: false,
-    secondPanel2: false
+    secondPanel2: false,
+    firstName: null,
+    lastName: null
     }
     const UserSlice = createSlice({
         name: 'userInfo',
@@ -33,9 +35,16 @@ const initialState = {
             }),
             setSecondPanel2: (state, action) =>({
                 ...state, secondPanel2: action.payload
+            }),
+            setFirstName: (state, action) =>({
+                ...state, firstName: action.payload
+            }),
+            setLastName: (state, action) =>({
+                ...state, lastName: action.payload
             })
+
     }
 })
 export default UserSlice.reducer
-export const { setUsrEmail, setLoading, setFirstPanel, setSecondPanel, setSecondPanel2, setCredentials, setFirstPanel2 }  = UserSlice.actions
+export const { setUsrEmail, setLoading, setFirstPanel, setSecondPanel, setSecondPanel2, setCredentials, setFirstPanel2, setFirstName, setLastName }  = UserSlice.actions
 
