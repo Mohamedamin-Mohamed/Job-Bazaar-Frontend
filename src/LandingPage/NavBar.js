@@ -41,7 +41,7 @@ const NavBar = ()=>{
     }
 
     return (
-        <div>
+        <div className="w-full">
             <div className="flex justify-between pb-4 border-b">
                 <ReactTyped className="mt-8 mx-16 font-bold text-[#00A264] text-4xl" strings={['Job Bazaar']}
                             typeSpeed={90}/>
