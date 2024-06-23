@@ -73,7 +73,6 @@ const Login = ()=>{
 
     const onSuccessHandler = (credentialResponse => {
         const decoded = jwtDecode(credentialResponse.credential);
-        console.log(decoded);
         navigate("/accounts")
     })
 
