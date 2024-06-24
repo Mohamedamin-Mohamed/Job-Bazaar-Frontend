@@ -4,9 +4,11 @@ import Signup from "./Authentication/Signup";
 import EmailLookup from "./Authentication/EmailLookup";
 import PasswordReset from "./Authentication/PasswordReset";
 import Home from "./LandingPage/Home";
-import Login2 from "./Authentication/Login";
 import CareerHub from "./Dashboard/CareerHub";
-import Profile from "./Dashboard/Profile";
+import Profile from "./Dashboard/Profile/Profile";
+import ReferralsRibbon from "./Dashboard/Referrals/ReferralsRibbon";
+import MyReferrals from "./Dashboard/Referrals/MyReferrals";
+import Refer from "./Dashboard/Referrals/Refer";
 
 const router = createBrowserRouter(
         createRoutesFromElements(
@@ -18,6 +20,8 @@ const router = createBrowserRouter(
                 <Route path="accounts/signup" element={<Signup />} />
                 <Route path="/careerhub" element={<CareerHub />} />
                 <Route path="/careerhub/profile" element={<Profile />} />
+                <Route path="/careerhub/myreferrals" element={<MyReferrals />} />
+                <Route path="/refer" element={<Refer />} />
             </Route>
 
         )
