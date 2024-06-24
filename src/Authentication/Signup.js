@@ -149,7 +149,7 @@ const Signup = ()=>{
                     </button>
                     <div className='flex justify-center'>
                         <p className='mr-1'>Already have an account?</p>
-                        <button className='text-blue-500 hover:underline' onClick={handleLogin}>Login</button>
+                        <button className='text-blue-500 hover:underline' disabled={disabled} onClick={handleLogin}>Login</button>
                     </div>
                     <div className='flex mt-2'>
                         <div className='border-b w-[40%]'></div>
