@@ -18,13 +18,13 @@ const Tasks = ()=>{
             </div>
             <div className="flex">
                 <IoIosArrowRoundForward size={25} color="green"/>
-                <p className="ml-4 mb-4 text-black font-semibold">Update your Profile</p>
+                <p className="ml-4 mb-4 text-black font-semibold hover:underline hover:cursor-pointer">Update your Profile</p>
             </div>
-            <div className="flex mx-6 mb-4">
-                <div className="w-[65px] h-[6px] bg-[#367c2b] rounded-md mr-1"></div>
-                <div className="w-[65px] h-[6px] bg-[#367c2b] rounded-md mr-1"></div>
-                <div className="w-[65px] h-[6px] bg-[#367c2b] rounded-md mr-1"></div>
-                <div className="w-[65px] h-[6px] bg-[#367c2b] rounded-md"></div>
+            <div className="flex  mb-4">
+                <div className="md:w-[300px] w-[65px] h-[6px] bg-[#367c2b] rounded-md mr-1"></div>
+                <div className="md:w-[300px] w-[65px] h-[6px] bg-[#367c2b] rounded-md mr-1"></div>
+                <div className="md:w-[300px] w-[65px] h-[6px] bg-[#367c2b] rounded-md mr-1"></div>
+                <div className="md:w-[300px] w-[65px] h-[6px] bg-[#367c2b] rounded-md"></div>
             </div>
             <div className="flex justify-between">
                 <div className="flex bg-[#fff89c] ">
@@ -36,11 +36,11 @@ const Tasks = ()=>{
 
             <div className="flex mt-4">
                 <IoIosArrowRoundForward size={25} color="green"/>
-                <p className="ml-4 mb-4 text-black font-semibold">Update your Career Interests</p>
+                <p className="ml-4 mb-4 text-black font-semibold hover:underline hover:cursor-pointer">Update your Career Interests</p>
             </div>
-            <div className="flex mb-4 ml-6">
-                <div className="w-[130px] h-[6px] bg-[#e6f0e1] rounded-md mr-2 border border-green-700"></div>
-                <div className="w-[127px] h-[6px] bg-[#e6f0e1] rounded-md mr-2 border  border-green-700"></div>
+            <div className="flex mb-4 ">
+                <div className="md:w-[500px] w-[130px] h-[6px] bg-[#e6f0e1] rounded-md mr-1 border border-green-700"></div>
+                <div className="md:w-[500px] w-[127px] h-[6px] bg-[#e6f0e1] rounded-md  border  border-green-700"></div>
             </div>
             <div className="flex justify-between">
                 <div className="flex bg-[#fff89c] p-0.5">
