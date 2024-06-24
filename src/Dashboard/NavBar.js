@@ -6,6 +6,7 @@ import { MdArrowDropDown } from "react-icons/md";
 import { IoMdArrowDropup } from "react-icons/io";
 import {useMediaQuery} from "react-responsive";
 import {setFirstName, setLastName, setUsrEmail} from "../Redux/UserSlice";
+import {clearLocationInfo, setLocationInfo} from "../Redux/LocationSlice";
 
 const NavBar = ()=>{
     const usrInfo = useSelector(state => state.userInfo);
@@ -21,6 +22,7 @@ const NavBar = ()=>{
     const handleLogout = ()=>{
         dispatch(setFirstName(''))
         dispatch(setLastName(''))
+        dispatch(clearLocationInfo())
         navigate('/')
     }
     const handleMenuGrid = ()=>{
@@ -53,8 +55,8 @@ const NavBar = ()=>{
                 {referrals && (
                     <div className="flex justify-center absolute left-1/2 transform -translate-x-1/2 w-full z-50 hover:cursor-pointer" onClick={handleReferrals}>
                     <nav className="flex flex-col mt-12 bg-white p-[12px] w-[220px] h-[94px] ml-72 border">
-                        <NavLink to='refer' className="p-1">Refer a friend</NavLink>
-                        <NavLink to='myreferrals' className="p-1">My Referrals</NavLink>
+                        <NavLink to='/refer' className="p-1">Refer a friend</NavLink>
+                        <NavLink to='/careerhub/myreferrals' className="p-1">My Referrals</NavLink>
                     </nav>
                     </div>
                 )}
@@ -69,8 +71,8 @@ const NavBar = ()=>{
                     )
                 }
                 <div className="flex hover:cursor-pointer text-white" onClick={ handleUserSettingDropDown }>
-                    <p className="bg-[#367c2b] rounded-3xl p-2 text-lg">{abbreviatedName}</p>
-                    { !userSettingDropDown ? <MdArrowDropDown size={28} color="black" className="mt-2"/> : <IoMdArrowDropup size={24} color="black" className="mt-2"/> }
+                    <div className="bg-[#367c2b] w-12 h-12 rounded-3xl text-center text-xl"><p className="text-center mt-2">{abbreviatedName}</p></div>
+                    { !userSettingDropDown ? <MdArrowDropDown size={30} color="black" className="mt-2"/> : <IoMdArrowDropup size={26} color="black" className="mt-2"/> }
                 </div>
                 {userSettingDropDown && (
                     <nav className="flex flex-col absolute right-0 mt-52 mr-4 w-[350px] h-[133px] border p-4 bg-white z-50">
