@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
-import AddressFetcher from "./AddressFetcher";
+import AddressFetcher from "../AddressFetcher";
 import {useSelector} from "react-redux";
 import ProfileRibbon from "./ProfileRibbon";
 import {NavLink, Route, useResolvedPath} from "react-router-dom";
-import NavBar from "./NavBar";
+import NavBar from "../NavBar";
 import Experience from "./Experience";
 import CareerInterests from "./CareerInterests";
 
