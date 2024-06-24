@@ -8,7 +8,7 @@ const ProfileRibbon = () =>{
     const fullName = usrInfo.firstName + ' ' + usrInfo.lastName
     return(
         <div>
-            <div className="relative mx-20 h-60 flex items-center justify-center overflow-hidden mt-0.5">
+            <div className="relative mx-10 h-60 flex items-center border-b justify-center overflow-hidden mt-0.5">
                 <div className="absolute inset-0 flex">
                     <div className="w-1/2 h-full bg-[#ffde00]" style={{clipPath: 'polygon(0 0, 100% 0, 0 100%'}}></div>
                     <div className="w-1/2 h-full bg-[#367c2b]"
