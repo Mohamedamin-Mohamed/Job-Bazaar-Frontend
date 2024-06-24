@@ -15,8 +15,13 @@ const LocationSlice = createSlice({
             state.city = city
             state.states = states
             state.country = country
+        },
+        clearLocationInfo : (state) =>{
+            state.city = ''
+            state.states = ''
+            state.country = ''
         }
     }
 })
 export default LocationSlice.reducer
-export const { setLocationInfo } = LocationSlice.actions
+export const { setLocationInfo, clearLocationInfo } = LocationSlice.actions
