@@ -1,9 +1,9 @@
 import NavBar from "./NavBar";
 import Hero from "./Hero";
 import {useSelector} from "react-redux";
+import {useEffect} from "react";
+import {useLocation} from "react-router-dom";
 const Home = ()=>{
-    const usr = useSelector(state => state.userInfo)
-
     return(
         <div>
             <NavBar/>
