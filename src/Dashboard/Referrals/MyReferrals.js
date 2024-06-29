@@ -10,7 +10,7 @@ const MyReferrals = ()=>{
     }
     return (
         <>
-            <ReferralsRibbon text={"My Referrals"} height={64}/>
+            <ReferralsRibbon text={"My Referrals"} height={60}/>
         <div className="flex flex-col justify-center items-center">
             <div className="w-[206px] h-[142px] flex justify-center mt-8">
                 <img src={Image} alt="" className="w-[90px] h-[150px]"/>
