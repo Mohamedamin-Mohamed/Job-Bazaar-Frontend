@@ -15,7 +15,7 @@ const Refer = () => {
     return (
         <>
             <ReferralsRibbon text={"Refer a Friend"} height={44}/>
-            <div className="flex justify-center items-center flex-col h-screen">
+            <div className="flex justify-center items-center flex-col h-screen mt-16">
                 <div
                     className="flex flex-col items-center bg-[#2c8cc90a] border border-dashed border-black w-[300px] h-[460px]">
                     <img src={Image} alt="" className="w-[72px] h-[52px] mt-2 mb-8"/>
@@ -33,10 +33,10 @@ const Refer = () => {
                     </button>
                 </div>
                 <div
-                    className="flex flex-col justify-center items-center mt-5 w-[600px] h-[100px] bg-[#2c8cc90a] border border-dashed border-black rounded-2xl">
-                    <div className="p-2">
+                    className="flex flex-col justify-center items-center mt-6 w-[440px] h-[90px] bg-[#2c8cc90a] border border-dashed border-black rounded-2xl ">
+                    <div className="p-1">
                         <h1 className="text-[#4f5666]">If you are an employee from Europe or Canada</h1>
-                        <div className="flex mt-4">
+                        <div className="flex mt-2">
                             <h1 className="text-[#367c2b] font-semibold text-2xl">Share link with your friends</h1>
                             <IoMdShareAlt color="gray" className="bg-white rounded ml-3 p-1 w-[44px] h-[36px] hover:cursor-pointer" onClick={handleLinksShow}/>
                         </div>
