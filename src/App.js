@@ -9,6 +9,7 @@ import Profile from "./Dashboard/Profile/Profile";
 import ReferralsRibbon from "./Dashboard/Referrals/ReferralsRibbon";
 import MyReferrals from "./Dashboard/Referrals/MyReferrals";
 import Refer from "./Dashboard/Referrals/Refer";
+import Feedback from "./Dashboard/Feedback";
 
 const router = createBrowserRouter(
         createRoutesFromElements(
@@ -19,9 +20,10 @@ const router = createBrowserRouter(
                 <Route path="accounts/login/password-reset" element={<PasswordReset />} />
                 <Route path="accounts/signup" element={<Signup />} />
                 <Route path="/careerhub" element={<CareerHub />} />
-                <Route path="/careerhub/profile" element={<Profile />} />
+                <Route path="careerhub/profile" element={<Profile />} />
                 <Route path="/careerhub/myreferrals" element={<MyReferrals />} />
                 <Route path="/refer" element={<Refer />} />
+                <Route path="/feedback/dashboard" element={<Feedback />} />
             </Route>
 
         )
