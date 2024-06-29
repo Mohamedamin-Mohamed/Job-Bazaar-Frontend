@@ -5,7 +5,6 @@ import {setCredentials, setFirstPanel, setLoading, setSecondPanel, setUsrEmail} 
 import {useDispatch, useSelector} from "react-redux";
 import {ClipLoader} from "react-spinners";
 import {MdOutlineDoNotDisturb} from "react-icons/md";
-import {IoClose} from "react-icons/io5";
 import EmailValidation from "./EmailValidation";
 const LoginPanel = ()=>{
     const usr = useSelector(state => state.userInfo)
