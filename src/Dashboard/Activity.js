@@ -19,7 +19,7 @@ const Activity = ()=>{
                 <p className="bg-[#cfd9cc] rounded-md px-1">0</p>
             </div>
             <div className="flex justify-center font-bold hover:underline hover:cursor-pointer">
-                <NavLink to='refer'>Refer a friend</NavLink>
+                <NavLink to='/refer'>Refer a friend</NavLink>
             </div>
         </div>
     )
