@@ -1,4 +1,4 @@
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import { IoLogoLinkedin } from "react-icons/io";
 import { FaFacebookSquare } from "react-icons/fa";
 import { RiTwitterXLine } from "react-icons/ri";
@@ -27,26 +27,26 @@ const ReferralsLinks = ({ handleLinksShow })=>{
         }
     }, [handleLinksShow]);
     return(
-        <div className="flex justify-center items-center top-3/4 ml-80 mt-4 absolute h-[238px] bg-white p-2 border ease-in-out " ref={ref}>
+        <div className="flex justify-center items-center top-2/4 ml-80 mt-32 w-[280px] absolute h-[238px] bg-white p-2 border ease-in-out " ref={ref}>
             <ToastContainer position="top-center" />
             <nav>
-                <div className="flex p-2 space-x-2 text-[#4f5666] h-10 mt-1.5 rounded border-2 border-black">
+                <div className="flex p-2 space-x-2 text-[#4f5666] h-10 mt-1.5 rounded border-2 border-black hover:cursor-pointer">
                     <IoLogoLinkedin size={25} />
                     <NavLink to="https://www.linkedin.com">Refer via LinkedIn</NavLink>
                 </div>
-                <div className="flex p-2.5 space-x-2 text-[#4f5666]">
+                <div className="flex p-2.5 space-x-2 text-[#4f5666] hover:cursor-pointer">
                     <FaFacebookSquare size={25} />
                     <NavLink to="https://www.facebook.com">Refer via Facebook</NavLink>
                 </div>
-                <div className="flex p-2.5 space-x-2 text-[#4f5666]">
+                <div className="flex p-2.5 space-x-2 text-[#4f5666] hover:cursor-pointer">
                     <RiTwitterXLine size={25} />
                     <NavLink to="https://www.x.com">Refer via X (Formerly Twitter) </NavLink>
                 </div>
-                <div className="flex p-2.5 space-x-2 text-[#4f5666]">
+                <div className="flex p-2.5 space-x-2 text-[#4f5666] hover:cursor-pointer">
                     <IoMail size={25} />
                     <NavLink to="mailto:">Refer via Email</NavLink>
                 </div>
-                <div className="flex p-2.5 space-x-2 text-[#4f5666]">
+                <div className="flex p-2.5 space-x-2 text-[#4f5666] hover:cursor-pointer">
                     <FaCopy size={25} />
                     <NavLink to="" onClick={handleCopy}>Copy Link</NavLink>
                 </div>
