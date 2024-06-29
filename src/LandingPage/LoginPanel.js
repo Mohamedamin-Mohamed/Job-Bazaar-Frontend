@@ -6,18 +6,28 @@ import {useDispatch, useSelector} from "react-redux";
 import {ClipLoader} from "react-spinners";
 import {MdOutlineDoNotDisturb} from "react-icons/md";
 import {IoClose} from "react-icons/io5";
-
+import EmailValidation from "./EmailValidation";
 const LoginPanel = ()=>{
     const usr = useSelector(state => state.userInfo)
     const dispatch = useDispatch()
     const[email, setEmail] = useState("")
+    const[emailValid, setEmailValid] = useState(true)
     const handleValidation = async ()=>{
         dispatch(setUsrEmail(email))
 
         if(email === '' || email === null ){
+            setEmailValid(true)
             setEmail(null)
             return
         }
+        else{
+            let valid = EmailValidation(email)
+            if(!valid){
+                setEmailValid(false)
+                return
+            }
+        }
+
         dispatch(setLoading(true))
 
         //make an email lookup, if the email is valid replace the LoginPanel with
@@ -31,8 +41,6 @@ const LoginPanel = ()=>{
                 dispatch(setCredentials(true))
                 dispatch(setFirstPanel(false))
                 dispatch(setSecondPanel(true))
-                dispatch(setUsrEmail(email))
-                console.log(email)
         }
             else{
                 dispatch(setCredentials(false))
@@ -64,8 +72,17 @@ const LoginPanel = ()=>{
                     <p className=" text-[#c13833] ml-[8px] text-sm mt-">Email is mandatory.</p>
                     </div>
                 )}
-                <button className="hover:bg-[#00a264] p-3 border border-gray-600 rounded-md font-medium mt-5" type="submit"
-                onClick={handleValidation}> {usr.loading ? <ClipLoader color="#36d7b7" /> : 'Continue with email'}</button>
+                {
+                    !emailValid && (
+                        <div className="flex mt-3">
+                            <MdOutlineDoNotDisturb size={20} color="red"/>
+                            <p className=" text-[#c13833] ml-[8px] text-sm mt-">Email is not valid.</p>
+                        </div>
+                    )
+                }
+                <button className="hover:bg-[#00a264] p-3 border border-gray-600 rounded-md font-medium mt-5"
+                        type="submit"
+                        onClick={handleValidation}> {usr.loading ? <ClipLoader color="#36d7b7" /> : 'Continue with email'}</button>
 
             </div>
         </>
