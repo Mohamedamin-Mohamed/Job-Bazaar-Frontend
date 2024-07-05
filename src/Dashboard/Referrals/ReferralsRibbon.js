@@ -1,7 +1,4 @@
-import {MdLocationOn} from "react-icons/md";
-import Image from '../../Images/referrals.png'
-import {useNavigate} from "react-router-dom";
-import NavBar from "../NavBar";
+import NavBar from "../Careerhub/NavBar";
 const ReferralsRibbon = ({ text, height })=>{
     return(
         <>

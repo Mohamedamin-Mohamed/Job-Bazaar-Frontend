@@ -3,7 +3,7 @@ import {Link, NavLink, Outlet, useNavigate} from 'react-router-dom'
 import { FaGithub } from "react-icons/fa"
 import { IoClose } from "react-icons/io5"
 import {useSelector, useDispatch} from "react-redux"
-import {setLoading, setUsrEmail} from "../Redux/UserSlice"
+import {setFirstName, setLastName, setLoading, setUsrEmail} from "../Redux/UserSlice"
 import React, { useState } from "react"
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -48,9 +48,13 @@ const Login = ()=>{
         const data = await response.text()
         if(response.ok){
             setDisabled(true)
+            const response = await fetch(`http://localhost:8080/api/person/${usr.usrEmail}`);
+            const names = await response.json();
             toast.success(data, {
                 onClose: ()=>{
                     dispatch(setUsrEmail(requestBody.email))
+                    dispatch(setFirstName(names.firstName))
+                    dispatch(setLastName(names.lastName))
                     navigate("/careerhub")
                 }
             })
@@ -97,50 +101,58 @@ const Login = ()=>{
             <div className= {`${statusCode !== null ? "h-[600px]" : "h-[540px]"} border rounded-lg w-[400px] bg-white`}>
                 <IoClose size={30}  className='ml-auto hover:cursor-pointer hover:scale-110 mt-2 mr-2 hover:rounded-lg hover:border' onClick={ handleClose }/>
                 <ToastContainer position={"top-center"}/>
-                <div className= 'ml-4 flex-col'>
-                    <form onSubmit={(event)=>handleSubmit(event)}>
+                <div className='ml-4 flex-col'>
+                    <form onSubmit={(event) => handleSubmit(event)}>
                         <h1 className='text-center font-bold text-xl my-2'>Login</h1>
                         <div className='flex items-center flex-col'>
                             <input placeholder='Email' type='email' name='email' disabled={disabled}
-                                   className='border rounded-lg p-2 w-[91%] mb-6 mt-2 mr-4 outline-none focus:border-gray-500' required/>
+                                   className='border rounded-lg p-2 w-[91%] mb-6 mt-2 mr-4 outline-none focus:border-gray-500'
+                                   required/>
                             {statusCode === 404 &&
                                 <p className='bg-[#ffebe8] p-2 mb-3 rounded-md w-[91%] mr-auto ml-2 font-medium'>{responseLogin}</p>}
                             <input placeholder='Password' type='password' name='password' disabled={disabled}
-                                   className='border rounded-lg p-2 w-[91%] mb-4 mr-4 outline-none focus:border-gray-500' required/>
+                                   className='border rounded-lg p-2 w-[91%] mb-4 mr-4 outline-none focus:border-gray-500'
+                                   required/>
 
                             {statusCode === 401 &&
                                 <p className='bg-[#ffebe8] p-2 mb-3 rounded-md w-[91%] mr-auto ml-2 font-medium'>{responseLogin}</p>}
                         </div>
-                        <div className='flex justify-center'>
-                                <button disabled={disabled} onClick={handlePasswordLookup} className="text-blue-600 hover:underline" >Forgot Password?</button>
-                        </div>
-                        <button disabled={disabled} className="w-[90%] bg-blue-600 rounded-lg my-4 ml-3 p-2 text-white flex justify-center">
+                        <button disabled={disabled}
+                                className="w-[90%] bg-blue-600 rounded-lg my-4 ml-3 p-2 text-white flex justify-center">
                             <Submit text={"Log in"} disabled={disabled}/>
                         </button>
-                        <div className='flex justify-center'>
-                            <p className='mr-1.5'>Don't have an account?</p>
-                            <button disabled={disabled} className='text-blue-600 hover:underline' onClick={ handleSignup }>Signup</button>
-                        </div>
-                        <div className='flex mt-2'>
-                            <div className='border-b w-[40%]'></div>
-                            <p>Or</p>
-                            <div className='border-b w-[40%]'></div>
-                        </div>
-                        <div className='flex'>
-                            <div className= 'flex border rounded-lg p-2 mx-4 my-6 w-[90%] ml-3 bg-blue-500 cursor-pointer'>
-                                <FaGithub size={30} />
-                                {/*<Link className='ml-16 text-white' to={"https:github.com/login/oauth/authorize?client_id="}>Login with GitHub</Link>*/}
-                            </div>
-                        </div>
-                        <div className='flex  justify-center'>
-                            <GoogleOAuthProvider  clientId={""}>
-                                <GoogleLogin onSuccess={(credentialResponse)=>onSuccessHandler(credentialResponse)} onError={errorHandler}
-                                />
-                            </GoogleOAuthProvider>
-                        </div>
                     </form>
+                    <div className='flex justify-center'>
+                        <button disabled={disabled} onClick={handlePasswordLookup}
+                                className="text-blue-600 mb-1 hover:underline">Forgot Password?
+                        </button>
+                    </div>
+                    <div className='flex justify-center'>
+                        <p className='mr-1.5'>Don't have an account?</p>
+                        <button disabled={disabled} className='text-blue-600 hover:underline'
+                                onClick={handleSignup}>Signup
+                        </button>
+                    </div>
+                    <div className='flex mt-2'>
+                        <div className='border-b w-[40%]'></div>
+                        <p>Or</p>
+                        <div className='border-b w-[40%]'></div>
+                    </div>
+                    <div className='flex'>
+                        <div className='flex border rounded-lg p-2 mx-4 my-6 w-[90%] ml-3 bg-blue-500 cursor-pointer'>
+                            <FaGithub size={30}/>
+                            {/*<Link className='ml-16 text-white' to={"https:github.com/login/oauth/authorize?client_id="}>Login with GitHub</Link>*/}
+                        </div>
+                    </div>
+                    <div className='flex  justify-center'>
+                        <GoogleOAuthProvider clientId={""}>
+                            <GoogleLogin onSuccess={(credentialResponse) => onSuccessHandler(credentialResponse)}
+                                         onError={errorHandler}
+                            />
+                        </GoogleOAuthProvider>
+                    </div>
                 </div>
-                <Outlet />
+                <Outlet/>
             </div>
         </div>
     )

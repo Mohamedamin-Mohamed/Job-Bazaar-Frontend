@@ -9,18 +9,19 @@ import {useMediaQuery} from "react-responsive";
 const CareerHub = () => {
     const isMediumScreen = useMediaQuery({minWidth: 998}); // Set the breakpoint for md screens
     const smallScreen = useMediaQuery({minWidth: 200})
+
     return (
         <>
-            <NavBar/>
+            <NavBar />
             <Ribbon/>
-            <div className={`flex ${isMediumScreen ? "gap-x-6" : "flex-col gap-y-6"} mt-6`}>
+            <div className={`flex ${isMediumScreen ? "gap-x-6" : "flex-col gap-y-6"} justify-center mt-6`}>
                 {isMediumScreen ? (
                     <>
                         <div className="flex flex-col">
                             <Tasks/>
                             <Activity/>
                         </div>
-                        <div className="flex flex-col xl:w-[950px]">
+                        <div className="flex flex-col">
                             <Interests/>
                                 <Explore/>
                         </div>
@@ -28,8 +29,10 @@ const CareerHub = () => {
                 ) : (
                     <>
                         <div className={"flex flex-col justify-center items-center"}>
-                            <Interests/>
-                            <Explore/>
+                            <div className="mx-4">
+                                <Interests/>
+                            </div>
+                                <Explore/>
                         </div>
                         <div className="flex flex-col justify-center items-center">
                             <Tasks/>

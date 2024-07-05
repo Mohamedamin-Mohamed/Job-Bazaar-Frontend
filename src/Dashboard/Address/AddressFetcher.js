@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import {useDispatch} from "react-redux";
-import {setLocationInfo} from "../Redux/LocationSlice";
+import {setLocationInfo} from "../../Redux/LocationSlice";
 
 const AddressFetcher = ({latitude, longitude, onError}) => {
     const dispatch = useDispatch()
@@ -11,9 +11,9 @@ const AddressFetcher = ({latitude, longitude, onError}) => {
                 const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}
                &lon=${longitude}`);
                 const data = await response.json()
-
+                console.log(data)
                 let address = {
-                    city: data.address.city || data.address.town || data.address.village,
+                    city: data.address.city || data.address.village || data.address.town,
                     states: data.address.state,
                     country: data.address.country
                 }

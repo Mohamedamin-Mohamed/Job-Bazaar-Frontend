@@ -9,11 +9,14 @@ import {useMediaQuery} from "react-responsive";
 const Explore = ()=>{
     const[arrowShow, setArrowShow] = useState(false)
     const navigate = useNavigate()
-    const handleExplore = ()=>{
+    const handleExplore = (text)=>{
+        if(text === 'jobs')
         navigate('explore/jobs')
+        else
+            navigate('explore/projects')
     }
     return(
-        <div className="flex flex-col md:flex-row w-[100%]">
+        <div className="flex flex-col md:flex-row w-full ml-8">
         <div className={` ${arrowShow ? "h-[94px]" : "h-[440px]"} border p-6 mr-8 mt-10 `}>
             <div className="border-b pb-4">
                 <div className="flex">
@@ -44,7 +47,7 @@ const Explore = ()=>{
                             <div className="w-[130px] h-[26px] border px-1 mx-2 bg-white text-[#9b9b9b] font-medium text-sm"><p>Electrical Engi...</p></div>
                             <div className="w-[130px] h-[26px] border px-1 bg-white text-[#9b9b9b] font-medium text-sm"><p>Software Engi..</p></div>
                         </div>
-                        <button className="bg-white w-[100%] mt-5 p-2 text-[#9b9b9b]" onClick={handleExplore}>Explore Jobs</button>
+                        <button className="bg-white w-[100%] mt-5 p-2 text-[#9b9b9b]" onClick={()=>handleExplore('jobs')}>Explore Jobs</button>
                     </div>
                     <div className="bg-[#cacffc] mt-8  border w-full md:w-[400px] h-[288px] p-6">
                         <div className="flex">
@@ -56,7 +59,7 @@ const Explore = ()=>{
                             <p className="text-sm text-[#2b3271]">Recommended for you</p>
                             <h1 className="font-medium text-lg text-[#2b3271]">Project Marketplace Onboarding</h1>
                         </div>
-                        <button className="bg-white w-[100%] mt-20 p-2 text-[#9b9b9b]">Explore Projects</button>
+                        <button className="bg-white w-[100%] mt-20 p-2 text-[#9b9b9b]" onClick={()=> handleExplore('projects')}>Explore Projects</button>
                     </div>
                 </div>
             )}
