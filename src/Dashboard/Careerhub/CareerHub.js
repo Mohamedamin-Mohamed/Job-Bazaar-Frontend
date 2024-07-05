@@ -14,14 +14,14 @@ const CareerHub = () => {
         <>
             <NavBar />
             <Ribbon/>
-            <div className={`flex ${isMediumScreen ? "gap-x-6" : "flex-col gap-y-6"} mt-6`}>
+            <div className={`flex ${isMediumScreen ? "gap-x-6" : "flex-col gap-y-6"} justify-center mt-6`}>
                 {isMediumScreen ? (
                     <>
                         <div className="flex flex-col">
                             <Tasks/>
                             <Activity/>
                         </div>
-                        <div className="flex flex-col xl:w-[950px]">
+                        <div className="flex flex-col">
                             <Interests/>
                                 <Explore/>
                         </div>
@@ -29,8 +29,10 @@ const CareerHub = () => {
                 ) : (
                     <>
                         <div className={"flex flex-col justify-center items-center"}>
-                            <Interests/>
-                            <Explore/>
+                            <div className="mx-4">
+                                <Interests/>
+                            </div>
+                                <Explore/>
                         </div>
                         <div className="flex flex-col justify-center items-center">
                             <Tasks/>

@@ -15,6 +15,8 @@ const Feedback = () => {
     const ref = useRef(null)
     const [dateRangeShow, setDateRangeShow] = useState(true);
     const [navLinksShow, setNavLinksShow] = useState({pending: true, completed: false, archived: false})
+    const [positions, setPositions] = useState(false)
+
     const handleCalendar = () => {
         setCalendarShow(!calendarShow)
     }
@@ -52,12 +54,19 @@ const Feedback = () => {
             <NavBar/>
             <div className="ml-8">
                 <h1 className="text-3xl font-semibold ">Feedback Center</h1>
-                <div className="flex lg:w-[207px] w-full flex-col">
+                <div className="flex md:w-[207px] w-full flex-col">
                     <div className="flex mx-5 cursor-pointer" onClick={() => setDateRangeShow(!dateRangeShow)}>
-                        <button className={`font-medium ${dateRangeShow ? "mb-2" : ""} mt-3`}>Data Range</button>
+                        <h1 className={`flex font-medium ${dateRangeShow ? "mb-2" : ""} mt-3`}>Data Range</h1>
                         {
-                            !dateRangeShow ? <IoIosArrowForward size={20} color="gray" className={`mt-4`}/> :
-                                <IoIosArrowDown size={20} color="gray" className="ml-auto mt-4 lg:mr-2"/>
+                            !dateRangeShow ?
+                                <div className="ml-auto md:ml-48">
+                                    <IoIosArrowForward size={20} color="gray" className={`mt-4 ml-auto`}/>
+                                </div>
+                                :
+                                <div className="ml-auto md:ml-48">
+                                    <IoIosArrowDown size={20} color="gray" className="ml-auto mt-4 lg:mr-2"/>
+                                </div>
+
                         }
                     </div>
                     {dateRangeShow && (
@@ -84,7 +93,7 @@ const Feedback = () => {
                             </div>
                         </div>
                     )}
-                    <div className={`${calendarShow ? "mt-4" : "mt-3"} text-lg mr-4 text-[#4f5666] w-full md:[w-350px]`}>
+                    <div className={`${calendarShow ? "mt-4" : "mt-3"} text-lg mr-4 text-[#4f5666] w-full md:[w-350px] pb-2`}>
                         <div onClick={() => handleLinksClick("pending")}
                              className={`${navLinksShow.pending ? "flex p-2 bg-[#feffe6] cursor-pointer text-[#20571a] md:w-[280px] mr-4" :
                                  "flex p-2 hover:bg-[#feffe6] cursor-pointer hover:text-[#20571a] md:w-[280px] mr-4"}`}>
@@ -94,7 +103,8 @@ const Feedback = () => {
                         <div onClick={() => handleLinksClick("completed")}
                              className={`${navLinksShow.completed ? "flex p-2 bg-[#feffe6] cursor-pointer text-[#20571a] md:w-[280px] mr-4" :
                                  "flex p-2 hover:bg-[#feffe6] cursor-pointer hover:text-[#20571a] md:w-[280px] mr-4"}`}>
-                            <h1>Completed Feedback</h1>
+                            <h1 className={`${navLinksShow.completed ? "text-[#20571a]" :
+                                "hover:text-[#20571a]"}`}>Completed Feedback</h1>
                             <p className="ml-auto">0</p>
                         </div>
                         <div onClick={() => handleLinksClick("archived")}
@@ -104,6 +114,26 @@ const Feedback = () => {
                             <p className="ml-auto">0</p>
                         </div>
                     </div>
+                    <div className="flex mr-6 pt-4" onClick={()=> setPositions(!positions)}>
+                        <h1 className= {`font-medium ${positions ? "mb-2" : ""} mt-3`}>Positions/Communities</h1>
+                        {
+                            !positions ?
+                                <div className="ml-auto md:ml-20">
+                                    <IoIosArrowForward size={20} color="gray" className={`mt-4`}/>
+                                </div>
+                                 :
+                                <div className="ml-auto md:ml-20">
+                                <IoIosArrowDown size={20} color="gray" className="mt-4 lg:mr-2"/>
+                                </div>
+                        }
+                        <div>
+                            {positions && (
+                                <div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
                 </div>
 
             </div>

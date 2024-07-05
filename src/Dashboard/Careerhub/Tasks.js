@@ -7,7 +7,7 @@ const Tasks = ()=>{
     const isMediumScreen = useMediaQuery({minWidth: 998}); // Set the breakpoint for md screens
 
     return(
-        <div className={`"flex h-screen flex-col text-[#367c2b] mt-10 border ${!isMediumScreen ? "w-[88%] mx-12 p-4" : "flex w-[345px] ml-28 p-4"} h-[275px] "`}>
+        <div className={`"flex h-screen flex-col text-[#367c2b] mt-10 border ${!isMediumScreen ? "w-[88%] mx-12 p-4" : "flex w-[345px] p-4"} h-[260px] "`}>
             <div className="flex justify-between mb-4">
                 <div className="flex">
                     <h1 className="mr-2 text-black font-bold">My Tasks </h1>

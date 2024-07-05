@@ -13,7 +13,7 @@ const AddressFetcher = ({latitude, longitude, onError}) => {
                 const data = await response.json()
                 console.log(data)
                 let address = {
-                    city: data.address.city,
+                    city: data.address.city || data.address.village || data.address.town,
                     states: data.address.state,
                     country: data.address.country
                 }
