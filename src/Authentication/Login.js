@@ -3,7 +3,7 @@ import {Link, NavLink, Outlet, useNavigate} from 'react-router-dom'
 import { FaGithub } from "react-icons/fa"
 import { IoClose } from "react-icons/io5"
 import {useSelector, useDispatch} from "react-redux"
-import {setLoading, setUsrEmail} from "../Redux/UserSlice"
+import {setFirstName, setLastName, setLoading, setUsrEmail} from "../Redux/UserSlice"
 import React, { useState } from "react"
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -48,9 +48,13 @@ const Login = ()=>{
         const data = await response.text()
         if(response.ok){
             setDisabled(true)
+            const response = await fetch(`http://localhost:8080/api/person/${usr.usrEmail}`);
+            const names = await response.json();
             toast.success(data, {
                 onClose: ()=>{
                     dispatch(setUsrEmail(requestBody.email))
+                    dispatch(setFirstName(names.firstName))
+                    dispatch(setLastName(names.lastName))
                     navigate("/careerhub")
                 }
             })
