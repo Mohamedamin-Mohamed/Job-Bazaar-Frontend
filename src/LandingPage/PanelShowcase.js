@@ -87,7 +87,8 @@ const PanelShowcase = ()=>{
             else{
                 toast.error(data, {
                     onClose: ()=>{
-                        window.location.reload()
+                        dispatch(setSecondPanel(false))
+                        dispatch(setFirstPanel(true))
                     }
                 })
             }
