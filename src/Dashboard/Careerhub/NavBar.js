@@ -5,8 +5,8 @@ import {useState} from "react";
 import {MdArrowDropDown} from "react-icons/md";
 import {IoMdArrowDropup} from "react-icons/io";
 import {useMediaQuery} from "react-responsive";
-import {setFirstName, setFirstPanel, setLastName, setSecondPanel, setUsrEmail} from "../Redux/UserSlice";
-import {clearLocationInfo, setLocationInfo} from "../Redux/LocationSlice";
+import {setFirstName, setFirstPanel, setLastName, setSecondPanel, setUsrEmail} from "../../Redux/UserSlice";
+import {clearLocationInfo, setLocationInfo} from "../../Redux/LocationSlice";
 
 const NavBar = () => {
     const usrInfo = useSelector(state => state.userInfo);
