@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import {useDispatch} from "react-redux";
-import {setLocationInfo} from "../Redux/LocationSlice";
+import {setLocationInfo} from "../../Redux/LocationSlice";
 
 const AddressFetcher = ({latitude, longitude, onError}) => {
     const dispatch = useDispatch()
