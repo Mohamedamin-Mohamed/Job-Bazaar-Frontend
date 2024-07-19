@@ -1,4 +1,4 @@
-const Save = async (postRequest) => {
+const SaveEducation = async (postRequest) => {
 
     return await fetch('http://localhost:8080/api/user-education/save', {
         method: 'post',
@@ -8,4 +8,4 @@ const Save = async (postRequest) => {
         body: JSON.stringify(postRequest),
     })
 }
-export default Save
+export default SaveEducation
