@@ -1,6 +1,6 @@
 import Image from "../../../../Images/education.svg";
 
-const Education = ()=>{
+const Studies = ()=>{
     return (
         <div className="flex flex-col h-[230px] border p-3 my-4">
             <div className="flex w-[350px] ">
@@ -14,4 +14,4 @@ const Education = ()=>{
         </div>
     )
 }
-export default Education
+export default Studies
