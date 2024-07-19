@@ -8,7 +8,7 @@ const JobAlerts = ()=>{
     }
     return(
           <div className="flex justify-center items-center mt-8">
-              <div className="flex flex-col justify-center pl-4 md:w-[840px] w-[450px] h-[460px] border mb-10">
+              <div className="flex flex-col justify-center pl-4 md:w-[840px] mx-2 w-[450px] h-[460px] border mb-10">
                   <div className="flex ml-2">
                       <IoIosSearch size={20} color="gray" className="mt-1.5"/>
                       <h1 className="font-semibold text-xl ml-2">Job alerts you created</h1>
