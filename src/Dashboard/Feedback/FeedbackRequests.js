@@ -2,7 +2,7 @@ import { IoIosSearch } from "react-icons/io"
 import Chat from '../../Images/empty_self_chat.svg'
 const FeedbackRequests = ()=>{
     return(
-        <div className="flex flex-col md:w-[800px] mr-4">
+        <div className="flex flex-col mr-4">
             <div className="flex w-full md: mt-4 border border-[#1a212e] p-2 mr-6">
                 <IoIosSearch size={20} color="gray"/>
                 <input placeholder="Search Candidate, Interview/Interaction, Feedback..." className="outline-none w-full ml-2"/>
