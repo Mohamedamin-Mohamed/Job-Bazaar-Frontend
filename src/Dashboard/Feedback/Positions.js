@@ -33,10 +33,9 @@ const Positions = () => {
     }, [setSelected]);
     console.log('select is ', selected)
     return (
-        <div>
             <div className="ml-2 ">
 
-                <div className="flex md:w-[207px] w-full border-t flex-col">
+                <div className="flex md:w-[207px] w-full border-t flex-col cursor-pointer">
 
                     <div className="flex mr-6 pt-4" onClick={() => handleClick()}>
                         <h1 className={`font-medium ${positions ? "mb-2" : ""} mt-3`}>Positions/Communities</h1>
@@ -77,7 +76,6 @@ const Positions = () => {
                             </div>
 
             </div>
-        </div>
     )
 }
 export default Positions

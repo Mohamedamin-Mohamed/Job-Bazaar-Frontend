@@ -47,7 +47,7 @@ const DateRange = () => {
     }
     return (
         <div>
-            <div className="flex cursor-pointer" onClick={() => setDateRangeShow(!dateRangeShow)}>
+            <div className="flex justify-center items-center cursor-pointer" onClick={() => setDateRangeShow(!dateRangeShow)}>
                 <h1 className={`flex font-medium ${dateRangeShow ? "mb-2" : ""} ml-3 mt-3`}>Data Range</h1>
                 {
                     !dateRangeShow ?
@@ -64,15 +64,15 @@ const DateRange = () => {
             {
                 dateRangeShow && (
                     <div>
-                        <div className="flex text-gray border w-[280px] p-1.5">
+                        <div className="flex text-gray border w-[280px] p-1.5 ">
                             <input placeholder="Start date" value={getFormattedDate(startDate)}
-                                   className="w-[100px] h-[24px] outline-none focus:border-b-2 focus:border-[#367c2b] pb-1"
+                                   className="w-[100px] h-[24px] outline-none focus:border-b-2 focus:border-[#367c2b] pb-1 cursor-pointer"
                                    onClick={handleCalendarShow}/>
                             <MdArrowRightAlt size={24} color="gray" className="ml-auto mr-2"/>
                             <input placeholder="End date" value={getFormattedDate(endDate)}
-                                   className="w-[100px] h-[24px] outline-none focus:border-b-2 focus:border-[#367c2b] pb-1 ml-2"
+                                   className="w-[100px] h-[24px] outline-none focus:border-b-2 focus:border-[#367c2b] pb-1 ml-2 cursor-pointer"
                                    onClick={handleCalendarShow}/>
-                            <BsCalendar4 size={14} color="gray" className="ml-auto mr-1 mt-1"/>
+                            <BsCalendar4 size={14} color="gray" className="ml-auto mr-1 mt-1 cursor-pointer"/>
                         </div>
                     </div>
                 )
@@ -91,9 +91,9 @@ const DateRange = () => {
                     </div>
                 )
             }
-            <div className={`${calendarShow ? "mt-4" : "mt-3"} text-lg mr-4 text-[#4f5666] w-full md:[w-350px] pb-2`}>
+            <div className={`${calendarShow ? "mt-4" : "mt-3"}flex justify-center items-center text-lg mr-4 text-[#4f5666] w-full md:[w-350px] pb-2`}>
                 <div onClick={() => handleLinksClick("pending")}
-                     className={`${navLinksShow.pending ? "flex p-2 bg-[#feffe6] cursor-pointer text-[#20571a] md:w-[280px] mr-4" :
+                     className={`${navLinksShow.pending ? "flex justify-center items-center p-2 bg-[#feffe6] cursor-pointer text-[#20571a] md:w-[280px] mr-4" :
                          "flex p-2 hover:bg-[#feffe6] cursor-pointer hover:text-[#20571a] md:w-[280px] mr-4"}`}>
                     <h1>Pending Feedback</h1>
                     <p className="ml-auto">0</p>
