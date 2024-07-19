@@ -32,7 +32,7 @@ const CareerHub = () => {
                             <div className="mx-4">
                                 <Interests/>
                             </div>
-                                <Explore/>
+                                <Explore />
                         </div>
                         <div className="flex flex-col justify-center items-center">
                             <Tasks/>
