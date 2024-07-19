@@ -27,7 +27,7 @@ const ReferralsLinks = ({ handleLinksShow })=>{
         }
     }, [handleLinksShow]);
     return(
-        <div className="flex justify-center items-center top-2/4 ml-80 mt-32 w-[280px] absolute h-[238px] bg-white p-2 border ease-in-out " ref={ref}>
+        <div className="flex justify-center items-center top-2/4 md:ml-80 md:mt-32 mt-[120px] ml-[72px] w-[280px] absolute h-[238px] bg-white p-2 border ease-in-out " ref={ref}>
             <ToastContainer position="top-center" />
             <nav>
                 <div className="flex p-2 space-x-2 text-[#4f5666] h-10 mt-1.5 rounded border-2 border-black hover:cursor-pointer">
