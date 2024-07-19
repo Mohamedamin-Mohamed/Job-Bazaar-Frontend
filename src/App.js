@@ -12,29 +12,34 @@ import Feedback from "./Dashboard/Feedback/Feedback";
 import NotFound from "./NotFound/NotFound";
 import NotFound2 from "./NotFound/NotFound2";
 import Settings from "./Dashboard/Settings/Settings";
+import CareerInterests from "./Dashboard/Profile/CareerInterests";
+import Experience from "./Dashboard/Profile/Experience/Experience";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route>
-            <Route path="/" element={<Home/>}/>
+            <Route path="/" element={<Home/>} />
             <Route path="accounts">
-                <Route path="login" element={<Login/>}/>
-                <Route path="login/email-lookup" element={<EmailLookup/>}/>
-                <Route path="login/password-reset" element={<PasswordReset/>}/>
-                <Route path="signup" element={<Signup/>}/>
+                <Route path="login" element={<Login/>} />
+                <Route path="login/email-lookup" element={<EmailLookup/>} />
+                <Route path="login/password-reset" element={<PasswordReset/>} />
+                <Route path="signup" element={<Signup/>} />
             </Route>
             <Route path="careerhub">
-                <Route index element={<CareerHub/>}/>
-                <Route path="profile" element={<Profile/>}/>
+                <Route index element={<CareerHub/>} />
+                <Route path="profile" element={<Profile/>}>
+                    <Route path="career" element={<CareerInterests/>} />
+                    <Route path="experience" element={<Experience/>} />
+                </Route>
                 <Route path="myreferrals" element={<MyReferrals/>}/>
                 <Route path="settings" element={<Settings />} />
             </Route>
-            <Route path="refer" element={<Refer/>}/>
+            <Route path="refer" element={<Refer/>} />
             <Route path="feedback">
-                <Route path="dashboard" element={<Feedback/>}/>
-                <Route path="*" element={<NotFound/>}/>
+                <Route path="dashboard" element={<Feedback/>} />
+                <Route path="*" element={<NotFound/>} />
             </Route>
-            <Route path="*" element={<NotFound2/>}/>
+            <Route path="*" element={<NotFound2/>} />
         </Route>
     )
 )
