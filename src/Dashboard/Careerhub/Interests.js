@@ -6,7 +6,7 @@ const Interests = ()=>{
         navigate('/careerhub/profile/career')
     }
     return(
-        <div className="flex justify-self-center items-center h-[160px] bg-[#f7f7f7] mt-10">
+        <div className="flex md:flex-row flex-col justify-self-center items-center h-[200px] bg-[#f7f7f7] mt-10">
             <div className="flex flex-col p-6">
                 <h1 className="mb-4 font-medium md:text-xl">Take 15 mins to set your career interests</h1>
                 <p className="md:w-[80%] text-sm md:text-lg">Tell us what you want to achieve in your career, and we'll put a plan together for you.</p>
