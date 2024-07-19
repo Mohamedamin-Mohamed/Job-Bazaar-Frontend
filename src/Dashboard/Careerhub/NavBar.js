@@ -47,7 +47,7 @@ const NavBar = () => {
             <NavLink to="/careerhub" className="text-3xl ml-16 text-[#367c2b] font-bold">Job Bazaar</NavLink>
             <nav className={`${isMediumScreen ? "flex space-x-5" : "hidden"}`}>
                 <NavLink to='/careerhub' className="hover:text-[#367c2b] font-medium">Home</NavLink>
-                <NavLink to='/career/profile/career' className="hover:text-[#367c2b] font-medium">Career Interests</NavLink>
+                <NavLink to='/careerhub/profile/career' className="hover:text-[#367c2b] font-medium">Career Interests</NavLink>
                 <NavLink to='/careerhub/profile' className="hover:text-[#367c2b] font-medium">My Profile</NavLink>
                 <NavLink to='/careerhub/explore/jobs' className="hover:text-[#367c2b] font-medium">Jobs</NavLink>
                 <div className="flex hover:cursor-pointer" onClick={handleReferrals}>
