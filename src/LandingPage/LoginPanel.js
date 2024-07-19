@@ -64,7 +64,7 @@ const LoginPanel = ()=>{
                 <p className="mt-4 mb-2 text-[#00060c] font-medium">Enter Email</p>
 
                 <input value={email} required type="email" onChange={(e)=> setEmail(e.target.value)}
-                       className={`w-[350px] border p-2 outline-none ${email === null ? 'bg-[#fff1f0] border-[#c13833]' : 'border-gray-600'} rounded-md outline-none`}/>
+                       className={`w-[350px] border p-2 outline-none ${email === null || !emailValid ? 'bg-[#fff1f0] border-[#c13833]' : 'border-gray-600'} rounded-md outline-none`}/>
                 {email === null && (
                     <div className="flex mt-3">
                     <MdOutlineDoNotDisturb size={20} color="red"/>
