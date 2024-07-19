@@ -7,7 +7,7 @@ const Companies = ({setCompanies})=>{
             <div className="border-l border-b w-[28%] h-[245px] pl-4 pt-4">
                 <p className="font-medium">Read millions of reviews</p>
                 <p className="w-[80%]">Read anonymous reviews on over 600,000 companies worldwide from the people that work there.</p>
-                <button className="border border-gray-500 mt-8  ml-10 p-2.5 rounded-md hover:bg-blue-600" onClick={()=> navigate('/accounts/login')}>Start using Job Bazaar</button>
+                <button className="border border-gray-500 mt-8  ml-10 p-2.5 rounded-md hover:bg-[#00A264]" onClick={()=> navigate('/accounts/login')}>Start using Job Bazaar</button>
             </div>
             <div className="border-r border-b h-[245px]">
                 <img src={CommunityImage} alt="" className="mr-4"/>
