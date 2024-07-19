@@ -17,10 +17,7 @@ import Explore from "../Careerhub/Explore";
 import {useMediaQuery} from "react-responsive";
 
 const Feedback = () => {
-
-    const [positions, setPositions] = useState(false)
     const isMediumScreen = useMediaQuery({minWidth: 900}); // Set the breakpoint for md screens
-
 
     return (
 
@@ -31,22 +28,24 @@ const Feedback = () => {
                     className={`flex ${isMediumScreen ? "gap-x-6" : "flex-col gap-y-6"} justify-center items-center mt-6`}>
                     {isMediumScreen ? (
                         <>
-                            <div className="flex flex-col ml-20">
+                            <div className="flex flex-col justify-center items-center ml-20">
+                                <div>
                                 <h1 className="text-3xl font-semibold ml-2 mb-6">Feedback Center</h1>
                                 <DateRange/>
                                 <Positions/>
+                                </div>
                             </div>
-                            <div className="border mt-36 p-3">
+                            <div className="border mt-36 p-3 mr-24">
                             <FeedbackRequests/>
                             </div>
                         </>
                     ) : (
                         <>
                             <div className={"flex flex-col"}>
-                                <h1 className="text-3xl font-semibold ml-2">Feedback Center</h1>
-                                <DateRange/>
-                                <Positions/>
-                                <FeedbackRequests/>
+                                    <h1 className="text-3xl font-semibold ml-2">Feedback Center</h1>
+                                    <DateRange/>
+                                    <Positions/>
+                                    <FeedbackRequests/>
                             </div>
                         </>
                     )}
