@@ -36,7 +36,7 @@ const Activity = ()=>{
     return(
         <div className="flex justify-center items-center mt-8">
             <ToastContainer position="top-center" />
-        <div className="flex flex-col justify-center pl-4 md:w-[840px] w-[450px] h-[250px] border">
+        <div className="flex flex-col justify-center mx-2 pl-4 md:w-[840px] w-[450px] h-[300px] border">
             <div className="flex space-x-2">
                 <LuTimerReset size={20} color="gray" className="mt-2"/>
                 <h1 className="font-semibold text-lg">Activity based personalization settings</h1>
@@ -52,7 +52,7 @@ const Activity = ()=>{
                     <MdKeyboardArrowUp size={25}/>
                 </div>
                 {toggle && (
-                    <div className="absolute ml-[726px] top-2/4 flex flex-col justify-start mt-[224px] border w-[200px] h-[90px] p-2 bg-white" ref={ref}>
+                    <div className="absolute md:ml-[726px] md:top-[464px] top-[516px] ml-[209px] flex flex-col justify-start mt-[224px] border w-[200px] h-[90px] p-2 bg-white" ref={ref}>
                         <button className="flex justify-start p-1" onClick={ ()=> handleText('Off')}>Off</button>
                         <button className="flex justify-start p-1" onClick={()=> handleText('On')}>On</button>
                     </div>
