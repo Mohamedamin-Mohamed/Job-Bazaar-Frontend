@@ -1,17 +1,12 @@
 import {useEffect, useState} from "react";
 import AddressFetcher from "../Address/AddressFetcher";
-import {useSelector} from "react-redux";
 import ProfileRibbon from "./ProfileRibbon";
-import {NavLink, Route, useResolvedPath} from "react-router-dom";
+import {NavLink, Outlet, useResolvedPath} from "react-router-dom";
 import NavBar from "../Careerhub/NavBar";
 
 const Profile = () => {
     const [location, setLocation] = useState({latitude: null, longitude: null})
     const [error, setError] = useState(null)
-    const locationInfo = useSelector(state => state.locationInfo)
-    const usrInfo = useSelector(state => state.userInfo)
-    const abbreviatedName = usrInfo.firstName.substring(0, 1) + usrInfo.lastName.substring(0, 1)
-    const fullName = usrInfo.firstName + ' ' + usrInfo.lastName
     const experiencedPath = useResolvedPath("experience").pathname
     const careerInterestsPath = useResolvedPath("career").pathname
 
@@ -36,10 +31,10 @@ const Profile = () => {
             <ProfileRibbon/>
             <nav className="flex my-12 mx-8 space-x-12 text-lg">
                 <NavLink to={experiencedPath} className={({isActive}) =>
-                    isActive ? "px-3 py-2 rounded-md text-sm font-medium bg-green-500 text-white" : "px-3 py-2 rounded-md text-sm font-medium"
+                    isActive ? "px-3 py-2 rounded-md font-medium text-[#367c2b] text-lg" : "px-3 py-2 rounded-md font-medium text-lg"
                 }>Experience</NavLink>
                 <NavLink to={careerInterestsPath} className={({isActive}) =>
-                    isActive ? "px-3 py-2 rounded-md text-sm font-medium bg-green-500 text-white" : "px-3 py-2 rounded-md text-sm font-medium"
+                    isActive ? "px-3 py-2 rounded-md font-medium text-[#367c2b] text-lg" : "px-3 py-2 rounded-md font-medium text-lg"
                 }>Career Interests</NavLink>
             </nav>
             {location.latitude && location.longitude && (
@@ -47,6 +42,7 @@ const Profile = () => {
                     setError(errorMsg)
                 }}/>
             )}
+            <Outlet />
         </div>
     )
 }
