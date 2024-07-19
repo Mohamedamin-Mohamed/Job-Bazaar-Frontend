@@ -1,10 +1,7 @@
-import { PiSuitcaseSimpleLight } from "react-icons/pi";
-import { GoProject } from "react-icons/go";
 import { IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {useMediaQuery} from "react-responsive";
 
 const Explore = ()=>{
     const[arrowShow, setArrowShow] = useState(false)
@@ -16,9 +13,9 @@ const Explore = ()=>{
             navigate('explore/projects')
     }
     return(
-        <div className="flex flex-col md:flex-row w-full ml-8">
-        <div className={` ${arrowShow ? "h-[94px]" : "h-[440px]"} border p-6 mr-8 mt-10 `}>
-            <div className="border-b pb-4">
+        <div className="flex flex-col md:flex-row w-full ml-8 md:mb-8">
+        <div className={` ${arrowShow ? "h-[120px]" : "h-[480px]"} border p-6 mr-8 mt-10 `}>
+            <div className={`${!arrowShow ? "border-b" : ""} pb-4`}>
                 <div className="flex">
                     <div className="flex flex-col w-[760px]">
                         <h1 className="text-black font-medium text-lg">Get more from Career Hub</h1>
