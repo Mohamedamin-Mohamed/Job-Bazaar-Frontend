@@ -8,7 +8,7 @@ const Tasks = () => {
 
     return (
         <div
-            className={`"flex h-screen flex-col text-[#367c2b] mt-10 border ${!isMediumScreen ? "w-[88%] mx-12 p-4 relative" : "flex w-[345px] px-4 pt-3.5"} h-[250px] "`}>
+            className={`"flex flex-col text-[#367c2b] mt-10 border ${!isMediumScreen ? "w-[88%] mx-12 p-4 relative" : "flex w-[345px] px-4 pt-3.5"} h-[280px] "`}>
             <div className="flex justify-between mb-4">
                 <div className="flex">
                     <h1 className="mr-2 text-black font-bold">My Tasks </h1>
