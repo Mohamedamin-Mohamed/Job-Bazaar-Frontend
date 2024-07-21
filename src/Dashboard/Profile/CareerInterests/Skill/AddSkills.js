@@ -28,7 +28,7 @@ const AddSkills = ({open, handleOpen}) => {
                         <h1 className="text-xl font-semibold">Add skills</h1>
                     </div>
                     <div className="ml-auto">
-                        <VscClose size={24} color="black" className="cursor-pointer" onClick={handleOpen}/>
+                        <VscClose size={24} color="black" className="cursor-pointer hover:rounded-full hover:border hover:bg-gray-100" onClick={handleOpen}/>
                     </div>
                 </div>
                 <div
@@ -37,13 +37,13 @@ const AddSkills = ({open, handleOpen}) => {
                     <input value={searchSkills} onChange={(e) => setSearchSkills(e.target.value)} type="text"
                            placeholder="Type to search skills" className="w-[500px] outline-none ml-4 text-lg"/>
                     {searchSkills !== '' &&
-                        <VscClose size={28} className="ml-auto mt-2 mr-3 cursor-pointer" color="gray"
+                        <VscClose size={28} className="ml-auto mt-2 mr-3 cursor-pointer " color="gray"
                                   onClick={() => setSearchSkills('')}/>}
 
                 </div>
                 <p className="ml-1 mt-3">0 suggestions(s)</p>
                 <div className="flex justify-center items-center">
-                    <img src={Image} alt="Image not found" className="w-[140px] mt-20"/>
+                    <img src={Image} alt="" className="w-[140px] mt-20"/>
                 </div>
             </div>
 
