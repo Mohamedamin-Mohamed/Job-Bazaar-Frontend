@@ -4,13 +4,12 @@ import FixedButtons from "../FixedButtons";
 import StartDate from "../Calendar/StartDate";
 import EndDate from "../Calendar/EndDate";
 import {format, parse} from "date-fns";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {toast, ToastContainer} from "react-toastify";
-import SaveEducation from "./FetchEducation/SaveEducation";
-import {setUsrEmail} from "../../../../Redux/UserSlice";
-import getEducation from "./FetchEducation/GetEducation";
+import GetWorkExperience from "./FetchWorkExperience/GetWorkExperience";
+import SaveWorkExperience from "./FetchWorkExperience/SaveWorkExperience";
 
-const AddEducation = ({open, handleOpen, statusCode}) => {
+const AddWorkExperience = ({open, handleOpen, statusCode}) => {
     const usrInfo = useSelector(state => state.userInfo);
 
     const [startDate, setStartDate] = useState(null);
@@ -19,13 +18,13 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
     const [endDateCalender, setEndDateCalender] = useState(false);
     const startDateRef = useRef(null);
     const endDateRef = useRef(null)
-    const [studyCheckBox, setStudyCheckBox] = useState(false)
+    const [workCheckBox, setWorkCheckBox] = useState(false)
 
-    //this states will track the inputs field for education section
-    const [school, setSchool] = useState("")
-    const [major, setMajor] = useState("")
-    const [degree, setDegree] = useState("")
+    //this states will track the inputs field for work experience section
+    const [title, setTitle] = useState("")
+    const [company, setCompany] = useState("")
     const [description, setDescription] = useState("")
+    const [location, setLocation] = useState("")
 
     const handleStartDateCalender = (date) => {
         setStartDate(date)
@@ -77,14 +76,14 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
     useEffect(() => {
         const abortController = new AbortController();
         const fetchEducation = async () => {
-            const response = await getEducation(email, abortController);
+            const response = await GetWorkExperience(email, abortController);
             if (response.status === 200) {
                 const result = await response.json()
                 console.log('result is', result)
-                setSchool(result.school)
-                setMajor(result.major)
-                setDegree(result.degree)
+                setTitle(result.title)
+                setCompany(result.company)
                 setDescription(result.description)
+                setLocation(result.location)
 
                 const parsedStartDate = parse(result.startDate, 'MM-yyyy', new Date())
                 setStartDate(parsedStartDate)
@@ -121,36 +120,37 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
         setEndDateCalender(false)
         setEndDate(null)
     }
-    const preprocessData = (formData)=>{
+    const preprocessData = (formData) => {
         const processedData = {}
-        for(const[key, value] of Object.entries(formData)){
+        for (const [key, value] of Object.entries(formData)) {
             processedData[key] = value === null ? 'Empty' : value;
         }
         return processedData
     }
     const handleSave = async () => {
-        if (major === "" || school === '' || degree === '' || startDate == null || endDate == null) {
+        if (title === "" || company === '' || startDate == null || endDate == null) {
             toast.error('Please enter the required fields*');
             return;
         }
 
-        const education = {
+        const work = {
             email: usrInfo.usrEmail,
-            school: school,
-            major: major,
-            degree: degree,
+            title: title,
+            company: company,
             description: description,
+            location: location,
             startDate: getFormattedDate(startDate),
             endDate: getFormattedDate(endDate),
         }
 
         let processedData = {}
-        if(statusCode === 200){
-            processedData = preprocessData(education)
+        if (statusCode === 200) {
+            processedData = preprocessData(work)
         }
 
         //store the object in the database based on if we are creating a new resource or updating an existing resource
-        const response = statusCode === 200 ? await SaveEducation(processedData) : await SaveEducation(education);
+        const response = statusCode === 200 ? await SaveWorkExperience(processedData) : await SaveWorkExperience(work);
+        // dispatch(setUsrEmail(usrInfo.usrEmail))
         console.log("Here is the response", response)
         const text = await response.text();
 
@@ -166,25 +166,26 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
         }
     }
     const handleClear = () => {
-        setSchool("")
-        setMajor("")
-        setDegree("")
+        setTitle("")
+        setCompany("")
+        setLocation("")
         setDescription("")
         setStartDate("")
         setEndDate("")
     }
-    const handleStudyCheckBox = ()=>{
-        setStudyCheckBox(!studyCheckBox)
+    const handleWorkCheckBox = () => {
+        setWorkCheckBox(!workCheckBox)
         setEndDate(new Date().toString())
     }
     return (
         <div
             className={!open ? 'hidden' : 'fixed flex justify-center inset-0 items-center text-black backdrop-brightness-50'}>
-            <div className="flex flex-col p-7 text-black rounded-xl bg-white w-[502px] border h-[750px] ease-in-out duration-500">
+            <div
+                className="flex flex-col p-7 text-black rounded-xl bg-white w-[502px] border h-[750px] ease-in-out duration-500">
                 <ToastContainer position="top-center"/>
                 <div className="flex">
                     <div>
-                        <h1 className="text-2xl font-semibold mb-6">Add Education</h1>
+                        <h1 className="text-2xl font-semibold mb-6">Add Work</h1>
                     </div>
                     <div className="ml-auto">
                         <IoClose size={30} className="ml-auto text-gray-700 hover:cursor-pointer" onClick={handleOpen}/>
@@ -195,26 +196,26 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
                         <p className="ml-auto">* Required fields</p>
                     </div>
                     <div className="flex flex-col mt-2">
-                        <h1 className="font-semibold text-lg">School</h1>
-                        <input value={school} onChange={(e) => setSchool(e.target.value)}
-                               placeholder="Ex. Stanford University"
+                        <h1 className="font-semibold text-lg">Title*</h1>
+                        <input value={title} onChange={(e) => setTitle(e.target.value)}
+                               placeholder="Ex. Senior UX Designer"
                                className="w-[403px] h-[34px] border border-[#1a212e] p-2 mt-3"/>
                     </div>
                     <div className="flex flex-col mt-6">
-                        <h1 className="font-semibold text-lg">Major*</h1>
-                        <input value={major} onChange={(e) => setMajor(e.target.value)} placeholder="Ex. Economics"
-                               className="w-[403px] h-[34px] border border-[#1a212e] p-2 mt-3"/>
-                    </div>
-                    <div className="flex flex-col mt-6">
-                        <h1 className="font-semibold text-lg">Degree</h1>
-                        <input value={degree} onChange={(e) => setDegree(e.target.value)}
-                               placeholder="Ex. Bachelor of Economics"
+                        <h1 className="font-semibold text-lg">Company*</h1>
+                        <input value={company} onChange={(e) => setCompany(e.target.value)} placeholder="Ex. Amazon"
                                className="w-[403px] h-[34px] border border-[#1a212e] p-2 mt-3"/>
                     </div>
                     <div className="flex flex-col mt-6">
                         <h1 className="font-semibold text-lg">Description</h1>
                         <textarea value={description} onChange={(e) => setDescription(e.target.value)}
                                   className="w-[403px] h-[93px] border border-[#1a212e] mt-3 px-3 py-1 text-sm"></textarea>
+                    </div>
+                    <div className="flex flex-col mt-6">
+                        <h1 className="font-semibold text-lg">Location*</h1>
+                        <input value={location} onChange={(e) => setLocation(e.target.value)}
+                               placeholder="Ex. Mountain View, CA"
+                               className="w-[403px] h-[34px] border border-[#1a212e] p-2 mt-3"/>
                     </div>
                     <div className="flex flex-col mt-6" ref={startDateRef}>
                         <h1 className="font-semibold text-lg mb-2">Start Date</h1>
@@ -248,7 +249,7 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
                             <input type="text" onFocus={() => handleCalendarsShow("end")}
                                    placeholder="End Date (MM/YYYY)" value={getFormattedDate(endDate)}
                                    className="pl-3 w-full outline-none"
-                                   disabled={studyCheckBox}
+                                   disabled={workCheckBox}
                             />
 
                             {endDate &&
@@ -262,8 +263,8 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
                     {/*implement functionalities of eg; clear should clear all inputs, cancel should close the form and submit should upload the form*/}
                     <div className="flex mt-1">
                         <input type="checkbox" className="w-[16px] h-[16px] mt-1"
-                               onChange={handleStudyCheckBox}/>
-                        <p className="ml-3">I currently study here</p>
+                               onChange={handleWorkCheckBox}/>
+                        <p className="ml-3">I currently work here</p>
                     </div>
                 </div>
                 <FixedButtons handleClear={handleClear} handleOpen={handleOpen} handleSave={handleSave}/>
@@ -272,4 +273,4 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
         </div>
     )
 }
-export default AddEducation;
+export default AddWorkExperience;

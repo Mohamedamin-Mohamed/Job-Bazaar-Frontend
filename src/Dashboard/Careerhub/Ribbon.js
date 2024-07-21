@@ -1,10 +1,8 @@
 import {useSelector} from "react-redux";
-import NavBar from "./NavBar";
 
-const Ribbon = ()=>{
+const Ribbon = () => {
     const usrInfo = useSelector(state => state.userInfo)
-    const locationInfo = useSelector(state => state.locationInfo)
-    const abbreviatedName = usrInfo.firstName.substring(0,1) + usrInfo.lastName.substring(0,1)
+    const abbreviatedName = usrInfo.firstName.substring(0, 1) + usrInfo.lastName.substring(0, 1)
 
     return (
         <div>
