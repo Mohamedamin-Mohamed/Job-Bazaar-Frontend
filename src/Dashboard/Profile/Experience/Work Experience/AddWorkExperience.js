@@ -46,7 +46,7 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
     const handleDateCalendarHide = useCallback((calendar) => {
         if (calendar === "start") setStartDateCalender(false)
         else setEndDateCalender(false)
-    })
+    },[])
 
     useEffect(() => {
         const handleStartDateClickOutside = (event) => {
@@ -128,7 +128,7 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
         return processedData
     }
     const handleSave = async () => {
-        if (title === "" || company === '' || startDate == null || endDate == null) {
+        if (title === "" || company === '' || location === '' || startDate == null || endDate == null) {
             toast.error('Please enter the required fields*');
             return;
         }
@@ -185,7 +185,7 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
                 <ToastContainer position="top-center"/>
                 <div className="flex">
                     <div>
-                        <h1 className="text-2xl font-semibold mb-6">Add Work</h1>
+                        <h1 className="text-2xl font-semibold mb-6">{statusCode === 404 ? "Add Work" : "Edit Details"}</h1>
                     </div>
                     <div className="ml-auto">
                         <IoClose size={30} className="ml-auto text-gray-700 hover:cursor-pointer" onClick={handleOpen}/>
@@ -197,14 +197,31 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
                     </div>
                     <div className="flex flex-col mt-2">
                         <h1 className="font-semibold text-lg">Title*</h1>
-                        <input value={title} onChange={(e) => setTitle(e.target.value)}
-                               placeholder="Ex. Senior UX Designer"
-                               className="w-[403px] h-[34px] border border-[#1a212e] p-2 mt-3"/>
+                        <div className="flex w-[403px] h-[34px] border border-[#1a212e]">
+                            <input value={title} onChange={(e) => setTitle(e.target.value)}
+                                   placeholder="Senior UX Designer"
+                                   className="pl-3 w-full outline-none"/>
+                            {title &&
+                                <div className="ml-auto" onClick={() => setTitle('')}>
+                                    <IoCloseOutline size={18} color="gray"
+                                                    className="ml-auto mt-1.5 mr-4 cursor-pointer"/>
+                                </div>
+                            }
+                        </div>
                     </div>
                     <div className="flex flex-col mt-6">
                         <h1 className="font-semibold text-lg">Company*</h1>
-                        <input value={company} onChange={(e) => setCompany(e.target.value)} placeholder="Ex. Amazon"
-                               className="w-[403px] h-[34px] border border-[#1a212e] p-2 mt-3"/>
+                        <div className="flex w-[403px] h-[34px] border border-[#1a212e]">
+                            <input value={company} onChange={(e) => setCompany(e.target.value)}
+                                   placeholder="Ex. Amazon"
+                                   className="pl-3 w-full outline-none"/>
+                            {company &&
+                                <div className="ml-auto" onClick={() => setCompany('')}>
+                                    <IoCloseOutline size={18} color="gray"
+                                                    className="ml-auto mt-1.5 mr-4 cursor-pointer"/>
+                                </div>
+                            }
+                        </div>
                     </div>
                     <div className="flex flex-col mt-6">
                         <h1 className="font-semibold text-lg">Description</h1>
@@ -213,12 +230,20 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
                     </div>
                     <div className="flex flex-col mt-6">
                         <h1 className="font-semibold text-lg">Location*</h1>
-                        <input value={location} onChange={(e) => setLocation(e.target.value)}
+                        <div className="flex w-[403px] h-[34px] border border-[#1a212e]">
+                            <input value={location} onChange={(e) => setLocation(e.target.value)}
                                placeholder="Ex. Mountain View, CA"
-                               className="w-[403px] h-[34px] border border-[#1a212e] p-2 mt-3"/>
+                               className="pl-3 w-full outline-none"/>
+                        {location &&
+                            <div className="ml-auto" onClick={()=> setLocation('')}>
+                                <IoCloseOutline size={18} color="gray"
+                                                className="ml-auto mt-1.5 mr-4 cursor-pointer"/>
+                            </div>
+                        }
+                        </div>
                     </div>
                     <div className="flex flex-col mt-6" ref={startDateRef}>
-                        <h1 className="font-semibold text-lg mb-2">Start Date</h1>
+                        <h1 className="font-semibold text-lg mb-2">Start Date*</h1>
 
                         {startDateCalender &&
                             <div className="w-1/2 flex absolute top-[387px] left-[45px]">
@@ -239,7 +264,7 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
                         </div>
                     </div>
                     <div className="flex flex-col mt-6" ref={endDateRef}>
-                        <h1 className="font-semibold text-lg mb-2">End Date</h1>
+                        <h1 className="font-semibold text-lg mb-2">End Date*</h1>
                         {endDateCalender &&
                             <div className="w-1/2 flex absolute top-[480px] left-[48px]">
                                 <EndDate endDate={endDate} handleEndDateCalender={handleEndDateCalender}/>
