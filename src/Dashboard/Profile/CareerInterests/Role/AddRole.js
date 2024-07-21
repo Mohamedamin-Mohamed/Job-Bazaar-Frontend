@@ -28,7 +28,7 @@ const AddRole = ({open, handleOpen}) => {
                         <h1 className="text-xl font-semibold">Add roles</h1>
                     </div>
                     <div className="ml-auto">
-                        <VscClose size={24} color="black" className="cursor-pointer" onClick={handleOpen}/>
+                        <VscClose size={24} color="black" className="cursor-pointer hover:rounded-full hover:border hover:bg-gray-100" onClick={handleOpen}/>
                     </div>
                 </div>
                 <div
