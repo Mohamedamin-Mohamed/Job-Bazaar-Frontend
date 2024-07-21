@@ -8,7 +8,6 @@ import {useMediaQuery} from "react-responsive";
 
 const CareerHub = () => {
     const isMediumScreen = useMediaQuery({minWidth: 998}); // Set the breakpoint for md screens
-    const smallScreen = useMediaQuery({minWidth: 200})
 
     return (
         <>
