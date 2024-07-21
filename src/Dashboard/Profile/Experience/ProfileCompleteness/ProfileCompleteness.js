@@ -43,7 +43,6 @@ const ProfileCompleteness = () => {
         const currentDiv = scrollDivRef.current;
         if (currentDiv) {
             currentDiv.addEventListener('scroll', updateScrollButtons);
-            updateScrollButtons(); // Initial check
         }
         return () => {
             if (currentDiv) {
@@ -53,8 +52,8 @@ const ProfileCompleteness = () => {
     }, []);
 
     return (
-        <div className="flex justify-center items-center md:mt-0 mt-16">
-            <div className={`flex flex-col justify-center pl-4 md:w-[840px] mx-2 text-wrap w-[650px] ${toggle ? "h-[500px]" : "h-[70px]"} border mb-4`}>
+        <div className="flex ml-[40px] md:mt-0 mt-16">
+            <div className={`flex flex-col justify-center pl-6 md:w-[840px] mx-2 text-wrap w-[650px] ${toggle ? "h-[500px]" : "h-[70px]"} border mb-4`}>
                 <div className="flex">
                     <div className="flex flex-col w-[760px] mt-3 mb-6">
                         <h1 className="text-black font-medium text-xl">Make Career Hub work for you</h1>
@@ -88,9 +87,12 @@ const ProfileCompleteness = () => {
                                     <p className="flex">1/4</p>
                                 </div>
                             </div>
-                            <div className="relative w-full">
+                            <div className="relative w-full ">
+                                <div className="w-[20%]">
+
+                                </div>
                                 <div ref={scrollDivRef}
-                                     className="border-t flex gap-x-6 overflow-x-auto whitespace-nowrap overflow-hidden no-scrollbar">
+                                     className={`border-t flex gap-x-6 overflow-x-auto whitespace-nowrap overflow-hidden no-scrollbar w-[89%] ${showLeftButton ? "ml-12" : ""}`}>
                                     <Resume/>
                                     <Skills/>
                                     <Studies/>
@@ -99,13 +101,13 @@ const ProfileCompleteness = () => {
                                 {showLeftButton && (
                                     <MdOutlineKeyboardArrowLeft
                                         onClick={handleScrollLeft}
-                                        className="absolute left-0 top-1/2 transform -translate-y-1/2 border border-[#367c2b] hover:bg-[#367c2b] hover:text-white text-[#367c2b] p-2 w-[44px] h-[44px] cursor-pointer"
+                                        className="absolute left-0 top-1/2 transform -translate-y-1/2 border border-[#367c2b] hover:bg-[#367c2b] hover:text-white text-[#367c2b] p-2 w-[44px] h-[44px] cursor-pointer bg-white"
                                     />
                                 )}
                                 {showRightButton && (
                                     <MdOutlineKeyboardArrowRight
                                         onClick={handleScrollRight}
-                                        className="absolute right-0 top-1/2 transform -translate-y-1/2 border border-[#367c2b] hover:bg-[#367c2b] hover:text-white text-[#367c2b] p-2 w-[44px] h-[44px] cursor-pointer"
+                                        className="absolute right-0 top-1/2 transform -translate-y-1/2 border border-[#367c2b] hover:bg-[#367c2b] hover:text-white text-[#367c2b] p-2 w-[44px] h-[44px] cursor-pointer bg-white"
                                     />
                                 )}
                             </div>
