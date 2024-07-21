@@ -4,6 +4,7 @@ import {BsCalendar4} from "react-icons/bs";
 import DatePicker from "react-datepicker";
 import {useEffect, useRef, useState} from "react";
 import {addMonths, format} from "date-fns";
+import 'react-datepicker/dist/react-datepicker.css'
 
 const DateRange = () => {
     const [calendarShow, setCalendarShow] = useState(false)
@@ -13,21 +14,17 @@ const DateRange = () => {
     const [dateRangeShow, setDateRangeShow] = useState(true);
     const [navLinksShow, setNavLinksShow] = useState({pending: true, completed: false, archived: false})
 
-    const handleCalendar = () => {
-        setCalendarShow(!calendarShow)
-    }
-
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (ref.current && !ref.current.contains(event.target)) {
-                handleCalendar()
+                setCalendarShow(!calendarShow)
             }
         }
         document.addEventListener('mousedown', handleClickOutside)
         return (() => {
             document.removeEventListener('mousedown', handleClickOutside)
         })
-    }, [handleCalendar])
+    }, [calendarShow])
 
     const getFormattedDate = (date) => {
         return startDate ? format(date, 'yyy-MM-dd') : ''
@@ -47,8 +44,9 @@ const DateRange = () => {
     }
     return (
         <div>
-            <div className="flex justify-center items-center cursor-pointer" onClick={() => setDateRangeShow(!dateRangeShow)}>
-                <h1 className={`flex font-medium ${dateRangeShow ? "mb-2" : ""} ml-3 mt-3`}>Data Range</h1>
+            <div className="flex justify-center items-center cursor-pointer"
+                 onClick={() => setDateRangeShow(!dateRangeShow)}>
+                <h1 className={`flex font-medium ${dateRangeShow ? "mb-2" : "mb-1"} ml-3 mt-3`}>Data Range</h1>
                 {
                     !dateRangeShow ?
                         <div className="ml-auto md:ml-40 mr-4">
@@ -79,7 +77,7 @@ const DateRange = () => {
             }
             {
                 calendarShow && (
-                    <div className="absolute space-x-4 flex mt-24 w-[500px] h-" ref={ref}>
+                    <div className="absolute flex mt-1" ref={ref}>
                         <div>
                             <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} inline/>
 
@@ -91,7 +89,8 @@ const DateRange = () => {
                     </div>
                 )
             }
-            <div className={`${calendarShow ? "mt-4" : "mt-3"}flex justify-center items-center text-lg mr-4 text-[#4f5666] w-full md:[w-350px] pb-2`}>
+            <div
+                className={`${calendarShow ? "mt-4" : "mt-3"}flex justify-center items-center mt-2 text-lg mr-4 text-[#4f5666] w-full md:[w-350px] pb-2`}>
                 <div onClick={() => handleLinksClick("pending")}
                      className={`${navLinksShow.pending ? "flex justify-center items-center p-2 bg-[#feffe6] cursor-pointer text-[#20571a] md:w-[280px] mr-4" :
                          "flex p-2 hover:bg-[#feffe6] cursor-pointer hover:text-[#20571a] md:w-[280px] mr-4"}`}>
