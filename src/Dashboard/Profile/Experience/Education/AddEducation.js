@@ -4,10 +4,9 @@ import FixedButtons from "../FixedButtons";
 import StartDate from "../Calendar/StartDate";
 import EndDate from "../Calendar/EndDate";
 import {format, parse} from "date-fns";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {toast, ToastContainer} from "react-toastify";
 import SaveEducation from "./FetchEducation/SaveEducation";
-import {setUsrEmail} from "../../../../Redux/UserSlice";
 import getEducation from "./FetchEducation/GetEducation";
 
 const AddEducation = ({open, handleOpen, statusCode}) => {
@@ -42,12 +41,12 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
         return () => {
             document.body.style.overflow = ''
         }
-    }, [open])
+    }, [open, statusCode])
 
     const handleDateCalendarHide = useCallback((calendar) => {
         if (calendar === "start") setStartDateCalender(false)
         else setEndDateCalender(false)
-    })
+    }, [])
 
     useEffect(() => {
         const handleStartDateClickOutside = (event) => {
@@ -184,7 +183,7 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
                 <ToastContainer position="top-center"/>
                 <div className="flex">
                     <div>
-                        <h1 className="text-2xl font-semibold mb-6">Add Education</h1>
+                        <h1 className="text-2xl font-semibold mb-6"> {statusCode === 404 ? "Add Education" : "Edit Details"}</h1>
                     </div>
                     <div className="ml-auto">
                         <IoClose size={30} className="ml-auto text-gray-700 hover:cursor-pointer" onClick={handleOpen}/>
@@ -195,21 +194,46 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
                         <p className="ml-auto">* Required fields</p>
                     </div>
                     <div className="flex flex-col mt-2">
-                        <h1 className="font-semibold text-lg">School</h1>
-                        <input value={school} onChange={(e) => setSchool(e.target.value)}
-                               placeholder="Ex. Stanford University"
-                               className="w-[403px] h-[34px] border border-[#1a212e] p-2 mt-3"/>
+                        <h1 className="font-semibold text-lg">School*</h1>
+                        <div className="flex w-[403px] h-[34px] border border-[#1a212e]">
+                            <input value={school} onChange={(e) => setSchool(e.target.value)}
+                                   placeholder="Ex. Stanford University"
+                                   className="pl-3 w-full outline-none"/>
+                            {school &&
+                                <div className="ml-auto" onClick={() => setSchool('')}>
+                                    <IoCloseOutline size={18} color="gray"
+                                                    className="ml-auto mt-1.5 mr-4 cursor-pointer"/>
+                                </div>
+                            }
+                        </div>
                     </div>
                     <div className="flex flex-col mt-6">
                         <h1 className="font-semibold text-lg">Major*</h1>
-                        <input value={major} onChange={(e) => setMajor(e.target.value)} placeholder="Ex. Economics"
-                               className="w-[403px] h-[34px] border border-[#1a212e] p-2 mt-3"/>
+                        <div className="flex w-[403px] h-[34px] border border-[#1a212e]">
+                            <input value={major} onChange={(e) => setMajor(e.target.value)}
+                                   placeholder="Ex. Economics"
+                                   className="pl-3 w-full outline-none"/>
+                            {major &&
+                                <div className="ml-auto" onClick={() => setMajor('')}>
+                                    <IoCloseOutline size={18} color="gray"
+                                                    className="ml-auto mt-1.5 mr-4 cursor-pointer"/>
+                                </div>
+                            }
+                        </div>
                     </div>
                     <div className="flex flex-col mt-6">
-                        <h1 className="font-semibold text-lg">Degree</h1>
-                        <input value={degree} onChange={(e) => setDegree(e.target.value)}
-                               placeholder="Ex. Bachelor of Economics"
-                               className="w-[403px] h-[34px] border border-[#1a212e] p-2 mt-3"/>
+                        <h1 className="font-semibold text-lg">Degree*</h1>
+                        <div className="flex w-[403px] h-[34px] border border-[#1a212e]">
+                            <input value={degree} onChange={(e) => setDegree(e.target.value)}
+                                   placeholder="Ex. Bachelor of Economics"
+                                   className="pl-3 w-full outline-none"/>
+                            {degree &&
+                                <div className="ml-auto" onClick={() => setDegree('')}>
+                                    <IoCloseOutline size={18} color="gray"
+                                                    className="ml-auto mt-1.5 mr-4 cursor-pointer"/>
+                                </div>
+                            }
+                        </div>
                     </div>
                     <div className="flex flex-col mt-6">
                         <h1 className="font-semibold text-lg">Description</h1>
@@ -217,7 +241,7 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
                                   className="w-[403px] h-[93px] border border-[#1a212e] mt-3 px-3 py-1 text-sm"></textarea>
                     </div>
                     <div className="flex flex-col mt-6" ref={startDateRef}>
-                        <h1 className="font-semibold text-lg mb-2">Start Date</h1>
+                        <h1 className="font-semibold text-lg mb-2">Start Date*</h1>
 
                         {startDateCalender &&
                             <div className="w-1/2 flex absolute top-[387px] left-[45px]">
@@ -238,7 +262,7 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
                         </div>
                     </div>
                     <div className="flex flex-col mt-6" ref={endDateRef}>
-                        <h1 className="font-semibold text-lg mb-2">End Date</h1>
+                        <h1 className="font-semibold text-lg mb-2">End Date*</h1>
                         {endDateCalender &&
                             <div className="w-1/2 flex absolute top-[480px] left-[48px]">
                                 <EndDate endDate={endDate} handleEndDateCalender={handleEndDateCalender}/>
