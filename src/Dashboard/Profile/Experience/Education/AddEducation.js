@@ -1,8 +1,8 @@
 import {IoClose, IoCloseOutline} from "react-icons/io5"
 import {useCallback, useEffect, useRef, useState} from "react";
-import FixedButtons from "./FixedButtons";
-import StartDate from "./Calendar/StartDate";
-import EndDate from "./Calendar/EndDate";
+import FixedButtons from "../FixedButtons";
+import StartDate from "../Calendar/StartDate";
+import EndDate from "../Calendar/EndDate";
 import {format, parse} from "date-fns";
 import {useDispatch, useSelector} from "react-redux";
 import {toast, ToastContainer} from "react-toastify";
@@ -10,9 +10,8 @@ import SaveEducation from "./FetchEducation/SaveEducation";
 import {setUsrEmail} from "../../../../Redux/UserSlice";
 import getEducation from "./FetchEducation/GetEducation";
 
-const AddEducation = ({open, handleOpen}) => {
+const AddEducation = ({open, handleOpen, statusCode}) => {
     const usrInfo = useSelector(state => state.userInfo);
-    const dispatch = useDispatch()
 
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
@@ -122,9 +121,16 @@ const AddEducation = ({open, handleOpen}) => {
         setEndDateCalender(false)
         setEndDate(null)
     }
+    const preprocessData = (formData)=>{
+        const processedData = {}
+        for(const[key, value] of Object.entries(formData)){
+            processedData[key] = value === null ? 'Empty' : value;
+        }
+        return processedData
+    }
     const handleSave = async () => {
-        if (major === "") {
-            toast.error('Please enter the required fields Major');
+        if (major === "" || school === '' || degree === '' || startDate == null || endDate == null) {
+            toast.error('Please enter the required fields*');
             return;
         }
 
@@ -137,10 +143,14 @@ const AddEducation = ({open, handleOpen}) => {
             startDate: getFormattedDate(startDate),
             endDate: getFormattedDate(endDate),
         }
-        console.log('response is djdjd', education, school)
-        //store the object in the database now since at least the majors input field is not empty
-        const response = await SaveEducation(education);
-        dispatch(setUsrEmail(usrInfo.usrEmail))
+
+        let processedData = {}
+        if(statusCode === 200){
+            processedData = preprocessData(education)
+        }
+
+        //store the object in the database based on if we are creating a new resource or updating an existing resource
+        const response = statusCode === 200 ? await SaveEducation(processedData) : await SaveEducation(education);
         console.log("Here is the response", response)
         const text = await response.text();
 
@@ -163,12 +173,14 @@ const AddEducation = ({open, handleOpen}) => {
         setStartDate("")
         setEndDate("")
     }
-
+    const handleStudyCheckBox = ()=>{
+        setStudyCheckBox(!studyCheckBox)
+        setEndDate(new Date().toString())
+    }
     return (
         <div
             className={!open ? 'hidden' : 'fixed flex justify-center inset-0 items-center text-black backdrop-brightness-50'}>
-            <div
-                className="flex flex-col p-7 text-black rounded-xl bg-white w-[502px] border h-[750px] ease-in-out duration-500">
+            <div className="flex flex-col p-7 text-black rounded-xl bg-white w-[502px] border h-[750px] ease-in-out duration-500">
                 <ToastContainer position="top-center"/>
                 <div className="flex">
                     <div>
@@ -250,7 +262,7 @@ const AddEducation = ({open, handleOpen}) => {
                     {/*implement functionalities of eg; clear should clear all inputs, cancel should close the form and submit should upload the form*/}
                     <div className="flex mt-1">
                         <input type="checkbox" className="w-[16px] h-[16px] mt-1"
-                               onChange={() => setStudyCheckBox(!studyCheckBox)}/>
+                               onChange={handleStudyCheckBox}/>
                         <p className="ml-3">I currently study here</p>
                     </div>
                 </div>
