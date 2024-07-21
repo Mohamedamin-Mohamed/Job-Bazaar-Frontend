@@ -1,10 +1,9 @@
 import {useEffect} from "react";
 
 const ImageSearch = ({query, handleImageUrl, onError}) => {
-    const env = require('dotenv')
 
     const apiKey = process.env.API_KEY
-    const cx = process.env.SEARCH_ENGINE_ID
+    const cx = process.env.CX_KEY
 
     useEffect(() => {
         const abortController = new AbortController();
