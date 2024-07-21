@@ -12,7 +12,7 @@ import Feedback from "./Dashboard/Feedback/Feedback";
 import NotFound from "./NotFound/NotFound";
 import NotFound2 from "./NotFound/NotFound2";
 import Settings from "./Dashboard/Settings/Settings";
-import CareerInterests from "./Dashboard/Profile/CareerInterests";
+import CareerInterests from "./Dashboard/Profile/CareerInterests/CareerInterests";
 import Experience from "./Dashboard/Profile/Experience/Experience";
 
 const router = createBrowserRouter(
