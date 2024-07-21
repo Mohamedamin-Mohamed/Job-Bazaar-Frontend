@@ -69,13 +69,13 @@ const NavBar = () => {
     }, [menuGrid]);
 
     return (
-        <div className="flex justify-between items-center p-4 mt-2">
+        <div className="flex justify-between items-center pt-4 pb-2 mt-2 border-b border-gray-400">
             <NavLink to="/careerhub" className="text-3xl ml-16 text-[#367c2b] font-bold">Job Bazaar</NavLink>
             <nav className={`${isMediumScreen ? "flex space-x-5" : "hidden"}`}>
                 <NavLink to='/careerhub' className="hover:text-[#367c2b] font-medium">Home</NavLink>
                 <NavLink to='/careerhub/profile/career' className="hover:text-[#367c2b] font-medium">Career
                     Interests</NavLink>
-                <NavLink to='/careerhub/profile/career' className="hover:text-[#367c2b] font-medium">My
+                <NavLink to='/careerhub/profile/experience' className="hover:text-[#367c2b] font-medium">My
                     Profile</NavLink>
                 <NavLink to='/careerhub/explore/jobs' className="hover:text-[#367c2b] font-medium">Jobs</NavLink>
                 <div className="flex hover:cursor-pointer" onClick={handleReferrals}>
@@ -112,10 +112,11 @@ const NavBar = () => {
                 {userSettingDropDown && (
                     <div className="mt-[36px]">
                         <nav
-                            className={"flex flex-col absolute right-0 mt-[22px] mr-4 w-[350px] border p-4 bg-white z-50"} ref={dropDownRef}>
+                            className={"flex flex-col absolute right-0 mt-[22px] mr-4 w-[350px] border p-4 bg-white z-50"}
+                            ref={dropDownRef} onClick={() => setUserSettingDropDown(!userSettingDropDown)}>
                             <NavLink to="/careerhub" className="mb-1">{usrInfo.firstName} {usrInfo.lastName}</NavLink>
                             <div className="flex flex-col pb-4">
-                                <NavLink to="/careerhub/profile" className="p-1 hover:cursor-pointer">My
+                                <NavLink to="/careerhub/profile/experience" className="p-1 hover:cursor-pointer">My
                                     Profile</NavLink>
                                 <NavLink to="/careerhub/profile/career" className="p-1 hover:cursor-pointer">Career
                                     Interests</NavLink>
