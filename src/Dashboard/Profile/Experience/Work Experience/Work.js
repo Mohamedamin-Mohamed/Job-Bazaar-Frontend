@@ -80,9 +80,9 @@ const Work = () => {
                             <FaPlus size={20} color="gray" className="cursor-pointer" onClick={handleOpen}/>
                         </div>
                         :
-                        <div className="flex ml-auto mr-8 space-x-4">
-                            <MdOutlineDelete size={24} color="gray" className="cursor-pointer" onClick={handleDelete}/>
-                            <IoPencilSharp size={24} color="gray" className="cursor-pointer" onClick={handlePencil}/>
+                        <div className="flex ml-auto mr-8 space-x-6 rounded-full">
+                            <MdOutlineDelete size={26} color="gray" className="cursor-pointer" onClick={handleDelete}/>
+                            <IoPencilSharp size={26} color="gray" className="cursor-pointer" onClick={handlePencil}/>
                         </div>
                     }
 
@@ -98,13 +98,13 @@ const Work = () => {
                         </p>
                     </div>
                     :
-                    <div className="flex ml-4 gap-2">
+                    <div className="flex ml-4 gap-4">
 
                         <ImageSearch query={`${data.company} " company logo"`}
                                      handleImageUrl={(imageUrl) => setImageUrl(imageUrl)}
                                      onError={(err) => setErr(err)}/>
                         <div>
-                            <img src={imageUrl} alt={err} className="w-[140px] h-[120px]"/>
+                            <img src={imageUrl} alt={err} className="w-[140px] h-[100px]"/>
                         </div>
                         <div className="mt-4">
                             <p className="text-[#000000de] font-semibold text-xl">{data.title}</p>

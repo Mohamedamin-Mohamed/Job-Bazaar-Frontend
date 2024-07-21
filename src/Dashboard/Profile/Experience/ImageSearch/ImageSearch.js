@@ -4,7 +4,7 @@ const ImageSearch = ({query, handleImageUrl, onError}) => {
 
     const apiKey = process.env.API_KEY
     const cx = process.env.CX_KEY
-
+    console.log('Here are the keys', apiKey, cx)
     useEffect(() => {
         const abortController = new AbortController();
         const signal = abortController.signal
@@ -14,10 +14,11 @@ const ImageSearch = ({query, handleImageUrl, onError}) => {
                 if (!response.ok) {
                     throw new Error('Failed to fetch image')
                 }
-                console.log('Here is the data')
+
                 const data = await response.json()
+                console.log('Here is the data', data)
                 if (data.items && data.items.length > 0) {
-                    handleImageUrl(data.items[5].link)
+                    handleImageUrl(data.items[3].link)
                 } else {
                     onError('No images found')
                 }
@@ -26,9 +27,9 @@ const ImageSearch = ({query, handleImageUrl, onError}) => {
             }
         }
         fetchImage()
-        return ()=>{
+        return () => {
             abortController.abort("fetch request finished")
         }
-    }, [query]);
+    }, [query, apiKey, cx, handleImageUrl, onError]);
 }
 export default ImageSearch

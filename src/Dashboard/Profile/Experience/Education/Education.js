@@ -83,9 +83,9 @@ const Education = () => {
                         </div>
                         :
 
-                        <div className="flex ml-auto mr-8 space-x-4">
-                            <MdOutlineDelete size={24} color="gray" className="cursor-pointer" onClick={handleDelete}/>
-                            <IoPencilSharp size={24} color="gray" className="cursor-pointer" onClick={handlePencil}/>
+                        <div className="flex ml-auto mr-8 space-x-6">
+                            <MdOutlineDelete size={26} color="gray" className="cursor-pointer" onClick={handleDelete}/>
+                            <IoPencilSharp size={26} color="gray" className="cursor-pointer" onClick={handlePencil}/>
                         </div>
                     }
 
@@ -99,8 +99,7 @@ const Education = () => {
                         </p>
                     </div>
                     :
-                    <div className="flex ml-4 gap-2">
-
+                    <div className="flex ml-4 gap-4">
                         <ImageSearch schoolName={`"${data.school} " school logo"`}
                                      handleImageUrl={(imageUrl) => setImageUrl(imageUrl)}
                                      onError={(err) => setErr(err)}/>

@@ -22,7 +22,7 @@ const TermsOfService = ({open, handleOpen})=>{
                         <h1 className="text-3xl font-semibold mb-6">Terms of Services</h1>
                     </div>
                     <div className="ml-auto">
-                        <IoClose size={25} className="ml-auto text-gray-700 hover:cursor-pointer" onClick={handleOpen}/>
+                        <IoClose size={25} className="ml-auto text-gray-700 hover:cursor-pointer hover:rounded-full hover:border hover:bg-gray-300" onClick={handleOpen}/>
                     </div>
                 </div>
                 <div className="flex-col overflow-y-scroll h-[500px] w-[565px] text-center flex justify-center text-2xl italic">
