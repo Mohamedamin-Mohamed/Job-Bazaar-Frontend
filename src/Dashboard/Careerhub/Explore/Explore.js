@@ -2,10 +2,13 @@ import { IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {useMediaQuery} from "react-responsive";
 
 const Explore = ()=>{
     const[arrowShow, setArrowShow] = useState(false)
     const navigate = useNavigate()
+    const isMediumScreen = useMediaQuery({minWidth: 998});
+
     const handleExplore = (text)=>{
         if(text === 'jobs')
         navigate('explore/jobs')
@@ -29,8 +32,8 @@ const Explore = ()=>{
 
             </div>
             { !arrowShow && (
-                <div className={`flex flex-col md:flex-row gap-6`}>
-                    <div className="border w-full md:w-[400px] h-[288px] bg-[#fff89c] p-6 text-[#5c5500] mt-8">
+                <div className={`flex flex-col md:flex-row gap-6 ${!isMediumScreen ? "h-[600px]" : "h-[500px]"}`}>
+                    <div className={`border w-full md:w-[400px] h-[288px] bg-[#fff89c] p-6 text-[#5c5500] mt-8`}>
                         <div className="flex flex-col mb-6">
                             <h1 className="font-medium text-lg">Jobs</h1>
                             <p className="font-semibold">Browse opportunities for you or friends</p>
