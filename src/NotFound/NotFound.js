@@ -14,7 +14,7 @@ const NotFound = ()=>{
                     <p className="my-3 text-[#4f5666] font-semibold">Sorry, the page you requested was not found</p>
                     <div className="flex text-[#2575a7] space-x-8">
                         <NavLink to="mailto:mohamedamin204080@gmail.com" className="w-[139px] h-[34px] border border-[#2575a7] bg-[#ffffff] font-semibold text-center pt-1">Contact Support</NavLink>
-                        <NavLink to="careerhub" className="bg-[#2575a7] text-white w-[65px] h-[32px] font-semibold text-center pt-1">Home</NavLink>
+                        <NavLink to="/careerhub" className="bg-[#2575a7] text-white w-[65px] h-[32px] font-semibold text-center pt-1">Home</NavLink>
                     </div>
                 </div>
             </div>
