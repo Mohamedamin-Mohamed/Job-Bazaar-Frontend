@@ -2,7 +2,7 @@ import {useState} from "react";
 import {HiOutlinePlus} from "react-icons/hi2";
 import {SlEnergy} from "react-icons/sl";
 import {MdKeyboardArrowDown, MdKeyboardArrowUp} from "react-icons/md";
-import AddSkills from "./Skill/AddSkills";
+import AddSkills from "./AddSkills";
 
 const Skills = () => {
     const [arrow, setArrow] = useState(true)
@@ -14,7 +14,7 @@ const Skills = () => {
     return (
         <div className="flex ml-[40px] md:mt-0">
             <div
-                className={`flex flex-col pl-6 md:w-[840px] mx-2 text-wrap w-[650px] ${!arrow ? "h-[440px]" : "h-[390px]"} border rounded-md mb-4 p-4`}>
+                className={`flex flex-col pl-6 md:w-full mx-2 text-wrap w-[650px] ${!arrow ? "h-[440px]" : "h-[400px]"} border rounded-md mb-4 p-4`}>
                 <div className="flex my-4">
                     <div>
                         <h1 className="text-xl font-semibold">Skills I want</h1>
@@ -50,7 +50,7 @@ const Skills = () => {
                     </div>
                     {!arrow &&
                         <div className="flex justify-center">
-                        <p className="text-lg text-[#4f5666] mt-6">Suggestions will appear here when available</p>
+                        <p className="text-lg text-[#4f5666] mt-10">Suggestions will appear here when available</p>
                         </div>
                         }
                 {open && <AddSkills open={open} handleOpen={handleOpen} />}
