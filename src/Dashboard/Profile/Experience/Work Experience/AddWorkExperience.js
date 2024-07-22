@@ -46,7 +46,7 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
     const handleDateCalendarHide = useCallback((calendar) => {
         if (calendar === "start") setStartDateCalender(false)
         else setEndDateCalender(false)
-    },[])
+    }, [])
 
     useEffect(() => {
         const handleStartDateClickOutside = (event) => {
@@ -232,14 +232,14 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
                         <h1 className="font-semibold text-lg">Location*</h1>
                         <div className="flex w-[403px] h-[34px] border border-[#1a212e]">
                             <input value={location} onChange={(e) => setLocation(e.target.value)}
-                               placeholder="Ex. Mountain View, CA"
-                               className="pl-3 w-full outline-none"/>
-                        {location &&
-                            <div className="ml-auto" onClick={()=> setLocation('')}>
-                                <IoCloseOutline size={18} color="gray"
-                                                className="ml-auto mt-1.5 mr-4 cursor-pointer"/>
-                            </div>
-                        }
+                                   placeholder="Ex. Mountain View, CA"
+                                   className="pl-3 w-full outline-none"/>
+                            {location &&
+                                <div className="ml-auto" onClick={() => setLocation('')}>
+                                    <IoCloseOutline size={18} color="gray"
+                                                    className="ml-auto mt-1.5 mr-4 cursor-pointer"/>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className="flex flex-col mt-6" ref={startDateRef}>
