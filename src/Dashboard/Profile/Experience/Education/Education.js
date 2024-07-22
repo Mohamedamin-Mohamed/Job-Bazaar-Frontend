@@ -17,16 +17,16 @@ const Education = () => {
     const [statusCode, setStatusCode] = useState("")
     const [imageUrl, setImageUrl] = useState("")
     const [err, setErr] = useState("")
+
     const handleOpen = () => {
         setOpen(!open)
     }
     const email = usrInfo.usrEmail
 
     useEffect(() => {
-        const abortController = new AbortController()
         const fetchData = async () => {
             try {
-                const response = await GetEducation(email, abortController)
+                const response = await GetEducation(email)
 
                 if (response == null) return
                 setStatusCode(response.status)
@@ -40,11 +40,8 @@ const Education = () => {
             }
         }
         fetchData()
-        return () => {
-            abortController.abort()
-        }
 
-    }, [email]);
+    },[]);
 
     const handleDelete = async () => {
         const response = await DeleteEducation(usrInfo.usrEmail)
@@ -99,8 +96,9 @@ const Education = () => {
                         </p>
                     </div>
                     :
+
                     <div className="flex ml-4 gap-4">
-                        <ImageSearch schoolName={`"${data.school} " school logo"`}
+                        <ImageSearch query={`${data.school} school logo`}
                                      handleImageUrl={(imageUrl) => setImageUrl(imageUrl)}
                                      onError={(err) => setErr(err)}/>
                         <div>
