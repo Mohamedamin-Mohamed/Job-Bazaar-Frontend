@@ -120,9 +120,9 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
         setEndDateCalender(false)
         setEndDate(null)
     }
-    const preprocessData = (formData)=>{
+    const preprocessData = (formData) => {
         const processedData = {}
-        for(const[key, value] of Object.entries(formData)){
+        for (const [key, value] of Object.entries(formData)) {
             processedData[key] = value === null ? 'Empty' : value;
         }
         return processedData
@@ -144,7 +144,7 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
         }
 
         let processedData = {}
-        if(statusCode === 200){
+        if (statusCode === 200) {
             processedData = preprocessData(education)
         }
 
@@ -172,14 +172,15 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
         setStartDate("")
         setEndDate("")
     }
-    const handleStudyCheckBox = ()=>{
+    const handleStudyCheckBox = () => {
         setStudyCheckBox(!studyCheckBox)
         setEndDate(new Date().toString())
     }
     return (
         <div
             className={!open ? 'hidden' : 'fixed flex justify-center inset-0 items-center text-black backdrop-brightness-50'}>
-            <div className="flex flex-col p-7 text-black rounded-xl bg-white w-[502px] border h-[750px] ease-in-out duration-500">
+            <div
+                className="flex flex-col p-7 text-black rounded-xl bg-white w-[502px] border h-[750px] ease-in-out duration-500">
                 <ToastContainer position="top-center"/>
                 <div className="flex">
                     <div>
