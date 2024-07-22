@@ -25,8 +25,9 @@ const Education = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+            const abortController = new AbortController()
             try {
-                const response = await GetEducation(email)
+                const response = await GetEducation(email, abortController)
 
                 if (response == null) return
                 setStatusCode(response.status)
