@@ -100,7 +100,7 @@ const Work = () => {
                     :
                     <div className="flex ml-4 gap-4">
 
-                        <ImageSearch query={`${data.company} " company logo"`}
+                        <ImageSearch query={`${data.company} company logo`}
                                      handleImageUrl={(imageUrl) => setImageUrl(imageUrl)}
                                      onError={(err) => setErr(err)}/>
                         <div>
