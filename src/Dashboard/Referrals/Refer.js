@@ -19,8 +19,8 @@ const Refer = () => {
     }
     return (
         <>
-            <ReferralsRibbon text={"Refer a Friend"} height={44}/>
-            <div className="flex justify-center items-center flex-col h-screen">
+            <ReferralsRibbon text={"Refer a Friend"}/>
+            <div className="flex items-center flex-col h-screen mt-4">
                 <div className="flex flex-col items-center bg-[#2c8cc90a] border border-dashed border-black w-[300px] h-[470px]">
                     <img src={Image} alt="" className="w-[72px] h-[52px] mt-2 mb-8"/>
                     <h1 className="w-[78%] text-center text-[#367c2b] text-2xl font-semibold">Drop your friend's resume
