@@ -1,40 +1,40 @@
 import {useNavigate} from 'react-router-dom'
-import { FaFacebook } from "react-icons/fa6"
-import { FcGoogle } from "react-icons/fc"
-import { IoClose } from "react-icons/io5"
-import {useSelector, useDispatch} from "react-redux"
+import {FaFacebook} from "react-icons/fa6"
+import {FcGoogle} from "react-icons/fc"
+import {IoClose} from "react-icons/io5"
+import {useDispatch, useSelector} from "react-redux"
 import {setFirstName, setLastName, setLoading} from "../Redux/UserSlice"
 import React, {useState} from "react";
-import { ToastContainer, toast } from 'react-toastify'
+import {toast, ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Submit from "../Buttons/Submit";
 
-const Signup = ()=>{
+const Signup = () => {
     const usr = useSelector(state => state.userInfo)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const[passMatch, setPassMatch] = useState(true)
-    const[userExists, setUserExists] = useState(false);
-    const[responseSignup, setResponseSignup] = useState(null)
-    const[emailAddress, setEmail] = useState("")
-    const[pass1, setPass1] = useState("")
-    const[pass2, setPass2] = useState("")
-    const[disabled, setDisabled] = useState(false)
-    const[name, setName] = useState({firstName: '', lastName: ''})
+    const [passMatch, setPassMatch] = useState(true)
+    const [userExists, setUserExists] = useState(false);
+    const [responseSignup, setResponseSignup] = useState(null)
+    const [emailAddress, setEmail] = useState("")
+    const [pass1, setPass1] = useState("")
+    const [pass2, setPass2] = useState("")
+    const [disabled, setDisabled] = useState(false)
+    const [name, setName] = useState({firstName: '', lastName: ''})
 
     //to be used to check if the password matches the requirement
-    const[passRem, setPassRem] = useState(true)
+    const [passRem, setPassRem] = useState(true)
 
 
-    const handleClose = ()=>{
+    const handleClose = () => {
         navigate("/")
     }
-    const handleLogin = ()=> {
+    const handleLogin = () => {
         navigate("../accounts/login")
     }
-    const handleSubmit = async(e)=> {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         const formData = new FormData(e.target)
@@ -43,13 +43,12 @@ const Signup = ()=>{
             setPassMatch(false)
             setPassRem(true)
             return
-        }
-        else{
+        } else {
             setPassMatch(true)
             //now check if the password is at least 16 characters OR at least 8 characters including a number and a letter
             const hasLetter = /[a-zA-Z]/.test(pass1)
             const hasNumber = /[0-9]/.test(pass1)
-            if(!pass1.length >=16 || !(pass1.length >=8 && hasLetter && hasNumber)) {
+            if (!pass1.length >= 16 || !(pass1.length >= 8 && hasLetter && hasNumber)) {
                 setPassRem(false)
                 return
             }
@@ -62,7 +61,7 @@ const Signup = ()=>{
             firstName: formData.get('firstName'),
             lastName: formData.get('lastName')
         }
-        const response = await fetch('http://localhost:8080/accounts/signup', {
+        const response = await fetch('http://localhost:8080/accounts/signup/', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
@@ -71,15 +70,16 @@ const Signup = ()=>{
             }
         )
         dispatch(setLoading(false))
-        const data = await response.text()
+        const data = await response.json()
+        console.log('HERE IS THE RESPONSE BODY',data)
+        const message = data.message
 
         //in here we should return that users account exists
         if (!response.ok) {//unauthorised
             setDisabled(true)
-            setResponseSignup(data)
             if (response.status === 409) {
                 setDisabled(true)
-                toast.error(data, {
+                toast.error(message, {
                     onClose: () => {
                         setEmail("")
                         setPass1("")
@@ -91,30 +91,33 @@ const Signup = ()=>{
                     }
                 })
             }
-        }
-        else { //201
+        } else { //201
             setDisabled(true)
-            toast.success(data, {
-                onClose: ()=>{
-                    dispatch(setFirstName(name.firstName))
-                    dispatch(setLastName(name.lastName))
+            const user = data.user;
+            const token = data.token;
+            toast.success(message, {
+                onClose: () => {
+                    dispatch(setFirstName(user.firstName))
+                    dispatch(setLastName(user.lastName))
+                    localStorage.setItem("token", token)
+                    localStorage.setItem("user", JSON.stringify(user))
                     navigate("/accounts/login")
                 }
             })
         }
     }
-    const handleChange = (e)=>{
-        const { name, value } = e.target;
-        setName((prevName) =>({
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setName((prevName) => ({
             ...prevName, [name]: value
         }))
     }
 
-    return(
-        <div className= 'flex flex-col justify-center items-center h-screen'>
-            <div className= {`${!passMatch || !passRem  ? 'h-[740px]' :'h-[660px]'} border rounded-lg w-[400px]`}>
-                <IoClose size={30}  className='ml-auto hover:cursor-pointer hover:scale-110' onClick={ handleClose }/>
-                <ToastContainer position={"top-center"} />
+    return (
+        <div className='flex flex-col justify-center items-center h-screen'>
+            <div className={`${!passMatch || !passRem ? 'h-[740px]' : 'h-[660px]'} border rounded-lg w-[400px]`}>
+                <IoClose size={30} className='ml-auto hover:cursor-pointer hover:scale-110' onClick={handleClose}/>
+                <ToastContainer position={"top-center"}/>
                 <form onSubmit={handleSubmit}>
                     <h1 className='text-center font-bold text-xl my-2'>Signup</h1>
                     <div className='flex items-center flex-col'>
@@ -149,7 +152,9 @@ const Signup = ()=>{
                     </button>
                     <div className='flex justify-center'>
                         <p className='mr-1'>Already have an account?</p>
-                        <button className='text-blue-500 hover:underline' disabled={disabled} onClick={handleLogin}>Login</button>
+                        <button className='text-blue-500 hover:underline' disabled={disabled}
+                                onClick={handleLogin}>Login
+                        </button>
                     </div>
                     <div className='flex mt-2'>
                         <div className='border-b w-[40%]'></div>
