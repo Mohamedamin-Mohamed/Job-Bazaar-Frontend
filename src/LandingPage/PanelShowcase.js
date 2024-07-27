@@ -42,17 +42,21 @@ const PanelShowcase = ()=>{
                 body: JSON.stringify({email: usr.usrEmail, password: pass})
             })
             dispatch(setLoading(false))
-            const text = await response.text()
             if(response. ok){
-                //make a request to grab the users firstName and lastName
-                const response = await fetch(`http://localhost:8080/api/person/${usr.usrEmail}`);
-                const names = await response.json();
+                const data = await response.json();
+                console.log('Here is the data', data)
+                const message = data.message
+                const user = data.user
+                const token = data.token
+                console.log('Here is the user', user)
                 setDisabled(true)
                 setPassIncorrectShow(false)
-                toast.success(text, {
+                toast.success(message, {
                     onClose: ()=>{
-                        dispatch(setFirstName(names.firstName))
-                        dispatch(setLastName(names.lastName))
+                        dispatch(setFirstName(user.firstName))
+                        dispatch(setLastName(user.lastName))
+                        localStorage.setItem("token", token)
+                        localStorage.setItem("user", user)
                         navigate('careerhub')
                     }
                 })
@@ -71,20 +75,26 @@ const PanelShowcase = ()=>{
                 },
                 body: JSON.stringify({email: usr.usrEmail, password: pass, firstName: name.firstName, lastName: name.lastName})
             })
-            const data = await response.text()
 
             dispatch(setLoading(false))
             if(response.status === 201){ //account created successfully
+                const data = await response.json()
+                const message = data.message
+                const token = data.token
+                const user = data.user
                 setDisabled(true)
-                toast.success(data.substring(0, 28), {
+                toast.success(message, {
                     onClose: ()=>{
-                        dispatch(setFirstName(name.firstName))
-                        dispatch(setLastName(name.lastName))
+                        dispatch(setFirstName(user.firstName))
+                        dispatch(setLastName(user.lastName))
+                        localStorage.setItem("token", token)
+                        localStorage.setItem("user", JSON.stringify(user))
                         navigate('/accounts/login')
                     }
                 })
             }
             else{
+                const data = await response.text()
                 toast.error(data, {
                     onClose: ()=>{
                         dispatch(setSecondPanel(false))
