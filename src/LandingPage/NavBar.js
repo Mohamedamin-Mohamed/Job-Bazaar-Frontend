@@ -16,6 +16,8 @@ const NavBar = ()=>{
     const[community, setCommunity] = useState(false)
     const[jobs, setJobs] = useState(false)
     const[companies, setCompanies] = useState(false)
+    const[hovered, setHovered] = useState(false)
+
     const handleNavigation = (path)=>{
         if(path === 'login')
         navigate('/accounts/login')
@@ -43,9 +45,9 @@ const NavBar = ()=>{
     return (
         <div className="w-full">
             <div className="flex justify-between pb-4 border-b">
-                <ReactTyped className="mt-8 mx-16 font-bold text-[#00A264] text-4xl" strings={['Job Bazaar']}
+                <ReactTyped className="mt-8 mx-16 font-bold text-[#367c2b] text-4xl" strings={['Job Bazaar']}
                             typeSpeed={90}/>
-                <nav className="hidden md:flex list-none space-x-12 mt-10 font-medium text-lg hover:cursor-pointer">
+                <nav className="hidden md:flex list-none space-x-12 mt-10 text-lg text-[#367c2b] font-semibold hover:cursor-pointer">
                     <li className="hover:underline" onMouseEnter={()=> handleHover('community')}>Community</li>
                     <li className="hover:underline" onMouseEnter={()=> handleHover('jobs')}>Jobs</li>
                     <li className="hover:underline" onMouseEnter={()=> handleHover('companies')}>Companies</li>
@@ -60,10 +62,13 @@ const NavBar = ()=>{
                 )}
                 <div className={`${isMediumScreen ? "flex flex-row gap-x-8 mx-4 font-medium text-lg" : navShow ? "flex flex-col space-y-4  py-1 px-3 h-[120px] mt-7" : "hidden"} 
                 mt-8 relative`}>
-                    <button className="hover:underline" onClick={()=>handleNavigation('signup')}>Join now</button>
-                    <div className="flex bg-black w-[120px] h-[42px] justify-center hover:bg-[#00A264] rounded-md" onClick={()=>handleNavigation('login')}>
-                        <BsBoxArrowInRight className="mt-2.5 mr-4 hover:cursor-pointer" color="white" size={25}/>
-                        <button className="text-white mr-3" >Sign in</button>
+                    <button className="hover:underline text-[#367c2b] font-semibold text-xl" onClick={()=>handleNavigation('signup')}>Join now</button>
+                    <div className="flex w-[120px] border border-[#367c2b] h-[42px] justify-center hover:bg-[#367c2b] hover:text-white rounded-md text-[#367c2b]"
+                         onMouseEnter={()=> setHovered(true)} onMouseLeave={()=> setHovered(false)}
+                         onClick={()=>handleNavigation('login')}>
+
+                        <BsBoxArrowInRight className="mt-2.5 mr-4 hover:cursor-pointer" color={`${hovered ? "white" :"green"}`} size={25}/>
+                        <button className="mr-3" >Sign in</button>
                     </div>
                 </div>
             </div>
