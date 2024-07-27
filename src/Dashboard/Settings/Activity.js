@@ -50,7 +50,7 @@ const Activity = () => {
                         <MdKeyboardArrowUp size={25}/>
                     </div>
                         {toggle && (
-                            <div className="absolute md:ml-[726px] md:top-[494px] top-[542px] ml-[209px] flex flex-col justify-start mt-[224px] border w-[200px] h-[90px] p-2 bg-white">
+                            <div className="absolute md:ml-[726px] md:top-[448px] top-[502px] ml-[209px] flex flex-col justify-start mt-[224px] border w-[200px] h-[90px] p-2 bg-white">
                             <button className="flex justify-start p-1" onClick={() => handleText('Off')}>Off</button>
                             <button className="flex justify-start p-1" onClick={() => handleText('On')}>On</button>
                             </div>
