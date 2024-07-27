@@ -10,15 +10,15 @@ import 'react-toastify/dist/ReactToastify.css'
 import {GoogleLogin, GoogleOAuthProvider} from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode"
 import Submit from '../Buttons/Submit'
+import emailLookup from "./EmailLookup";
 
 const Login = ()=>{
-    const usr = useSelector(state => state.userInfo)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [responseLogin, setResponseLogin] = useState(null)
     const[statusCode, setStatusCode] = useState(null)
     const[disabled, setDisabled] = useState(false)
-
+    const[email, setUserEmail] = useState("")
     const handleClose = ()=>{
         navigate("/")
     }
@@ -44,17 +44,19 @@ const Login = ()=>{
             body: JSON.stringify(requestBody)
         })
         dispatch(setLoading(false))
-
-        const data = await response.text()
         if(response.ok){
+            const data = await response.json()
+            const message = data.message
             setDisabled(true)
-            const response = await fetch(`http://localhost:8080/api/person/${usr.usrEmail}`);
-            const names = await response.json();
-            toast.success(data, {
+            const token = data.token
+            const user = data.user
+            toast.success(message, {
                 onClose: ()=>{
-                    dispatch(setUsrEmail(requestBody.email))
-                    dispatch(setFirstName(names.firstName))
-                    dispatch(setLastName(names.lastName))
+                    dispatch(setUsrEmail(user.email))
+                    dispatch(setFirstName(user.firstName))
+                    dispatch(setLastName(user.lastName))
+                    localStorage.setItem("token", token)
+                    localStorage.setItem("user", JSON.stringify(user))
                     navigate("/careerhub")
                 }
             })
@@ -62,6 +64,7 @@ const Login = ()=>{
 
         }
         else{
+            const data = await response.text()
             //regardless of response status code 401 and 404, set the return response
             setResponseLogin(data)
 
@@ -105,7 +108,7 @@ const Login = ()=>{
                     <form onSubmit={(event) => handleSubmit(event)}>
                         <h1 className='text-center font-bold text-xl my-2'>Login</h1>
                         <div className='flex items-center flex-col'>
-                            <input placeholder='Email' type='email' name='email' disabled={disabled}
+                            <input value={email} onChange={(e)=> setUserEmail(e.target.value)} placeholder='Email' type='email' name='email' disabled={disabled}
                                    className='border rounded-lg p-2 w-[91%] mb-6 mt-2 mr-4 outline-none focus:border-gray-500'
                                    required/>
                             {statusCode === 404 &&
