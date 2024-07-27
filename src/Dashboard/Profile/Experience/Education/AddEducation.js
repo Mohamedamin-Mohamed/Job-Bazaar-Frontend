@@ -123,7 +123,7 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
     const preprocessData = (formData) => {
         const processedData = {}
         for (const [key, value] of Object.entries(formData)) {
-            processedData[key] = value === null ? 'Empty' : value;
+            processedData[key] = value === null ? '' : value;
         }
         return processedData
     }
