@@ -23,6 +23,7 @@ const Signup = () => {
     const [pass2, setPass2] = useState("")
     const [disabled, setDisabled] = useState(false)
     const [name, setName] = useState({firstName: '', lastName: ''})
+    const[hovered, setHovered] = useState(false)
 
     //to be used to check if the password matches the requirement
     const [passRem, setPassRem] = useState(true)
@@ -32,7 +33,7 @@ const Signup = () => {
         navigate("/")
     }
     const handleLogin = () => {
-        navigate("../accounts/login")
+        navigate("/accounts/login")
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -114,30 +115,30 @@ const Signup = () => {
     }
 
     return (
-        <div className='flex flex-col justify-center items-center h-screen'>
-            <div className={`${!passMatch || !passRem ? 'h-[740px]' : 'h-[660px]'} border rounded-lg w-[400px]`}>
-                <IoClose size={30} className='ml-auto hover:cursor-pointer hover:scale-110' onClick={handleClose}/>
+        <div className='flex flex-col justify-center items-center h-screen bg-[#f0f2f5]'>
+            <div className={`${!passMatch || !passRem ? 'h-[740px]' : 'h-[660px]'} border rounded-lg w-[400px] bg-white`}>
+                <IoClose size={30} className='ml-auto hover:cursor-pointer hover:scale-110 mt-2 mr-2 hover:rounded-lg hover:border' onClick={handleClose}/>
                 <ToastContainer position={"top-center"}/>
                 <form onSubmit={handleSubmit}>
-                    <h1 className='text-center font-bold text-xl my-2'>Signup</h1>
+                    <h1 className='text-center text-[#367c2b] font-semibold text-2xl my-2'>Signup</h1>
                     <div className='flex items-center flex-col'>
                         <input value={emailAddress} disabled={disabled} onChange={(e) => setEmail(e.target.value)}
                                placeholder='Email' type='email' name='email'
-                               className='border rounded-lg p-2 w-[90%] my-3 outline-none focus:border-gray-500'
+                               className='border rounded-lg p-2 w-[90%] my-3 outline-none focus:border-[#367c2b]'
                                required/>
                         <input value={name.firstName} disabled={disabled} onChange={handleChange}
                                placeholder="First Name" name="firstName" type="text"
-                               className="border rounded-lg p-2 w-[90%] mb-4 outline-none focus:border-gray-500"/>
+                               className="border rounded-lg p-2 w-[90%] mb-4 outline-none focus:border-[#367c2b]"/>
                         <input value={name.lastName} disabled={disabled} onChange={handleChange}
                                placeholder="Last Name" name="lastName" type="text"
-                               className="border rounded-lg p-2 w-[90%] mb-4 outline-none focus:border-gray-500"/>
+                               className="border rounded-lg p-2 w-[90%] mb-4 outline-none focus:border-[#367c2b]"/>
                         <input value={pass1} disabled={disabled} onChange={(e) => setPass1(e.target.value)}
                                placeholder='Create Password' name='pass1' type='password'
-                               className='border rounded-lg p-2 w-[90%] mb-4 outline-none focus:border-gray-500'
+                               className='border rounded-lg p-2 w-[90%] mb-4 outline-none focus:border-[#367c2b]'
                                required/>
                         <input value={pass2} disabled={disabled} onChange={(e) => setPass2(e.target.value)}
                                placeholder='Confirm Password' name='pass2' type='password'
-                               className='border rounded-lg p-2 w-[90%] mb-1 outline-none focus:border-gray-500'
+                               className='border rounded-lg p-2 w-[90%] mb-1 outline-none focus:border-[#367c2b]'
                                required/>
                         {!passMatch &&
                             <p className='bg-[#ffebe8] p-2 my-3 rounded-md w-[90%] mr-auto ml-5'>Passwords don't
@@ -147,12 +148,13 @@ const Signup = () => {
                                 OR at least 8 characters including a number and a letter.</p>}
                     </div>
                     <button disabled={disabled}
-                            className="w-[90%] bg-blue-600 rounded-lg my-4 ml-3 p-2 text-white flex justify-center">
-                        <Submit text={"Signup"} disabled={disabled}/>
+                            className="w-[90%] hover:bg-[#367c2b] border border-[#367c2b] rounded-lg my-4 ml-5 p-2 text-white flex justify-center"
+                            onMouseEnter={()=> setHovered(true)} onMouseLeave={()=> setHovered(false)}>
+                        <Submit text={"Signup"} disabled={disabled} hovered={hovered}/>
                     </button>
                     <div className='flex justify-center'>
                         <p className='mr-1'>Already have an account?</p>
-                        <button className='text-blue-500 hover:underline' disabled={disabled}
+                        <button className='text-[#367c2b] font-semibold hover:underline' disabled={disabled}
                                 onClick={handleLogin}>Login
                         </button>
                     </div>
