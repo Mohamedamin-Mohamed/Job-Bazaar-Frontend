@@ -63,7 +63,7 @@ const NavBar = ()=>{
                 <div className={`${isMediumScreen ? "flex flex-row gap-x-8 mx-4 font-medium text-lg" : navShow ? "flex flex-col space-y-4  py-1 px-3 h-[120px] mt-7" : "hidden"} 
                 mt-8 relative`}>
                     <button className="hover:underline text-[#367c2b] font-semibold text-xl" onClick={()=>handleNavigation('signup')}>Join now</button>
-                    <div className="flex w-[120px] border border-[#367c2b] h-[42px] justify-center hover:bg-[#367c2b] hover:text-white rounded-md text-[#367c2b]"
+                    <div className="flex w-[120px] hover:cursor-pointer border border-[#367c2b] h-[42px] justify-center hover:bg-[#367c2b] hover:text-white rounded-md text-[#367c2b]"
                          onMouseEnter={()=> setHovered(true)} onMouseLeave={()=> setHovered(false)}
                          onClick={()=>handleNavigation('login')}>
 
