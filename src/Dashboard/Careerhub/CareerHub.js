@@ -5,14 +5,14 @@ import Tasks from "./Tasks";
 import Interests from "./Interests";
 import Explore from "./Explore/Explore";
 import {useMediaQuery} from "react-responsive";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
 
 const CareerHub = () => {
     const isMediumScreen = useMediaQuery({minWidth: 998}); // Set the breakpoint for md screens
     const navigate = useNavigate()
-
+    const[file, setFile] = useState("")
     useEffect(() => {
         const token = localStorage.getItem("token")
 
@@ -43,11 +43,18 @@ const CareerHub = () => {
         }
         validateToken()
     }, [])
+    const handleChange = (e)=>{
+        console.log('Here it is', e.target.files)
+        setFile(URL.createObjectURL(e.target.files[0]))
+    }
     return (
         <>
             <NavBar/>
             <Ribbon/>
             <div className={`flex ${isMediumScreen ? "gap-x-6" : "flex-col gap-y-6"} justify-center mt-1`}>
+                {/*<h1>Upload an Image</h1>*/}
+                {/*<input type="file" onChange={handleChange} />*/}
+                {/*<img src={file} alt="" />*/}
                 <ToastContainer position="top-center"/>
                 {isMediumScreen ? (
                     <>
