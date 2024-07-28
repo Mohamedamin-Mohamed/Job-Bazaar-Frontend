@@ -44,7 +44,7 @@ const Work = () => {
             abortController.abort()
         }
 
-    }, [email]);
+    }, []);
 
     const handleDelete = async () => {
         const response = await DeleteWorkExperience(usrInfo.usrEmail)
