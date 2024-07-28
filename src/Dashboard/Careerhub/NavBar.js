@@ -120,11 +120,12 @@ const NavBar = () => {
                     Interests</NavLink>
                 <NavLink to='/careerhub/profile/experience' className="hover:text-[#367c2b] font-medium text-lg pl-2">My
                     Profile</NavLink>
-                <div className="flex hover:cursor-pointer" onClick={handleJobs} ref={jobsRef}>
+                <div className="flex hover:cursor-pointer" onClick={handleJobs} >
                     <p className="hover:text-[#367c2b] font-medium text-lg pl-2">Jobs</p>
                     {!jobs ? <MdArrowDropDown size={28} color="black"/> :
                         <IoMdArrowDropup size={24} color="black"/>}
                 </div>
+                <div ref={jobsRef}>
                 {jobs && (
                     <div
                         className="flex justify-center absolute left-1/2 transform -translate-x-1/2 w-full z-50 hover:cursor-pointer"
@@ -136,6 +137,7 @@ const NavBar = () => {
                         </nav>
                     </div>
                 )}
+                </div>
                 <div className="flex hover:cursor-pointer" onClick={handleReferrals}>
                     <p className="hover:text-[#367c2b] font-medium text-lg px-2">Referrals</p>
                     {!referrals ? <MdArrowDropDown size={28} color="black"/> :
