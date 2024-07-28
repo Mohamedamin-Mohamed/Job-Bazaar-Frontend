@@ -1,7 +1,6 @@
 import {useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {setLocationInfo} from "../../Redux/LocationSlice";
-import {retry} from "@reduxjs/toolkit/query";
 
 const AddressFetcher = ({latitude, longitude, onError}) => {
     const dispatch = useDispatch()

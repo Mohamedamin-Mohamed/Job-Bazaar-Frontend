@@ -1,35 +1,47 @@
 import {useEffect} from "react";
 
 const ImageSearch = ({query, handleImageUrl, onError}) => {
-
-    const apiKey = process.env.API_KEY
-    const cx = process.env.CX_KEY
-    console.log('Here are the keys', apiKey, cx)
     useEffect(() => {
         const abortController = new AbortController();
         const signal = abortController.signal
+        console.log('Here is the query', query)
         const fetchImage = async () => {
+            const token = localStorage.getItem("token")
             try {
-                const response = await fetch(`https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&cx=${cx}&key=${apiKey}&searchType=image`, {signal})
-                if (!response.ok) {
-                    throw new Error('Failed to fetch image')
-                }
+                if (token) {
+                    const response = await fetch(`http://localhost:8080/api/fetch-image/imageUrl?query=${query}`, {
+                        method: 'GET',
+                        headers:{
+                            'Authorization' : `Bearer ${token}`
+                        },
+                        signal
+                    })
 
-                const data = await response.json()
-                console.log('Here is the data', data)
-                if (data.items && data.items.length > 0) {
-                    handleImageUrl(data.items[3].link)
-                } else {
-                    onError('No images found')
+                    if (!response.ok) {
+                        throw new Error();
+                    }
+                    const dataJson = await response.json()
+
+                    const data = dataJson.data
+                    if (data.items && data.items.length > 0) {
+                        handleImageUrl(data.items[7].link)
+                    } else {
+                        console.log('No images found')
+                        onError('No images found')
+                    }
                 }
-            } catch (err) {
-                onError(err.message)
             }
+            catch
+                (err)
+                {
+                    onError("Image couldn't be fetched")
+                    //throw err
+                }
         }
         fetchImage()
         return () => {
             abortController.abort("fetch request finished")
         }
-    }, [query, apiKey, cx, handleImageUrl, onError]);
+    }, [query]);
 }
 export default ImageSearch

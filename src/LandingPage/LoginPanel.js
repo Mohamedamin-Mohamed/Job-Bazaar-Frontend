@@ -79,9 +79,9 @@ const LoginPanel = ()=>{
                         </div>
                     )
                 }
-                <button className="hover:bg-[#00a264] p-3 border border-gray-600 rounded-md font-medium mt-5"
+                <button className="hover:bg-[#367c2b] hover:text-white text-[#367c2b] font-semibold p-3 border border-gray-600 rounded-md mt-5"
                         type="submit"
-                        onClick={handleValidation}> {usr.loading ? <ClipLoader color="#36d7b7" /> : 'Continue with email'}</button>
+                        onClick={handleValidation}> {usr.loading ? <ClipLoader color="#36d7b7" /> : "Continue with email"}</button>
 
             </div>
         </>

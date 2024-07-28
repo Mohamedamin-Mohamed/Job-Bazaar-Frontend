@@ -26,6 +26,8 @@ const NavBar = () => {
         dispatch(clearLocationInfo())
         dispatch(setSecondPanel(false))
         dispatch(setFirstPanel(true))
+        localStorage.removeItem("token")
+        localStorage.removeItem("user")
         navigate('/')
     }
     const handleMenuGrid = () => {

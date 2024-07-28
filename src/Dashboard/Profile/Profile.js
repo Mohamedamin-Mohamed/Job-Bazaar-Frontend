@@ -13,8 +13,7 @@ const Profile = () => {
 
     useEffect(() => {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
+            navigator.geolocation.getCurrentPosition((position) => {
                     const {latitude, longitude} = position.coords
                     setLocation({latitude, longitude})
                 },
@@ -25,12 +24,12 @@ const Profile = () => {
         } else {
             setError('Geolocation is not supported by this browser. ')
             toast.error(error, {
-                onClose: ()=> {
+                onClose: () => {
                     window.location.reload()
                 }
             })
         }
-    }, []);
+    }, [error]);
     return (
         <div>
             <NavBar/>
@@ -49,7 +48,7 @@ const Profile = () => {
                     setError(errorMsg)
                 }}/>
             )}
-            <Outlet />
+            <Outlet/>
         </div>
     )
 }

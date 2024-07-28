@@ -1,13 +1,13 @@
 import {useSelector} from "react-redux";
 
-const Login = (props)=>{
+const Submit = ({text, disabled, hovered})=>{
     const usr = useSelector(state => state.userInfo)
 
     return (
         <button
-           disabled={props.disabled} className={`flex items-center bg-blue-600  gap-1 px-4 py-2 cursor-pointer text-white font-semibold tracking-widest rounded-md ${props.disabled ? '' : 'hover:gap-x-6 hover:translate-x-3' }duration-300 `}
+           disabled={disabled} className={`flex items-center gap-1 px-4 text-${hovered ?"white" : "[#367c2b]"} py-2 cursor-pointer font-semibold tracking-widest rounded-md ${disabled ? '' : 'hover:gap-x-6 hover:translate-x-3' }duration-300 `}
         >
-            {props.text}
+            {text}
             <svg
                 className="w-5 h-5"
                 stroke="currentColor"
@@ -30,4 +30,4 @@ const Login = (props)=>{
     )
 
 }
-export default Login
+export default Submit

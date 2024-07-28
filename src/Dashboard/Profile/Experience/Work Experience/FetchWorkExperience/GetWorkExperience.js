@@ -1,6 +1,13 @@
 const GetWorkExperience = async (email, abortController)=>{
-    return await fetch(`http://localhost:8080/api/work-experience/get/${email}`, {
-        signal: abortController.signal
-    })
+    const token = localStorage.getItem("token")
+    if(token) {
+        return await fetch(`http://localhost:8080/api/work-experience/get/${email}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            signal: abortController.signal,
+        })
+    }
 }
 export default GetWorkExperience

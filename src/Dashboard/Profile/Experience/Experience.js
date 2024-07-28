@@ -15,7 +15,7 @@ const Experience = () => {
                         <div>
                             <ProfileCompleteness/>
                             <Education/>
-                            <Work />
+                            <Work/>
                         </div>
                         <div>
                             <EmployeeInfo/>
@@ -28,7 +28,7 @@ const Experience = () => {
                     <ContactLinks/>
                     <ProfileCompleteness/>
                     <Education/>
-                    <Work />
+                    <Work/>
                     <EmployeeInfo/>
                 </div>
             }

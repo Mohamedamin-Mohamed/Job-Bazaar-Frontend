@@ -1,7 +1,13 @@
 const GetEducation = async (email, abortController)=>{
-
-    return await fetch(`http://localhost:8080/api/user-education/get/${email}`, {
-        signal: abortController.signal
-    })
+    const token = localStorage.getItem("token")
+    if(token) {
+        return await fetch(`http://localhost:8080/api/user-education/get/${email}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            signal: abortController.signal
+        })
+    }
 }
 export default GetEducation

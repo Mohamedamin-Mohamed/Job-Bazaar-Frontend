@@ -1,17 +1,17 @@
 import {useNavigate} from "react-router-dom";
 
-const Back = (props)=>{
+const Back = ({disabled, margin, text})=>{
     const navigate = useNavigate()
     const handleBacktickLogin = ()=>{
-        navigate("../accounts/login")
+        navigate("/accounts/login")
     }
     return (
         <button onClick={ handleBacktickLogin}
-            type="button" disabled={props.disabled}
+            type="button" disabled={disabled}
             className="w-38 rounded-2xl h-14 relative text-gray-500 font-clear text-xs font-semibold group  "
         >
             <div
-                className={`bg-blue-600 rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] ${props.disabled ? '' :'group-hover:w-[184px] z-10 duration-500'}`}
+                className={`bg-[#367c2b] rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] ${disabled ? '' :'group-hover:w-[184px] z-10 duration-500'}`}
             >
                 <svg
                     width="25px"
@@ -29,7 +29,7 @@ const Back = (props)=>{
                     ></path>
                 </svg>
             </div>
-            <p className={`translate-x-2 ml-${props.margin}`}>{props.text}</p>
+            <p className={`translate-x-2 ml-${margin} text-[#367c2b] font-semibold text-sm`}>{text}</p>
         </button>
     )
 }
