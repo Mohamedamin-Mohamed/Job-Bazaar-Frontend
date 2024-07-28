@@ -1,7 +1,6 @@
 import {IoIosArrowDown, IoIosArrowForward} from "react-icons/io";
 import {useEffect, useRef, useState} from "react";
 import {MdArrowDropDown, MdArrowDropUp} from "react-icons/md";
-import {IoMdArrowDropup} from "react-icons/io";
 
 const Positions = () => {
     const [positions, setPositions] = useState(false)
@@ -31,7 +30,7 @@ const Positions = () => {
             document.removeEventListener('mousedown', handleClickOutside)
         }
     }, [setSelected]);
-    console.log('select is ', selected)
+
     return (
             <div className="ml-2 ">
 

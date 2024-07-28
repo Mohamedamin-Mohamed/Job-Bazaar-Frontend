@@ -65,11 +65,11 @@ const DateRange = () => {
                         <div className="flex text-gray border w-[280px] p-1.5 ">
                             <input placeholder="Start date" value={getFormattedDate(startDate)}
                                    className="w-[100px] h-[24px] outline-none focus:border-b-2 focus:border-[#367c2b] pb-1 cursor-pointer"
-                                   onClick={handleCalendarShow}/>
+                                   onClick={handleCalendarShow} onChange={(e)=> setStartDate(e.target.value)}/>
                             <MdArrowRightAlt size={24} color="gray" className="ml-auto mr-2"/>
                             <input placeholder="End date" value={getFormattedDate(endDate)}
                                    className="w-[100px] h-[24px] outline-none focus:border-b-2 focus:border-[#367c2b] pb-1 ml-2 cursor-pointer"
-                                   onClick={handleCalendarShow}/>
+                                   onClick={handleCalendarShow} onChange={(e)=> setStartDate(e.target.value)}/>
                             <BsCalendar4 size={14} color="gray" className="ml-auto mr-1 mt-1 cursor-pointer"/>
                         </div>
                     </div>

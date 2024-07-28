@@ -24,6 +24,7 @@ const Signup = () => {
     const [disabled, setDisabled] = useState(false)
     const [name, setName] = useState({firstName: '', lastName: ''})
     const[hovered, setHovered] = useState(false)
+    const[role, setRole] = useState("")
 
     //to be used to check if the password matches the requirement
     const [passRem, setPassRem] = useState(true)
@@ -60,7 +61,8 @@ const Signup = () => {
             email: formData.get('email'),
             password: pass1,
             firstName: formData.get('firstName'),
-            lastName: formData.get('lastName')
+            lastName: formData.get('lastName'),
+            role: formData.get("role")
         }
         const response = await fetch('http://localhost:8080/accounts/signup/', {
                 method: 'POST',
@@ -71,8 +73,8 @@ const Signup = () => {
             }
         )
         dispatch(setLoading(false))
+
         const data = await response.json()
-        console.log('HERE IS THE RESPONSE BODY',data)
         const message = data.message
 
         //in here we should return that users account exists
@@ -86,6 +88,7 @@ const Signup = () => {
                         setPass1("")
                         setPass2("")
                         setName({firstName: '', lastName: ''})
+                        setRole("")
                         setUserExists(true)
                         setPassRem(true)
                         setDisabled(false)
@@ -116,7 +119,7 @@ const Signup = () => {
 
     return (
         <div className='flex flex-col justify-center items-center h-screen bg-[#f0f2f5]'>
-            <div className={`${!passMatch || !passRem ? 'h-[740px]' : 'h-[660px]'} border rounded-lg w-[400px] bg-white`}>
+            <div className={`${!passMatch || !passRem ? 'h-[780px]' : 'h-[720px]'} border rounded-lg w-[400px] bg-white`}>
                 <IoClose size={30} className='ml-auto hover:cursor-pointer hover:scale-110 mt-2 mr-2 hover:rounded-lg hover:border' onClick={handleClose}/>
                 <ToastContainer position={"top-center"}/>
                 <form onSubmit={handleSubmit}>
@@ -132,6 +135,12 @@ const Signup = () => {
                         <input value={name.lastName} disabled={disabled} onChange={handleChange}
                                placeholder="Last Name" name="lastName" type="text"
                                className="border rounded-lg p-2 w-[90%] mb-4 outline-none focus:border-[#367c2b]"/>
+                        <select value={role} disabled={disabled} name="role" onChange={(e)=> setRole(e.target.value)}
+                               className="border rounded-lg p-2 w-[90%] mb-4 outline-none focus:border-[#367c2b] cursor-pointer" required>
+                            <option value="" disabled selected>Select your role</option>
+                            <option >Employer</option>
+                            <option>Applicant</option>
+                        </select>
                         <input value={pass1} disabled={disabled} onChange={(e) => setPass1(e.target.value)}
                                placeholder='Create Password' name='pass1' type='password'
                                className='border rounded-lg p-2 w-[90%] mb-4 outline-none focus:border-[#367c2b]'
@@ -147,11 +156,11 @@ const Signup = () => {
                             <p className="bg-[#ffebe8] p-2 my-3 rounded-md w-[90%] mr-auto ml-5"> At least 16 characters
                                 OR at least 8 characters including a number and a letter.</p>}
                     </div>
-                    <button disabled={disabled}
+                    <div disabled={disabled}
                             className="w-[90%] hover:bg-[#367c2b] border border-[#367c2b] rounded-lg my-4 ml-5 p-2 text-white flex justify-center"
-                            onMouseEnter={()=> setHovered(true)} onMouseLeave={()=> setHovered(false)}>
+                            onMouseEnter={() => setHovered(true)} onMouseLeave={()=> setHovered(false)}>
                         <Submit text={"Signup"} disabled={disabled} hovered={hovered}/>
-                    </button>
+                    </div>
                     <div className='flex justify-center'>
                         <p className='mr-1'>Already have an account?</p>
                         <button className='text-[#367c2b] font-semibold hover:underline' disabled={disabled}

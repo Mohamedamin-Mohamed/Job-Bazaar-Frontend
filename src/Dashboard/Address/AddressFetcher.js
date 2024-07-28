@@ -13,8 +13,8 @@ const AddressFetcher = ({latitude, longitude, onError}) => {
             try {
                 const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}
                &lon=${longitude}`, {signal});
+
                 const data = await response.json()
-                console.log(data)
                 let address = {
                     city: data.address.city || data.address.village || data.address.town || data.address.municipality,
                     states: data.address.state,

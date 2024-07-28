@@ -31,7 +31,6 @@ const PanelShowcase = ()=>{
         //in here we primarily check if the password is correct or not
         if(usr.credentials){
             dispatch(setLoading(true))
-            console.log('First name is ', name.firstName, name.lastName)
 
             //make a login request
             const response = await fetch('http://localhost:8080/accounts/login/', {
@@ -44,11 +43,10 @@ const PanelShowcase = ()=>{
             dispatch(setLoading(false))
             if(response. ok){
                 const data = await response.json();
-                console.log('Here is the data', data)
                 const message = data.message
                 const user = data.user
                 const token = data.token
-                console.log('Here is the user', user)
+
                 setDisabled(true)
                 setPassIncorrectShow(false)
                 toast.success(message, {
@@ -56,7 +54,7 @@ const PanelShowcase = ()=>{
                         dispatch(setFirstName(user.firstName))
                         dispatch(setLastName(user.lastName))
                         localStorage.setItem("token", token)
-                        localStorage.setItem("user", user)
+                        localStorage.setItem("user", JSON.stringify(user))
                         navigate('careerhub')
                     }
                 })
@@ -105,7 +103,6 @@ const PanelShowcase = ()=>{
         }
     }
     const handlePanelsShow = ()=>{
-        console.log('Received')
         dispatch(setSecondPanel(false))
         dispatch(setFirstPanel(true))
     }
