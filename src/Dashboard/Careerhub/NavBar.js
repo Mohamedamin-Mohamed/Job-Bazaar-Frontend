@@ -120,22 +120,24 @@ const NavBar = () => {
                     Interests</NavLink>
                 <NavLink to='/careerhub/profile/experience' className="hover:text-[#367c2b] font-medium text-lg pl-2">My
                     Profile</NavLink>
-                <div className="flex hover:cursor-pointer" onClick={handleJobs} ref={jobsRef}>
+                <div className="flex hover:cursor-pointer" onClick={handleJobs} >
                     <p className="hover:text-[#367c2b] font-medium text-lg pl-2">Jobs</p>
                     {!jobs ? <MdArrowDropDown size={28} color="black"/> :
                         <IoMdArrowDropup size={24} color="black"/>}
                 </div>
+                <div ref={jobsRef}>
                 {jobs && (
                     <div
                         className="flex justify-center absolute left-1/2 transform -translate-x-1/2 w-full z-50 hover:cursor-pointer"
                         onClick={handleJobs}>
                         <nav className={`flex flex-col mt-12 bg-white p-[12px] w-[220px] ${role === 'Employer' ? "h-[124px]" : "h-[94px]"} ml-96 border`}>
                             <NavLink to='/careerhub/explore/jobs' className="p-1">Job Search</NavLink>
-                            <NavLink to='/careerhub/my/jobs/saved' className="p-1">My Jobs</NavLink>
-                            {role === "Employer" ? <NavLink to='/careerhub/my/jobs/saved' className="p-1">Post a job</NavLink> : "" }
+                            <NavLink to={role === "Employer" ? '/careerhub/my/jobs/uploaded' : '/careerhub/my/jobs/saved'} className="p-1">My Jobs</NavLink>
+                            {role === "Employer" ? <NavLink to='/careerhub/jobs/upload' className="p-1">Post a job</NavLink> : "" }
                         </nav>
                     </div>
                 )}
+                </div>
                 <div className="flex hover:cursor-pointer" onClick={handleReferrals}>
                     <p className="hover:text-[#367c2b] font-medium text-lg px-2">Referrals</p>
                     {!referrals ? <MdArrowDropDown size={28} color="black"/> :
@@ -168,7 +170,7 @@ const NavBar = () => {
                         <IoMdArrowDropup size={26} color="black" className="mt-2"/>}
                 </div>
                 {userSettingDropDown && (
-                    <div className="mt-[36px]">
+                    <div>
                         <nav
                             className={"flex flex-col absolute right-0 mt-[22px] mr-4 w-[350px] border p-4 bg-white z-50"}
                             ref={dropDownRef} onClick={handleUserSettingDropDown}>

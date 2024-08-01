@@ -15,8 +15,8 @@ const Explore = () => {
             navigate('explore/projects')
     }
     return (
-        <div className="flex flex-col md:flex-row w-full ml-8 md:mb-8">
-            <div className={` ${arrowShow ? "h-[12px]" : "h-[780px]"} border p-6 mr-8 mt-10 `}>
+        <div className="flex flex-col md:flex-row md:mb-8">
+            <div className={` ${arrowShow ? "h-[100px]" : "h-[780px]"} border w-full p-6 mr-8 mt-10 `}>
                 <div className={`${!arrowShow ? "border-b" : ""} pb-4`}>
                     <div className="flex">
                         <div className="flex flex-col w-[760px]">

@@ -1,8 +1,7 @@
-import NavBar from "../Careerhub/NavBar";
+import NavBar from "./NavBar";
 
-const ReferralsRibbon = ({text}) => {
+const GenericRibbon = ({text}) => {
     return (
-        <>
             <div>
                 <NavBar/>
                 <div className={`relative mx-10 h-[200px] flex overflow-hidden mt-0.5`}>
@@ -17,7 +16,6 @@ const ReferralsRibbon = ({text}) => {
                     </div>
                 </div>
             </div>
-        </>
     )
 }
-export default ReferralsRibbon
+export default GenericRibbon

@@ -1,5 +1,5 @@
 import Image from "../../Images/referrals.png";
-import ReferralsRibbon from "./ReferralsRibbon";
+import Ribbon from "../Careerhub/GenericRibbon";
 import {useNavigate} from "react-router-dom";
 
 const MyReferrals = ()=>{
@@ -10,7 +10,7 @@ const MyReferrals = ()=>{
     }
     return (
         <>
-            <ReferralsRibbon text={"My Referrals"} height={60}/>
+            <Ribbon text={"My Referrals"} height={60}/>
         <div className="flex flex-col justify-center items-center">
             <div className="w-[206px] h-[142px] flex justify-center mt-8">
                 <img src={Image} alt="" className="w-[130px] h-[220px]"/>
