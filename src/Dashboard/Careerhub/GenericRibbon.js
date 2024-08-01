@@ -2,7 +2,6 @@ import NavBar from "../Careerhub/NavBar";
 
 const ReferralsRibbon = ({text}) => {
     return (
-        <>
             <div>
                 <NavBar/>
                 <div className={`relative mx-10 h-[200px] flex overflow-hidden mt-0.5`}>
@@ -17,7 +16,6 @@ const ReferralsRibbon = ({text}) => {
                     </div>
                 </div>
             </div>
-        </>
     )
 }
 export default ReferralsRibbon
