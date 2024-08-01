@@ -1,11 +1,14 @@
-const GetJobs = async(getJobRequest, employerEmail)=>{
+const GetUploadedJobs = async(employerEmail)=>{
     const token = localStorage.getItem('token')
     if(token){
         const abortController = new AbortController()
-        return fetch(`http://localhost:8080/api/jobs/employer/${employerEmail}`, {
-            'Authorization': `Bearer ${token}`,
+        return await fetch(`http://localhost:8080/api/jobs/employer/${employerEmail}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
             signal: abortController.signal
         })
     }
 }
-export default GetJobs
+export default GetUploadedJobs
