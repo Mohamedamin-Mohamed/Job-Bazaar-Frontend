@@ -14,15 +14,20 @@ import NotFound2 from "./NotFound/NotFound2";
 import Settings from "./Dashboard/Settings/Settings";
 import CareerInterests from "./Dashboard/Profile/CareerInterests/CareerInterests";
 import Experience from "./Dashboard/Profile/Experience/Experience";
+import Jobs from "./Dashboard/Careerhub/Jobs/Upload/Jobs";
+import SavedJobs from "./Dashboard/Careerhub/Jobs/Saved/SavedJobs";
+import UploadedJobs from "./Dashboard/Careerhub/Jobs/Uploaded/UploadedJobs";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route>
             <Route path="/" element={<Home/>}/>
             <Route path="accounts">
-                <Route path="login" element={<Login/>}/>
-                <Route path="login/email-lookup" element={<EmailLookup/>}/>
-                <Route path="login/password-reset" element={<PasswordReset/>}/>
+                <Route path="login">
+                    <Route index element={<Login />}/>
+                    <Route path="email-lookup" element={<EmailLookup/>}/>
+                    <Route path="password-reset" element={<PasswordReset/>}/>
+                </Route>
                 <Route path="signup" element={<Signup/>}/>
             </Route>
             <Route path="careerhub">
@@ -33,6 +38,11 @@ const router = createBrowserRouter(
                 </Route>
                 <Route path="myreferrals" element={<MyReferrals/>}/>
                 <Route path="settings" element={<Settings/>}/>
+                <Route path="jobs/upload" element={<Jobs />}/>
+                <Route path="my/jobs">
+                    <Route path="uploaded" element={<UploadedJobs/>}/>
+                    <Route path="saved" element={<SavedJobs/>}/>
+                </Route>
             </Route>
             <Route path="refer" element={<Refer/>}/>
             <Route path="feedback">
