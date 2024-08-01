@@ -79,7 +79,7 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
             const response = await GetWorkExperience(email, abortController);
             if (response.status === 200) {
                 const result = await response.json()
-                console.log('result is', result)
+
                 setTitle(result.title)
                 setCompany(result.company)
                 setDescription(result.description)
@@ -91,7 +91,6 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
                 const parsedEndDate = parse(result.endDate, 'MM-yyyy', new Date())
                 setEndDate(parsedEndDate)
 
-                console.log(parsedEndDate, 'end date is ', parsedEndDate)
             }
         }
         fetchEducation()
@@ -150,8 +149,7 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
 
         //store the object in the database based on if we are creating a new resource or updating an existing resource
         const response = statusCode === 200 ? await SaveWorkExperience(processedData) : await SaveWorkExperience(work);
-        // dispatch(setUsrEmail(usrInfo.usrEmail))
-        console.log("Here is the response", response)
+
         const text = await response.text();
 
         if (response.status === 200) {
@@ -253,12 +251,11 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
                         <div className="flex w-[403px] h-[34px] border border-[#1a212e]">
                             <input type="text" onFocus={() => handleCalendarsShow("start")}
                                    placeholder="Start Date (MM/YYYY)" value={getFormattedDate(startDate)}
-                                   className="pl-3 w-full outline-none"
+                                   className="pl-3 w-full outline-none" onChange={(e)=> setStartDate(e.target.value)}
                             />
                             {startDate &&
                                 <div onClick={handleStartDateCalendarHide}>
-                                    <IoCloseOutline size={18} color="gray"
-                                                    className="ml-auto mt-1.5 mr-4 cursor-pointer"/>
+                                    <IoCloseOutline size={18} color="gray" className="ml-auto mt-1.5 mr-4 cursor-pointer"/>
                                 </div>
                             }
                         </div>
@@ -273,7 +270,7 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
                         <div className="flex w-[403px] h-[34px] border border-[#1a212e]">
                             <input type="text" onFocus={() => handleCalendarsShow("end")}
                                    placeholder="End Date (MM/YYYY)" value={getFormattedDate(endDate)}
-                                   className="pl-3 w-full outline-none"
+                                   className="pl-3 w-full outline-none" onChange={(e)=> setEndDate(e.target.value)}
                                    disabled={workCheckBox}
                             />
 
