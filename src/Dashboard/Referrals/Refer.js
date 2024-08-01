@@ -1,5 +1,5 @@
 import NavBar from "../Careerhub/NavBar";
-import ReferralsRibbon from "./ReferralsRibbon";
+import Ribbon from "../Careerhub/GenericRibbon";
 import {FaCloudArrowUp} from "react-icons/fa6";
 import {IoMdShareAlt} from "react-icons/io";
 import Image from "../../Images/refer_illustration_cloud.png"
@@ -19,7 +19,7 @@ const Refer = () => {
     }
     return (
         <>
-            <ReferralsRibbon text={"Refer a Friend"}/>
+            <Ribbon text={"Refer a Friend"}/>
             <div className="flex items-center flex-col h-screen mt-4">
                 <div className="flex flex-col items-center bg-[#2c8cc90a] border border-dashed border-black w-[300px] h-[470px]">
                     <img src={Image} alt="" className="w-[72px] h-[52px] mt-2 mb-8"/>
