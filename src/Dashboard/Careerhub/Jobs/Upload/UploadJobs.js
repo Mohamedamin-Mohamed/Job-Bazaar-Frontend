@@ -1,13 +1,13 @@
 import {useState} from "react";
-import JobType from "./Types/JobType";
-import WorkPlaceType from "./Types/WorkPlaceType";
-import FixedButtons from "./FixedButtons";
-import WorkPlaceTypeDropDown from "./DropDowns/WorkPlaceTypeDropDown";
-import JobTypeDropDown from "./DropDowns/JobTypeDropDown";
+import JobType from "../Types/JobType";
+import WorkPlaceType from "../Types/WorkPlaceType";
+import FixedButtons from "../FixedButtons";
+import WorkPlaceTypeDropDown from "../DropDowns/WorkPlaceTypeDropDown";
+import JobTypeDropDown from "../DropDowns/JobTypeDropDown";
 import {useMediaQuery} from "react-responsive";
 import {useNavigate} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
-import SaveJobs from "./FetchJobs/SaveJobs";
+import SaveJobs from "../FetchJobs/SaveJobs";
 import {useSelector} from "react-redux";
 
 const UploadJobs = () => {
