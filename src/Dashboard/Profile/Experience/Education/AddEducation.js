@@ -79,7 +79,7 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
             const response = await getEducation(email, abortController);
             if (response.status === 200) {
                 const result = await response.json()
-                console.log('result is', result)
+
                 setSchool(result.school)
                 setMajor(result.major)
                 setDegree(result.degree)
@@ -90,8 +90,6 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
 
                 const parsedEndDate = parse(result.endDate, 'MM-yyyy', new Date())
                 setEndDate(parsedEndDate)
-
-                console.log(parsedEndDate, 'end date is ', parsedEndDate)
             }
         }
         fetchEducation()
@@ -150,7 +148,6 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
 
         //store the object in the database based on if we are creating a new resource or updating an existing resource
         const response = statusCode === 200 ? await SaveEducation(processedData) : await SaveEducation(education);
-        console.log("Here is the response", response)
         const text = await response.text();
 
         if (response.status === 200) {
@@ -238,7 +235,7 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
                     </div>
                     <div className="flex flex-col mt-6">
                         <h1 className="font-semibold text-lg">Description</h1>
-                        <textarea value={description} onChange={(e) => setDescription(e.target.value)}
+                        <textarea value={description === null ? "": description} onChange={(e) => setDescription(e.target.value)}
                                   className="w-[403px] h-[93px] border border-[#1a212e] mt-3 px-3 py-1 text-sm"></textarea>
                     </div>
                     <div className="flex flex-col mt-6" ref={startDateRef}>
@@ -251,7 +248,7 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
                         }
                         <div className="flex w-[403px] h-[34px] border border-[#1a212e]">
                             <input type="text" onFocus={() => handleCalendarsShow("start")}
-                                   placeholder="Start Date (MM/YYYY)" value={getFormattedDate(startDate)}
+                                   placeholder="Start Date (MM/YYYY)" value={getFormattedDate(startDate)} onChange={(e)=> setStartDate(e.target.value)}
                                    className="pl-3 w-full outline-none"
                             />
                             {startDate &&
@@ -272,7 +269,7 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
                         <div className="flex w-[403px] h-[34px] border border-[#1a212e]">
                             <input type="text" onFocus={() => handleCalendarsShow("end")}
                                    placeholder="End Date (MM/YYYY)" value={getFormattedDate(endDate)}
-                                   className="pl-3 w-full outline-none"
+                                   className="pl-3 w-full outline-none" onChange={(e)=> setEndDate(e.target.value)}
                                    disabled={studyCheckBox}
                             />
 
