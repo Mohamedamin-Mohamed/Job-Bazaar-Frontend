@@ -132,8 +132,8 @@ const NavBar = () => {
                         onClick={handleJobs}>
                         <nav className={`flex flex-col mt-12 bg-white p-[12px] w-[220px] ${role === 'Employer' ? "h-[124px]" : "h-[94px]"} ml-96 border`}>
                             <NavLink to='/careerhub/explore/jobs' className="p-1">Job Search</NavLink>
-                            <NavLink to='/careerhub/my/jobs/saved' className="p-1">My Jobs</NavLink>
-                            {role === "Employer" ? <NavLink to='/careerhub/my/jobs/saved' className="p-1">Post a job</NavLink> : "" }
+                            <NavLink to={role === "Employer" ? '/careerhub/my/jobs/uploaded' : '/careerhub/my/jobs/saved'} className="p-1">My Jobs</NavLink>
+                            {role === "Employer" ? <NavLink to='/careerhub/jobs/upload' className="p-1">Post a job</NavLink> : "" }
                         </nav>
                     </div>
                 )}
@@ -170,7 +170,7 @@ const NavBar = () => {
                         <IoMdArrowDropup size={26} color="black" className="mt-2"/>}
                 </div>
                 {userSettingDropDown && (
-                    <div className="mt-[36px]">
+                    <div>
                         <nav
                             className={"flex flex-col absolute right-0 mt-[22px] mr-4 w-[350px] border p-4 bg-white z-50"}
                             ref={dropDownRef} onClick={handleUserSettingDropDown}>
