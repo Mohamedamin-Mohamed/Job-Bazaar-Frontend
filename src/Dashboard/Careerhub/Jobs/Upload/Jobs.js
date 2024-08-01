@@ -1,4 +1,4 @@
-import NavBar from "../NavBar";
+import NavBar from "../../NavBar";
 import UploadJobs from "./UploadJobs";
 
 const Jobs = () => {
