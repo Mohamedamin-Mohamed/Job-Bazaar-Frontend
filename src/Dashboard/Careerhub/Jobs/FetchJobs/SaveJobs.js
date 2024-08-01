@@ -8,7 +8,8 @@ const SaveJobs = async (jobRequest)=>{
                 'Authorization': `Bearer ${token}`,
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify(jobRequest)
+            body: JSON.stringify(jobRequest),
+            signal: abortController.signal
         })
     }
 }
