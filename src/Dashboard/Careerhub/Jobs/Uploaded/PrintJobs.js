@@ -2,10 +2,12 @@ import {useEffect, useState} from "react";
 import GetName from "./GetName";
 import {useNavigate} from "react-router-dom";
 import JobDetails from "../Details/JobDetails";
+import {ScaleLoader} from "react-spinners";
 
 const PrintJobs = ({uploadedJobs, employerEmail}) => {
     const [jobById, setJobById] = useState()
     const [clicked, setClicked] = useState({})
+    const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
 
@@ -43,6 +45,7 @@ const PrintJobs = ({uploadedJobs, employerEmail}) => {
     }
 
     useEffect(() => {
+        setLoading(true)
         const fetchName = async () => {
             const response = await GetName(employerEmail, new AbortController())
             const data = await response.json()
@@ -50,11 +53,21 @@ const PrintJobs = ({uploadedJobs, employerEmail}) => {
                 firstName: data.firstName,
                 lastName: data.lastName
             })
+                setLoading(false)
         }
         fetchName()
     }, [employerEmail]);
     return (
         <div className="flex h-screen my-8">
+            {loading && (
+            <div className="fixed flex justify-center items-center inset-0 backdrop-brightness-50">
+                <ScaleLoader
+                    color="#1c3e17"
+                    height={100}
+                    width={4}
+                />
+            </div>
+            )}
             <div className="flex h-[700px] pr-4">
                 <div className="cursor-pointer overflow-y-scroll h-screen w-[700px] mr-4">
                     {uploadedJobs.map((job) => (
