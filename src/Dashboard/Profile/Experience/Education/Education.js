@@ -9,6 +9,7 @@ import DeleteEducation from "./FetchEducation/DeleteEducation";
 import {toast, ToastContainer} from "react-toastify";
 import ImageSearch from "../ImageSearch/ImageSearch";
 import {format} from "date-fns";
+import {ScaleLoader} from "react-spinners";
 
 const Education = () => {
     const usrInfo = useSelector(state => state.userInfo);
@@ -17,6 +18,7 @@ const Education = () => {
     const [statusCode, setStatusCode] = useState("")
     const [imageUrl, setImageUrl] = useState("")
     const [err, setErr] = useState("")
+    const [loading, setLoading] = useState(false)
 
     const handleOpen = () => {
         setOpen(!open)
@@ -24,10 +26,17 @@ const Education = () => {
     const email = usrInfo.usrEmail
 
     useEffect(() => {
+        setLoading(true)
+        const scrollHandle = () => {
+            document.body.style.overflow = loading ? 'hidden' : ''
+        }
+
         const fetchData = async () => {
             const abortController = new AbortController()
             try {
                 const response = await GetEducation(email, abortController)
+
+                setLoading(false)
 
                 if (response == null) return
                 setStatusCode(response.status)
@@ -40,9 +49,12 @@ const Education = () => {
                 console.error('Error fetching data', err)
             }
         }
+        scrollHandle()
         fetchData()
-
-    },[]);
+        return () => {
+            document.body.style.overflow = ''
+        }
+    }, []);
 
     const handleDelete = async () => {
         const response = await DeleteEducation(usrInfo.usrEmail)
@@ -69,6 +81,15 @@ const Education = () => {
     return (
         <div className="flex ml-[40px] md:mt-0 mt-16">
             <ToastContainer position="top-center"/>
+            {loading && (
+                <div className="fixed flex justify-center items-center inset-0 backdrop-brightness-50 z-50">
+                    <ScaleLoader
+                        color="#1c3e17"
+                        height={100}
+                        width={4}
+                    />
+                </div>
+            )}
             <div
                 className={`flex flex-col justify-center pl-4 md:w-[840px] mx-2 text-wrap w-[650px] ${statusCode === 404 ? "h-[190px]" : "h-[240px]"} border mb-4`}>
                 <div className="flex my-4">
