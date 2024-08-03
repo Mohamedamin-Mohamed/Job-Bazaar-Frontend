@@ -9,14 +9,14 @@ const Headers = ({job, name}) => {
 
             <div className="flex pl-8 py-4 mt-4">
                 <div className="flex text-lg gap-4 w-[370px]">
-                    <IoLocationOutline size={24} color="gray" className="mt-1"/>
+                    <IoLocationOutline size={24} color="gray" className="mt-1.5"/>
                     <div className="flex-col">
                         <h1 className="font-bold text-xl">Job Location</h1>
                         <p>{job.location}</p>
                     </div>
                 </div>
                 <div className="flex ml-[100px] gap-4 text-lg">
-                    <FaRegUser size={20} color="gray" className="mt-1.5"/>
+                    <FaRegUser size={24} color="gray" className="mt-1.5"/>
                     <div className="flex-col">
                         <h1 className="font-bold text-xl">Job Uploader</h1>
                         <div className="flex space-x-2">
@@ -37,7 +37,7 @@ const Headers = ({job, name}) => {
                     </div>
                 </div>
                 <div className="flex ml-[100px] text-lg gap-4">
-                    <PiFingerprintLight size={24} color="gray" className="mt-1"/>
+                    <PiFingerprintLight size={24} color="gray" className="mt-1.5"/>
                     <div className="flex-col">
                         <h1 className="font-bold text-xl">Job ID</h1>
                         <p>{job.jobId}</p>
@@ -45,7 +45,7 @@ const Headers = ({job, name}) => {
                 </div>
             </div>
             <div className="flex pl-8 mt-8">
-                <MdBusiness size={24} color="gray"/>
+                <MdBusiness size={24} color="gray" className="mt-2"/>
                 <div className="flex-col ml-4">
                     <h1 className="font-bold text-xl">Company</h1>
                     <p>{job.company}</p>
