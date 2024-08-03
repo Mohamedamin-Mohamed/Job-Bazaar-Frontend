@@ -1,4 +1,4 @@
-import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, createRoutesFromElements, Navigate, Route, RouterProvider} from "react-router-dom";
 import Login from "./Authentication/Login";
 import Signup from "./Authentication/Signup";
 import EmailLookup from "./Authentication/EmailLookup";
@@ -17,6 +17,7 @@ import Experience from "./Dashboard/Profile/Experience/Experience";
 import Jobs from "./Dashboard/Careerhub/Jobs/Upload/Jobs";
 import SavedJobs from "./Dashboard/Careerhub/Jobs/Saved/SavedJobs";
 import UploadedJobs from "./Dashboard/Careerhub/Jobs/Uploaded/UploadedJobs";
+import JobDetails from "./Dashboard/Careerhub/Jobs/Details/JobDetails";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -40,7 +41,10 @@ const router = createBrowserRouter(
                 <Route path="settings" element={<Settings/>}/>
                 <Route path="jobs/upload" element={<Jobs />}/>
                 <Route path="my/jobs">
-                    <Route path="uploaded" element={<UploadedJobs/>}/>
+                    <Route path="uploaded" element={<UploadedJobs/>}>
+                        {/*<Route index element={<Navigate to=":jobId"/>} />*/}
+                        <Route path=":jobId" element={<JobDetails />} />
+                    </Route>
                     <Route path="saved" element={<SavedJobs/>}/>
                 </Route>
             </Route>
