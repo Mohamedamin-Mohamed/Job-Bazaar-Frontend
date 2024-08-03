@@ -128,7 +128,7 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
     }
     const handleSave = async () => {
         if (title === "" || company === '' || location === '' || startDate == null || endDate == null) {
-            toast.error('Please enter the required fields*');
+            toast.error('Please enter all the required fields*');
             return;
         }
 
