@@ -70,7 +70,7 @@ const Work = () => {
         <div className="flex ml-[40px] md:mt-0 mt-16">
             <ToastContainer position="top-center"/>
             <div
-                className={`flex flex-col justify-center pl-4 md:w-[840px] mx-2 text-wrap w-[650px] ${statusCode === 404 ? "h-[250px]" : "h-[200px]"} border mb-4`}>
+                className={`flex flex-col justify-center pl-4 md:w-[840px] mx-2 text-wrap w-[650px] ${statusCode === 404 ? "h-[250px]" : "h-[240px]"} border mb-4`}>
                 <div className="flex my-4">
                     <div>
                         <h1 className="text-xl font-semibold">Work Experience</h1>
