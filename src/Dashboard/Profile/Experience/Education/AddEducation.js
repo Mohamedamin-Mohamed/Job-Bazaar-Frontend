@@ -127,7 +127,7 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
     }
     const handleSave = async () => {
         if (major === "" || school === '' || degree === '' || startDate == null || endDate == null) {
-            toast.error('Please enter the required fields*');
+            toast.error('Please enter all the required fields*');
             return;
         }
 

@@ -95,7 +95,7 @@ const EditJob = ({job, name, handleClose, edit}) => {
     }, [edit]);
     return (
         <div className="fixed flex justify-center inset-0 items-center text-black backdrop-brightness-50 z-50">
-            <div className="bg-white w-[600px] h-[860px] p-4 mx-12 rounded-md">
+            <div className="bg-white w-[630px] h-[720px] p-4 mx-12 rounded-md">
                     <TfiClose color="gray" size={24} className="ml-auto cursor-pointer hover:rounded-full" onClick={handleClose}/>
                 <div className="flex-col">
                         <div>
@@ -107,6 +107,7 @@ const EditJob = ({job, name, handleClose, edit}) => {
                     </div>
                 </div>
                 {/*{ start of position and company }*/}
+                <div className="w-[600px] h-[490px] overflow-y-scroll">
                 <div className="flex flex-col gap-4 mt-3">
                     <div className="flex my-6">
                         <div className={`flex flex-col`}>
@@ -121,7 +122,7 @@ const EditJob = ({job, name, handleClose, edit}) => {
                             <input value={jobDetails.company} onChange={handleChange}
                                    type="text" name="company" disabled={disable}
                                    placeholder="Name of the Employer"
-                                   className="w-[210px] h-[32px] border border-gray-400 rounded-md p-2 mr-4 outline-none focus:border-[#367c2b]"/>
+                                   className="w-[230px] h-[32px] border border-gray-400 rounded-md p-2 mr-4 outline-none focus:border-[#367c2b]"/>
                         </div>
                     </div>
                     <div className="flex ">
@@ -134,7 +135,7 @@ const EditJob = ({job, name, handleClose, edit}) => {
                             <label htmlFor="location" className="text-lg mb-2 font-semibold">Job Location*</label>
                             <input value={jobDetails.location} onChange={handleChange} type="text"
                                    name="location" disabled={disable} placeholder="Location you are hiring for"
-                                   className="w-[210px] h-[32px] border border-gray-400 rounded-md p-2 mb-4 mr-4 outline-none focus:border-[#367c2b]"/>
+                                   className="w-[230px] h-[32px] border border-gray-400 rounded-md p-2 mb-4 mr-4 outline-none focus:border-[#367c2b]"/>
                         </div>
                     </div>
                 </div>
@@ -151,7 +152,7 @@ const EditJob = ({job, name, handleClose, edit}) => {
                         <input value={jobDetails.jobFunction} onChange={handleChange}
                                type="text" name="jobFunction" disabled={disable}
                                placeholder="Function you are hiring for"
-                               className="w-[210px] h-[32px] border border-gray-400 rounded-md p-2 mr-4 outline-none focus:border-[#367c2b]"/>
+                               className="w-[230px] h-[32px] border border-gray-400 rounded-md p-2 mr-4 outline-none focus:border-[#367c2b]"/>
                     </div>
                 </div>
                 <div className="flex justify-center ml-2 gap-12 mt-4">
@@ -167,6 +168,7 @@ const EditJob = ({job, name, handleClose, edit}) => {
                                   disabled={disable}
                                   style={{resize: 'none'}} placeholder="Job Requirements ..."></textarea>
                     </div>
+                </div>
                 </div>
                 <FixedButtons handleClear={handleClear} handleOpen={handleOpen} handleSave={handleSave}/>
             </div>

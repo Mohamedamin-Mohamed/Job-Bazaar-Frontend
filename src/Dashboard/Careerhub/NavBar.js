@@ -182,12 +182,12 @@ const NavBar = () => {
                                     Interests</NavLink>
                             </div>
                             <div className="flex flex-col border-t border-b py-4">
-                                <NavLink to="/careerhub/explore/jobs" className="p-1">Job Search</NavLink>
+                                {role !== 'Employer' &&  <NavLink to="/careerhub/explore/jobs" className="p-1">Job Search</NavLink>}
                                 <NavLink to="/careerhub/explore/projects" className="p-1">Project Search</NavLink>
                                 <NavLink to="/careerhub/explore/courses" className="p-1">Courses Search</NavLink>
                             </div>
                             <div className="flex flex-col border-b py-4">
-                                <NavLink to="/careerhub/my/jobs/saved" className="p-1">My Jobs</NavLink>
+                                <NavLink to={role === 'Employer' ? "/careerhub/my/jobs/uploaded" : "/careerhub/my/jobs/saved"} className="p-1">My Jobs</NavLink>
                                 <NavLink to="/careerhub/myreferrals" className="p-1">My Referrals</NavLink>
                             </div>
                             <div className="flex flex-col pt-4">

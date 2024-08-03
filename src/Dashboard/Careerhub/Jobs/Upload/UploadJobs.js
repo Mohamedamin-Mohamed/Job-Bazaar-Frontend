@@ -75,7 +75,7 @@ const UploadJobs = () => {
             toast.success(text, {
                 onClose: ()=>{
                     setDisable(false)
-                    navigate('/careerhub')
+                    navigate('/careerhub/my/jobs/uploaded')
                 }
             })
         }
