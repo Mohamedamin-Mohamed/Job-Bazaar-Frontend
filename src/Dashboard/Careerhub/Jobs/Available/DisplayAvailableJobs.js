@@ -44,7 +44,7 @@ const DisplayAvailableJobs = ({uploadedJobs}) => {
             console.error('Error fetching job by ID: ', err)
         }
     }
-    console.log('Job by is', jobById)
+
     useEffect(() => {
         if(employerEmail) {
             setLoading(true)
