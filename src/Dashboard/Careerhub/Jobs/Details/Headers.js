@@ -2,8 +2,9 @@ import {IoLocationOutline} from "react-icons/io5";
 import {FaRegUser} from "react-icons/fa";
 import {PiFingerprintLight, PiUsersThree} from "react-icons/pi";
 import {MdBusiness} from "react-icons/md";
+import { MdWork } from "react-icons/md";
 
-const Headers = ({job, name}) => {
+const Headers = ({job, name, role}) => {
     return (
         <div className="flex-col pb-8">
 
@@ -18,7 +19,7 @@ const Headers = ({job, name}) => {
                 <div className="flex ml-[100px] gap-4 text-lg">
                     <FaRegUser size={24} color="gray" className="mt-1.5"/>
                     <div className="flex-col">
-                        <h1 className="font-bold text-xl">Job Uploader</h1>
+                        <h1 className="font-bold text-xl">{role === 'Employer' ? 'Job Uploader' : 'Hiring Manager'}</h1>
                         <div className="flex space-x-2">
                             <p>{name.firstName}</p>
                             <p>{name.lastName}</p>
@@ -45,10 +46,19 @@ const Headers = ({job, name}) => {
                 </div>
             </div>
             <div className="flex pl-8 mt-8">
-                <MdBusiness size={24} color="gray" className="mt-2"/>
-                <div className="flex-col ml-4">
-                    <h1 className="font-bold text-xl">Company</h1>
-                    <p>{job.company}</p>
+                <div className="flex text-lg gap-4 w-[370px]">
+                    <MdBusiness size={24} color="gray" className="mt-2"/>
+                    <div className="flex-col">
+                        <h1 className="font-bold text-xl">Company</h1>
+                        <p>{job.company}</p>
+                    </div>
+                </div>
+                <div className="flex ml-[100px] text-lg gap-4">
+                    <MdWork size={24} color="gray" className="mt-1.5"/>
+                    <div className="flex-col">
+                        <h1 className="font-bold text-xl">Job Type</h1>
+                        <p>{job.jobType}</p>
+                    </div>
                 </div>
             </div>
         </div>
