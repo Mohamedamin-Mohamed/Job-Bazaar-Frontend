@@ -1,10 +1,10 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 
 const Details = ({job, setHeight}) => {
     const refHeight = useRef(null)
 
-    useEffect(()=>{
-        if(refHeight.current){
+    useEffect(() => {
+        if (refHeight.current) {
             setHeight(refHeight.current.offsetHeight)
         }
     }, [])
