@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {NavLink, useNavigate} from "react-router-dom";import {useState} from "react";
+import {NavLink, useNavigate} from "react-router-dom";import React, {useState} from "react";
 import {setFirstName, setFirstPanel, setLastName, setLoading, setSecondPanel} from "../Redux/UserSlice";
 import { IoClose } from "react-icons/io5"
 import {MdOutlineDoNotDisturb, MdOutlineDoNotDisturbAlt} from "react-icons/md";
@@ -17,6 +17,7 @@ const PanelShowcase = ()=>{
     const[passRem, setPassRem] = useState(true)
     const[disabled, setDisabled] = useState(false)
     const[name, setName] = useState({firstName: '', lastName: ''})
+    const[role, setRole] = useState('')
 
     const handleSubmit = async ()=>{
         //check if the password is at least 16 characters OR at least 8 characters including a number and a letter
@@ -66,12 +67,20 @@ const PanelShowcase = ()=>{
         else{
             //make an account for the user
             dispatch(setLoading(true))
-            const response = await fetch('http://localhost:8080/accounts/signup', {
+
+            const requestBody = {
+                email: usr.usrEmail,
+                password: pass,
+                firstName: name.firstName,
+                lastName: name.lastName,
+                role: role
+            }
+            const response = await fetch('http://localhost:8080/accounts/signup/', {
                 method: 'post',
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify({email: usr.usrEmail, password: pass, firstName: name.firstName, lastName: name.lastName})
+                body: JSON.stringify(requestBody)
             })
 
             dispatch(setLoading(false))
@@ -139,12 +148,23 @@ const PanelShowcase = ()=>{
                     <label>Last Name</label>
                     <input type="text" name="lastName" value={name.lastName} onChange={handleChange} placeholder="Last Name" className="w-[350px] border p-2 border-gray-600 rounded-md outline-none" required/>
                     </div>
+                        <div className="flex flex-col mt-1.5">
+                            <select value={role} disabled={disabled} name="role"
+                                    onChange={(e) => setRole(e.target.value)}
+                                    className="border rounded-lg p-2 w-[350px] mb-4 outline-none focus:border-[#367c2b] cursor-pointer"
+                                    required>
+                                <option value="" disabled selected>Select your role</option>
+                                <option>Employer</option>
+                                <option>Applicant</option>
+                            </select>
+                        </div>
                     </div>
                 )}
 
-                <p className="mt-4 mb-2 text-[#00060c]">Password</p>
+                <p className="mt-2 mb-2 text-[#00060c]">Password</p>
 
-                <input disabled={disabled} value={pass} type={showPass ? 'text' : 'password'} onChange={(e) => setPass(e.target.value)}
+                <input disabled={disabled} value={pass} type={showPass ? 'text' : 'password'}
+                       onChange={(e) => setPass(e.target.value)}
                        className="w-[350px] border p-2 border-gray-600 rounded-md outline-none"/>
                 <div className={!passRem ? "flex mt-3" : "hidden"}>
                     <MdOutlineDoNotDisturb size={20} color="red"/>
