@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import JobDetails from "../Details/JobDetails";
 import {ScaleLoader} from "react-spinners";
 
-const PrintJobs = ({uploadedJobs, employerEmail}) => {
+const DisplayUploadedJobs = ({uploadedJobs, employerEmail}) => {
     const [jobById, setJobById] = useState()
     const [clicked, setClicked] = useState({})
     const [loading, setLoading] = useState(false)
@@ -123,10 +123,10 @@ const PrintJobs = ({uploadedJobs, employerEmail}) => {
                     ))}
 
                 </div>
-                {jobById && <JobDetails job={jobById} name={name}/>}
+                {jobById && <JobDetails job={jobById} name={name} role={'Employer'}/>}
 
             </div>
         </div>
     )
 }
-export default PrintJobs
+export default DisplayUploadedJobs
