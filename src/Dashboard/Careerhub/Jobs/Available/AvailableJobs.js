@@ -1,22 +1,17 @@
 import {useEffect, useState} from "react";
-import GetUploadedJobs from "../FetchJobs/GetUploadedJobs";
-import {useSelector} from "react-redux";
 import {toast, ToastContainer} from "react-toastify";
-import DisplayUploadedJobs from "./DisplayUploadedJobs";
 import GenericRibbon from "../../GenericRibbon";
-import {Outlet, useParams} from "react-router-dom";
+import {Outlet} from "react-router-dom";
+import GetAvailableJobs from "../FetchJobs/GetAvailableJobs";
+import DisplayAvailableJobs from "./DisplayAvailableJobs";
 
-const UploadedJobs = () => {
-    const userInfo = useSelector(state => state.userInfo)
-    const employerEmail = userInfo.usrEmail
+const AvailableJobs = () => {
     const [uploadedJobs, setUploadedJobs] = useState([])
 
-    const {jobId} = useParams()
-
     useEffect(() => {
-        const fetchUploadedJobs = async () => {
+        const fetchAvailableJobs = async () => {
             try {
-                const response = await GetUploadedJobs(employerEmail)
+                const response = await GetAvailableJobs(new AbortController())
                 if (response.ok) {
                     const jobs = await response.json()
                     setUploadedJobs(jobs)
@@ -28,15 +23,15 @@ const UploadedJobs = () => {
                 console.error('Error fetching jobs:', err)
             }
         }
-        fetchUploadedJobs()
+        fetchAvailableJobs()
     }, []);
     return (
         <div>
             <ToastContainer position="top-center"/>
-            <GenericRibbon text={"Uploaded Jobs"}/>
-            <DisplayUploadedJobs uploadedJobs={uploadedJobs} employerEmail={employerEmail}/>
+            <GenericRibbon text={"Available Jobs"}/>
+            <DisplayAvailableJobs uploadedJobs={uploadedJobs}/>
             <Outlet/>
         </div>
     )
 }
-export default UploadedJobs
+export default AvailableJobs

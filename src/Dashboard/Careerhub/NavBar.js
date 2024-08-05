@@ -130,8 +130,8 @@ const NavBar = () => {
                     <div
                         className="flex justify-center absolute left-1/2 transform -translate-x-1/2 w-full z-50 hover:cursor-pointer"
                         onClick={handleJobs}>
-                        <nav className={`flex flex-col mt-12 bg-white p-[12px] w-[220px] ${role === 'Employer' ? "h-[124px]" : "h-[94px]"} ml-96 border`}>
-                            <NavLink to='/careerhub/explore/jobs' className="p-1">Job Search</NavLink>
+                        <nav className="flex flex-col mt-12 bg-white p-[12px] w-[220px] h-[94px] ml-96 border">
+                            {role === 'Employer' ? "" :  <NavLink to='/careerhub/explore/jobs' className="p-1">Job Search</NavLink>}
                             <NavLink to={role === "Employer" ? '/careerhub/my/jobs/uploaded' : '/careerhub/my/jobs/saved'} className="p-1">My Jobs</NavLink>
                             {role === "Employer" ? <NavLink to='/careerhub/jobs/upload' className="p-1">Post a job</NavLink> : "" }
                         </nav>

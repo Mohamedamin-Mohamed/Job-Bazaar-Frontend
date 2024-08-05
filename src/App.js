@@ -18,6 +18,8 @@ import Jobs from "./Dashboard/Careerhub/Jobs/Upload/Jobs";
 import SavedJobs from "./Dashboard/Careerhub/Jobs/Saved/SavedJobs";
 import UploadedJobs from "./Dashboard/Careerhub/Jobs/Uploaded/UploadedJobs";
 import JobDetails from "./Dashboard/Careerhub/Jobs/Details/JobDetails";
+import DisplayAvailableJobs from "./Dashboard/Careerhub/Jobs/Available/DisplayAvailableJobs";
+import AvailableJobs from "./Dashboard/Careerhub/Jobs/Available/AvailableJobs";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -35,17 +37,19 @@ const router = createBrowserRouter(
                 <Route index element={<CareerHub/>}/>
                 <Route path="profile" element={<Profile/>}>
                     <Route path="career" element={<CareerInterests/>}/>
-                    <Route path="experience" element={<Experience/>}/>
+                        <Route path="experience" element={<Experience/>}/>
                 </Route>
                 <Route path="myreferrals" element={<MyReferrals/>}/>
                 <Route path="settings" element={<Settings/>}/>
                 <Route path="jobs/upload" element={<Jobs />}/>
                 <Route path="my/jobs">
                     <Route path="uploaded" element={<UploadedJobs/>}>
-                        {/*<Route index element={<Navigate to=":jobId"/>} />*/}
                         <Route path=":jobId" element={<JobDetails />} />
                     </Route>
                     <Route path="saved" element={<SavedJobs/>}/>
+                </Route>
+                <Route path="explore/jobs" element={<AvailableJobs />} >
+                    <Route path=":jobId" element={<JobDetails />}/>
                 </Route>
             </Route>
             <Route path="refer" element={<Refer/>}/>
