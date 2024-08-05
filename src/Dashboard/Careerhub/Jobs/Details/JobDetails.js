@@ -2,13 +2,15 @@ import {useState} from "react";
 import Headers from "./Headers";
 import Details from "./Details";
 import EditJob from "../Edits/EditJob";
+import Apply from "../Edits/Apply";
 
-const JobDetails = ({job, name}) => {
+const JobDetails = ({job, name, role}) => {
+    console.log('Job is', job)
     const [height, setHeight] = useState('')
-    const [edit, setEdit] = useState(false)
-
+    const [editOrApply, setEditOrApply] = useState(false)
+    console.log('')
     const handleClose = () => {
-        setEdit(!edit)
+        setEditOrApply(!editOrApply)
     }
 
     return (
@@ -23,18 +25,20 @@ const JobDetails = ({job, name}) => {
                         <div>
                             <button
                                 className="w-[103px] h-[36px] bg-[#ffed00] font-semibold hover:backdrop-brightness-150"
-                                onClick={() => setEdit(true)}>Edit Job
+                                onClick={() => setEditOrApply(true)}>{role === 'Employer' ? 'Edit Job' : 'Apply Now'}
                             </button>
                         </div>
                     </div>
                     <div className={`w-[94%] h-[${height + 20}px border rounded-md my-8`}>
-                        <Headers job={job} name={name}/>
+                        <Headers job={job} name={name} role={role}/>
                         <Details job={job} setHeight={setHeight}/>
                     </div>
                 </>
             )
             }
-            {edit && <EditJob job={job} name={name} handleClose={handleClose} edit={edit}/>}
+            {editOrApply ?  role === 'Employer' ?
+                <EditJob job={job} name={name} handleClose={handleClose} edit={editOrApply}/> :
+                <Apply job={job} handleClose={handleClose} open={editOrApply}/> : ""}
         </div>
     )
 }
