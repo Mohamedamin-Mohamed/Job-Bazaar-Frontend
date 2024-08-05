@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import GetUploadedJobs from "../FetchJobs/GetUploadedJobs";
 import {useSelector} from "react-redux";
 import {toast, ToastContainer} from "react-toastify";
-import PrintJobs from "./PrintJobs";
+import DisplayUploadedJobs from "./DisplayUploadedJobs";
 import GenericRibbon from "../../GenericRibbon";
 import {Outlet, useParams} from "react-router-dom";
 
@@ -34,7 +34,7 @@ const UploadedJobs = () => {
         <div>
             <ToastContainer position="top-center"/>
             <GenericRibbon text={"Uploaded Jobs"}/>
-            <PrintJobs uploadedJobs={uploadedJobs} employerEmail={employerEmail}/>
+            <DisplayUploadedJobs uploadedJobs={uploadedJobs} employerEmail={employerEmail}/>
             <Outlet/>
         </div>
     )
