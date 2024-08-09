@@ -5,10 +5,8 @@ import EditJob from "../Edits/EditJob";
 import Apply from "../Edits/Apply";
 
 const JobDetails = ({job, name, role}) => {
-    console.log('Job is', job)
     const [height, setHeight] = useState('')
     const [editOrApply, setEditOrApply] = useState(false)
-    console.log('')
     const handleClose = () => {
         setEditOrApply(!editOrApply)
     }
