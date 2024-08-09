@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import GetName from "./GetName";
+import GetName from "./GetUserInfo";
 import {useNavigate} from "react-router-dom";
 import JobDetails from "../Details/JobDetails";
 import {ScaleLoader} from "react-spinners";

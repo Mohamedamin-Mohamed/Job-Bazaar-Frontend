@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import JobDetails from "../Details/JobDetails";
 import {ScaleLoader} from "react-spinners";
-import GetName from "../Uploaded/GetName";
+import GetName from "../Uploaded/GetUserInfo";
 
 const DisplayAvailableJobs = ({uploadedJobs}) => {
     const [jobById, setJobById] = useState()

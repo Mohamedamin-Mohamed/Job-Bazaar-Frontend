@@ -6,7 +6,7 @@ import Countries from "./Countries";
 import {TfiClose} from "react-icons/tfi";
 import FixedButtons from "../FixedButtons";
 import ApplyToJob from "./ApplyToJob";
-import GetName from "../Uploaded/GetName";
+import GetName from "../Uploaded/GetUserInfo";
 import {useSelector} from "react-redux";
 
 const Apply = ({job, handleClose, open}) => {
