@@ -8,6 +8,7 @@ import FixedButtons from "../FixedButtons";
 import ApplyToJob from "./ApplyToJob";
 import GetName from "../Uploaded/GetUserInfo";
 import {useSelector} from "react-redux";
+import {toast, ToastContainer} from "react-toastify";
 
 const Apply = ({job, handleClose, open}) => {
     const countriesRef = useRef(null)
@@ -93,7 +94,15 @@ const Apply = ({job, handleClose, open}) => {
     const handleSave = async () => {
         const nameResponse = await GetName(userInfo.usrEmail, new AbortController())
         const user = await nameResponse.json()
-        const response = ApplyToJob(new AbortController(), jobApplication, user)
+        const response = await ApplyToJob(new AbortController(), jobApplication, user)
+        const text = await response.text()
+
+        const toastText = response.ok ? toast.success : toast.error
+      toastText(text, {
+          onClose: ()=>{
+              handleClose()
+          }
+      })
     }
 
     useEffect(() => {
@@ -130,6 +139,7 @@ const Apply = ({job, handleClose, open}) => {
     }, [open])
     return (
         <div className="flex fixed justify-center items-center inset-0 z-50 backdrop-brightness-50">
+            <ToastContainer position="top-center" />
             <div className="w-[590px] h-[820px] border rounded-md bg-white p-8 overflow-y-scroll">
                 <TfiClose size={24} className="ml-auto cursor-pointer hover:rounded-full" onClick={handleClose}/>
                 <div className="flex flex-col font-semibold mb-12">
