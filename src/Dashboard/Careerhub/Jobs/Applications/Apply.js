@@ -6,7 +6,7 @@ import Countries from "./Countries";
 import {TfiClose} from "react-icons/tfi";
 import FixedButtons from "../FixedButtons";
 import ApplyToJob from "./ApplyToJob";
-import GetName from "../Uploaded/GetUserInfo";
+import GetName from "../UploadedJobs/GetUserInfo";
 import {useSelector} from "react-redux";
 import {toast, ToastContainer} from "react-toastify";
 
@@ -22,6 +22,7 @@ const Apply = ({job, handleClose, open}) => {
         nationality: '',
         additionalDocument: {name: '', file: ''},
         employerContact: '',
+        position: job.position,
         jobId: job.jobId
     }
     const [jobApplication, setJobApplication] = useState(initialJobApplicationState)
@@ -83,9 +84,9 @@ const Apply = ({job, handleClose, open}) => {
         setGenderShow(true)
     }
     const handleGender = (gender) => {
-        setJobApplication((prevState => ({
+        setJobApplication(prevState => ({
             ...prevState, gender: gender
-        })))
+        }))
         setGenderShow(false)
     }
     const handleClear = () => {
@@ -98,11 +99,12 @@ const Apply = ({job, handleClose, open}) => {
         const text = await response.text()
 
         const toastText = response.ok ? toast.success : toast.error
-      toastText(text, {
-          onClose: ()=>{
-              handleClose()
-          }
-      })
+        toastText(text, {
+            onClose: () => {
+                handleClose()
+                window.location.reload()
+            }
+        })
     }
 
     useEffect(() => {
@@ -139,7 +141,7 @@ const Apply = ({job, handleClose, open}) => {
     }, [open])
     return (
         <div className="flex fixed justify-center items-center inset-0 z-50 backdrop-brightness-50">
-            <ToastContainer position="top-center" />
+            <ToastContainer position="top-center"/>
             <div className="w-[590px] h-[820px] border rounded-md bg-white p-8 overflow-y-scroll">
                 <TfiClose size={24} className="ml-auto cursor-pointer hover:rounded-full" onClick={handleClose}/>
                 <div className="flex flex-col font-semibold mb-12">

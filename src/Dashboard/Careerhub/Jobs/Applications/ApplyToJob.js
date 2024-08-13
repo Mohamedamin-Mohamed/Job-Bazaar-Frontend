@@ -3,8 +3,10 @@ import {format} from "date-fns";
 const ApplyToJob = async (controller, jobApplication, user) => {
     const token = localStorage.getItem('token')
     const formData = new FormData();
+
     formData.append("applicantEmail", user.email);
     formData.append("jobId", jobApplication.jobId);
+    formData.append("position", jobApplication.position)
     formData.append("resumeName", jobApplication.resume.name)
     formData.append("resumeFile", jobApplication.resume.file)
     formData.append("country", jobApplication.country)

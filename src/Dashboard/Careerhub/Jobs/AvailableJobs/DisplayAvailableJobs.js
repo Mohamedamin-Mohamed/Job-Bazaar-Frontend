@@ -2,13 +2,14 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import JobDetails from "../Details/JobDetails";
 import {ScaleLoader} from "react-spinners";
-import GetName from "../Uploaded/GetUserInfo";
+import GetUserInfo from "../UploadedJobs/GetUserInfo";
+import GetJobById from "../FetchJobs/GetJobById";
 
 const DisplayAvailableJobs = ({uploadedJobs}) => {
     const [jobById, setJobById] = useState()
     const [clicked, setClicked] = useState({})
     const [loading, setLoading] = useState(false)
-    const[employerEmail, setEmployerEmail] = useState('')
+    const [employerEmail, setEmployerEmail] = useState('')
     const navigate = useNavigate()
 
     const [name, setName] = useState({
@@ -18,38 +19,30 @@ const DisplayAvailableJobs = ({uploadedJobs}) => {
     const handleFetchJobById = async (jobId, employerEmail) => {
         setEmployerEmail(employerEmail)
         try {
-            const controller = new AbortController()
-            const token = localStorage.getItem('token')
-            const response = await fetch(`http://localhost:8080/api/jobs/${employerEmail}/${jobId}`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                },
-                signal: controller.signal
-            })
+            const response = await GetJobById(employerEmail, jobId, new AbortController())
 
-            if (!response.ok) {
-                throw new Error('Failed fetch the job')
+            if (response.ok) {
+
+                const data = await response.json()
+                setJobById(data)
+
+                if (clicked[jobId]) return
+
+                setClicked((prevState) => ({
+                    [jobId]: true
+                }))
+                navigate(`${jobId}`)
             }
-            const data = await response.json()
-            setJobById(data)
-
-            if (clicked[jobId]) return
-
-            setClicked((prevState) => ({
-                [jobId]: true
-            }))
-            navigate(`${jobId}`)
         } catch (err) {
             console.error('Error fetching job by ID: ', err)
         }
     }
 
     useEffect(() => {
-        if(employerEmail) {
+        if (employerEmail) {
             setLoading(true)
             const fetchName = async () => {
-                const response = await GetName(employerEmail, new AbortController())
+                const response = await GetUserInfo(employerEmail, new AbortController())
                 const data = await response.json()
                 setName({
                     firstName: data.firstName,
