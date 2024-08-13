@@ -14,12 +14,13 @@ import NotFound2 from "./NotFound/NotFound2";
 import Settings from "./Dashboard/Settings/Settings";
 import CareerInterests from "./Dashboard/Profile/CareerInterests/CareerInterests";
 import Experience from "./Dashboard/Profile/Experience/Experience";
-import Jobs from "./Dashboard/Careerhub/Jobs/Upload/Jobs";
-import SavedJobs from "./Dashboard/Careerhub/Jobs/Saved/SavedJobs";
-import UploadedJobs from "./Dashboard/Careerhub/Jobs/Uploaded/UploadedJobs";
+import Jobs from "./Dashboard/Careerhub/Jobs/UploadJob/Jobs";
+import DisplayAppliedJobs from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/Applied";
+import UploadedJobs from "./Dashboard/Careerhub/Jobs/UploadedJobs/UploadedJobs";
 import JobDetails from "./Dashboard/Careerhub/Jobs/Details/JobDetails";
-import DisplayAvailableJobs from "./Dashboard/Careerhub/Jobs/Available/DisplayAvailableJobs";
-import AvailableJobs from "./Dashboard/Careerhub/Jobs/Available/AvailableJobs";
+import DisplayAvailableJobs from "./Dashboard/Careerhub/Jobs/AvailableJobs/DisplayAvailableJobs";
+import AvailableJobs from "./Dashboard/Careerhub/Jobs/AvailableJobs/AvailableJobs";
+import Applied from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/Applied";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -46,7 +47,7 @@ const router = createBrowserRouter(
                     <Route path="uploaded" element={<UploadedJobs/>}>
                         <Route path=":jobId" element={<JobDetails />} />
                     </Route>
-                    <Route path="saved" element={<SavedJobs/>}/>
+                    <Route path="applied" element={<Applied/>}/>
                 </Route>
                 <Route path="explore/jobs" element={<AvailableJobs />} >
                     <Route path=":jobId" element={<JobDetails />}/>

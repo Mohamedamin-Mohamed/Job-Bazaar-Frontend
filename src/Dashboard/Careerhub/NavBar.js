@@ -132,7 +132,7 @@ const NavBar = () => {
                         onClick={handleJobs}>
                         <nav className="flex flex-col mt-12 bg-white p-[12px] w-[220px] h-[94px] ml-96 border">
                             {role === 'Employer' ? "" :  <NavLink to='/careerhub/explore/jobs' className="p-1">Job Search</NavLink>}
-                            <NavLink to={role === "Employer" ? '/careerhub/my/jobs/uploaded' : '/careerhub/my/jobs/saved'} className="p-1">My Jobs</NavLink>
+                            <NavLink to={role === "Employer" ? '/careerhub/my/jobs/uploaded' : '/careerhub/my/jobs/applied'} className="p-1">My Jobs</NavLink>
                             {role === "Employer" ? <NavLink to='/careerhub/jobs/upload' className="p-1">Post a job</NavLink> : "" }
                         </nav>
                     </div>
@@ -172,13 +172,13 @@ const NavBar = () => {
                 {userSettingDropDown && (
                     <div>
                         <nav
-                            className={"flex flex-col absolute right-0 mt-[22px] mr-4 w-[350px] border p-4 bg-white z-50"}
+                            className={"flex flex-col absolute right-0 mt-[22px] mr-4 w-[350px] border p-4 bg-white z-50 hover:cursor-pointer"}
                             ref={dropDownRef} onClick={handleUserSettingDropDown}>
                             <NavLink to="/careerhub" className="mb-1">{usrInfo.firstName} {usrInfo.lastName}</NavLink>
                             <div className="flex flex-col pb-4">
-                                <NavLink to="/careerhub/profile/experience" className="p-1 hover:cursor-pointer">My
+                                <NavLink to="/careerhub/profile/experience" className="p-1">My
                                     Profile</NavLink>
-                                <NavLink to="/careerhub/profile/career" className="p-1 hover:cursor-pointer">Career
+                                <NavLink to="/careerhub/profile/career" className="p-1">Career
                                     Interests</NavLink>
                             </div>
                             <div className="flex flex-col border-t border-b py-4">
@@ -187,12 +187,12 @@ const NavBar = () => {
                                 <NavLink to="/careerhub/explore/courses" className="p-1">Courses Search</NavLink>
                             </div>
                             <div className="flex flex-col border-b py-4">
-                                <NavLink to={role === 'Employer' ? "/careerhub/my/jobs/uploaded" : "/careerhub/my/jobs/saved"} className="p-1">My Jobs</NavLink>
+                                <NavLink to={role === 'Employer' ? "/careerhub/my/jobs/uploaded" : "/careerhub/my/jobs/applied"} className="p-1">My Jobs</NavLink>
                                 <NavLink to="/careerhub/myreferrals" className="p-1">My Referrals</NavLink>
                             </div>
                             <div className="flex flex-col pt-4">
                                 <NavLink to="/careerhub/settings"
-                                         className="p-1 hover:cursor-pointer">Settings</NavLink>
+                                         className="p-1">Settings</NavLink>
                                 <NavLink to={''} onClick={() => handleLogout()} className="p-1">Logout</NavLink>
                             </div>
                         </nav>

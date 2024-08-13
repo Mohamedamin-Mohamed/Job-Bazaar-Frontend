@@ -12,7 +12,7 @@ const Roles = () => {
         setOpen(!open)
     }
     return (
-        <div className="flex ml-[40px] md:mt-0 mt-4">
+        <div className="flex mx-4 md:mt-0 mt-4">
             <div
                 className={`flex flex-col pl-6 md:w-full mx-2 text-wrap w-[650px] ${!arrow ? "h-[440px]" : "h-[410px]"} border rounded-md mb-4 p-4`}>
                 <div className="flex my-4">
