@@ -127,7 +127,7 @@ const PanelShowcase = ()=>{
                 <h1 className=" mb-3 font-bold text-xl text-center">Welcome {usr.credentials ? 'back' : ''} to Job
                     Bazaar.</h1>
                 <ToastContainer position="top-center"/>
-                <div className="flex">
+                <div className="flex flex-col items-center py-3">
                 {!usr.credentials ? <p className="">Create your account as </p> : <p>Sign in to your account as</p>}
                 <p className="font-bold ml-2">{usr.usrEmail.toUpperCase()}</p>
                 </div>
