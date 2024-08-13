@@ -1,9 +1,9 @@
 import {useMediaQuery} from "react-responsive";
 
 const DisplayAppliedJobs = ({appliedJobs}) => {
-    const mediaQuery = useMediaQuery({minWidth: "1120px"})
+    const mediaQuery = useMediaQuery({minWidth: "1050px"})
     return (
-        <div className="flex flex-col ml-12 mt-12 bg-white mx-8 p-4 rounded-xl">
+        <div className="flex flex-col ml-12 mt-12 bg-white mx-8 p-4 rounded-xl md:mb-8">
             <div className="w-full">
                 <h1 className="text-2xl font-semibold mb-6">My Applications</h1>
                 <p>As the employer is evaluating your qualifications, we may contact you to provide additional
@@ -56,7 +56,7 @@ const DisplayAppliedJobs = ({appliedJobs}) => {
                                 <div className="flex space-x-32">
                                     <p>{application.jobId}</p>
                                     <div>
-                                        <p className="mr-20">In Progress</p>
+                                        <p className="mr-20 text-[#217a37] bg-[#ebfff0] font-semibold px-1">{application.applicationStatus}</p>
                                     </div>
                                 </div>
                                 <div className="flex space-x-20">
