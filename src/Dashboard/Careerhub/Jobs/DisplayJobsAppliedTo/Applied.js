@@ -46,7 +46,6 @@ const Applied = () => {
                 )
                 : (
                     <div>
-                        {console.log(appliedJobs)}
                         <div className="flex flex-col mt-2 bg-[#f0f1f2]">
                             <GenericRibbon text={"Applied Jobs"}/>
                             <div className="flex space-x-4 text-2xl font-semibold md:ml-14 ml-12 py-8">
