@@ -9,7 +9,7 @@ const RoleBased = ()=>{
         setOpen(!open)
     }
     return(
-        <div className="flex ml-[40px] md:mt-0 mt-4" >
+        <div className="flex mx-4 md:mt-0 mt-4" >
             <div
                 className="flex flex-col pl-6 md:w-full mx-2 text-wrap w-[650px] h-[410px] border rounded-md mb-4 p-4">
                 <h1 className="text-lg font-semibold">Role based suggestions</h1>
