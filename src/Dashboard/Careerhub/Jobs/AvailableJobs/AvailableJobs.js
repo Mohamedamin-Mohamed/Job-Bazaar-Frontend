@@ -1,16 +1,24 @@
 import {useEffect, useState} from "react";
 import {toast, ToastContainer} from "react-toastify";
 import GenericRibbon from "../../GenericRibbon";
-import {Outlet} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 import GetAvailableJobs from "../FetchJobs/GetAvailableJobs";
 import DisplayAvailableJobs from "./DisplayAvailableJobs";
 import {ScaleLoader} from "react-spinners";
+import Display404Employer from "../DisplayJobsAppliedTo/Display404Employer";
+import NavBar from "../../NavBar";
 
 const AvailableJobs = () => {
     const [uploadedJobs, setUploadedJobs] = useState([])
     const[loading, setLoading] = useState(false)
+    const userInfo = JSON.parse(localStorage.getItem('user'))
+    const[redirect, setRedirect] = useState(false)
 
     useEffect(() => {
+        if(userInfo.role === 'Employer'){
+            setRedirect(true)
+            return
+        }
         const fetchAvailableJobs = async () => {
             try {
                 setLoading(true)
@@ -28,7 +36,7 @@ const AvailableJobs = () => {
             }
         }
         fetchAvailableJobs()
-    }, []);
+    }, [userInfo.role]);
     return (
         <div className="flex flex-col h-screen">
             {loading && (
@@ -41,9 +49,18 @@ const AvailableJobs = () => {
                 </div>
             )}
             <ToastContainer position="top-center"/>
+            {redirect ?
+                <>
+                <NavBar />
+                <Display404Employer />
+                </>
+                :
+                <>
             <GenericRibbon text={"Available Jobs"}/>
             <DisplayAvailableJobs uploadedJobs={uploadedJobs}/>
             <Outlet/>
+                </>
+            }
         </div>
     )
 }
