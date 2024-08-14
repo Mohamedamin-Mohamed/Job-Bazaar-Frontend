@@ -27,7 +27,7 @@ const DisplayAvailableJobs = ({uploadedJobs}) => {
         setEmployerEmail(employerEmail)
         try {
             const response = await GetJobById(employerEmail, jobId, new AbortController())
-            const hasAppliedTo = await ApplicationChecker(applicantEmail, jobId, new AbortController())
+            const hasAppliedTo = userInfo.role === 'Applicant' && await ApplicationChecker(applicantEmail, jobId, new AbortController())
             const applied = await hasAppliedTo.json()
 
             if (response.ok) {
