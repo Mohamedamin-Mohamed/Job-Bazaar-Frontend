@@ -1,4 +1,4 @@
-import {createBrowserRouter, createRoutesFromElements, Navigate, Route, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from "react-router-dom";
 import Login from "./Authentication/Login";
 import Signup from "./Authentication/Signup";
 import EmailLookup from "./Authentication/EmailLookup";
@@ -15,12 +15,11 @@ import Settings from "./Dashboard/Settings/Settings";
 import CareerInterests from "./Dashboard/Profile/CareerInterests/CareerInterests";
 import Experience from "./Dashboard/Profile/Experience/Experience";
 import Jobs from "./Dashboard/Careerhub/Jobs/UploadJob/Jobs";
-import DisplayAppliedJobs from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/Applied";
+import Applied from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/Applied";
 import UploadedJobs from "./Dashboard/Careerhub/Jobs/UploadedJobs/UploadedJobs";
 import JobDetails from "./Dashboard/Careerhub/Jobs/Details/JobDetails";
-import DisplayAvailableJobs from "./Dashboard/Careerhub/Jobs/AvailableJobs/DisplayAvailableJobs";
 import AvailableJobs from "./Dashboard/Careerhub/Jobs/AvailableJobs/AvailableJobs";
-import Applied from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/Applied";
+import Display404Employer from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/Display404Employer";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -28,7 +27,7 @@ const router = createBrowserRouter(
             <Route path="/" element={<Home/>}/>
             <Route path="accounts">
                 <Route path="login">
-                    <Route index element={<Login />}/>
+                    <Route index element={<Login/>}/>
                     <Route path="email-lookup" element={<EmailLookup/>}/>
                     <Route path="password-reset" element={<PasswordReset/>}/>
                 </Route>
@@ -38,19 +37,20 @@ const router = createBrowserRouter(
                 <Route index element={<CareerHub/>}/>
                 <Route path="profile" element={<Profile/>}>
                     <Route path="career" element={<CareerInterests/>}/>
-                        <Route path="experience" element={<Experience/>}/>
+                    <Route path="experience" element={<Experience/>}/>
                 </Route>
                 <Route path="myreferrals" element={<MyReferrals/>}/>
                 <Route path="settings" element={<Settings/>}/>
-                <Route path="jobs/upload" element={<Jobs />}/>
+                <Route path="jobs/upload" element={<Jobs/>}/>
                 <Route path="my/jobs">
                     <Route path="uploaded" element={<UploadedJobs/>}>
-                        <Route path=":jobId" element={<JobDetails />} />
+                        <Route path=":jobId" element={<JobDetails/>}/>
                     </Route>
                     <Route path="applied" element={<Applied/>}/>
                 </Route>
-                <Route path="explore/jobs" element={<AvailableJobs />} >
-                    <Route path=":jobId" element={<JobDetails />}/>
+                <Route path="explore/jobs" element={<AvailableJobs/>}>
+                    <Route path=":jobId" element={<JobDetails/>}/>
+                    <Route path="*" element={<Display404Employer/>}/>
                 </Route>
             </Route>
             <Route path="refer" element={<Refer/>}/>
