@@ -3,11 +3,12 @@ import GetAppliedJobs from "../FetchJobs/GetAppliedJobs";
 import {toast, ToastContainer} from "react-toastify";
 import GenericRibbon from "../../GenericRibbon";
 import NavBar from "../../NavBar";
-import Display404UnappliedJob from "./Display404UnappliedJob";
+import Display404Applicant from "./Display404Applicant";
 import DisplayAppliedJobs from "./DisplayAppliedJobs";
 import NoTasks from "./NoTasks";
 import CompanyInfo from "./CompanyInfo";
 import {useMediaQuery} from "react-responsive";
+import Display404Employer from "./Display404Employer";
 
 const Applied = () => {
     const [appliedJobs, setAppliedJobs] = useState({})
@@ -20,7 +21,7 @@ const Applied = () => {
 
         const fetchAppliedJobs = async () => {
             try {
-                const response = await GetAppliedJobs(applicantEmail)
+                const response = userInfo.role === 'Applicant' && await GetAppliedJobs(applicantEmail)
                 if (response.ok) {
                     const jobs = await response.json()
                     setAppliedJobs(jobs)
@@ -38,27 +39,32 @@ const Applied = () => {
 
         <div className="max-h-screen mb-10">
             <ToastContainer position="top-center"/>
-            {Object.keys(appliedJobs).length === 0 ? (
-                    <>
-                        <NavBar/>
-                        <Display404UnappliedJob/>
-                    </>
+            {Object.keys(appliedJobs).length === 0 ? (userInfo.role === 'Employer' ? (
+                <>
+                    <NavBar />
+                    <Display404Employer />
+                </>
+                        )
+                        : <>
+                            <NavBar/>
+                            <Display404Applicant/>
+                        </>
                 )
                 : (
                     <div>
                         <div className="flex flex-col mt-2 bg-[#f0f1f2]">
                             <GenericRibbon text={"Applied Jobs"}/>
                             <div className="flex space-x-4 text-2xl font-semibold md:ml-14 ml-12 py-8">
-                            <h1>Welcome,</h1>
-                            <p>{userInfo.firstName}</p>
-                            <p>{userInfo.lastName}</p>
+                                <h1>Welcome,</h1>
+                                <p>{userInfo.firstName}</p>
+                                <p>{userInfo.lastName}</p>
                             </div>
                             <div className={mediaQuery ? "flex" : "flex-col"}>
                                 <div className="flex flex-col">
-                                    <NoTasks />
+                                    <NoTasks/>
                                     <DisplayAppliedJobs appliedJobs={appliedJobs}/>
                                 </div>
-                                    <CompanyInfo />
+                                <CompanyInfo/>
                             </div>
                         </div>
                     </div>
