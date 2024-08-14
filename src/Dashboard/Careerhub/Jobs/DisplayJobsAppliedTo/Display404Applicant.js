@@ -1,7 +1,7 @@
 import Image404 from "../../../../Images/404_illustration.png";
 import {NavLink} from "react-router-dom";
 
-const Display404UnappliedJob = ()=>{
+const Display404Applicant = ()=>{
     return (
         <div className="flex flex-col justify-center items-center mt-12">
             <div>
@@ -22,4 +22,4 @@ const Display404UnappliedJob = ()=>{
         </div>
     )
 }
-export default Display404UnappliedJob
+export default Display404Applicant
