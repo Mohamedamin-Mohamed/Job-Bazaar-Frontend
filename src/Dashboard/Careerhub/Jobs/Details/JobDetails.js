@@ -12,10 +12,6 @@ const JobDetails = ({job, name, role, applied}) => {
         setEditOrApply(!editOrApply)
     }
 
-    const handleJobApplication = () => {
-        setEditOrApply(true)
-    }
-
     return (
         <div className="ml-14 mb-8 w-full">
             {job && (
@@ -29,7 +25,7 @@ const JobDetails = ({job, name, role, applied}) => {
                             <button
                                 className={`${applied ? "w-[136px]" : "w-[103px]"} h-[36px] bg-[#ffed00] font-semibold rounded-sm disabled:cursor-not-allowed`}
                                 disabled={applied}
-                                onClick={handleJobApplication}>{role === 'Employer' ? 'Edit Job' : (applied ? "Already Applied" : 'Apply Now')}
+                                onClick={()=> setEditOrApply(true)}>{role === 'Employer' ? 'Edit Job' : (applied ? "Already Applied" : 'Apply Now')}
                             </button>
                         </div>
                     </div>
