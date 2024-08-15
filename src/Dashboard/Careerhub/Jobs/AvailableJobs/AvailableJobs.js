@@ -1,12 +1,11 @@
 import {useEffect, useState} from "react";
 import {toast, ToastContainer} from "react-toastify";
 import GenericRibbon from "../../GenericRibbon";
-import {Outlet, useNavigate} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import GetAvailableJobs from "../FetchJobs/GetAvailableJobs";
 import DisplayAvailableJobs from "./DisplayAvailableJobs";
 import {ScaleLoader} from "react-spinners";
-import Display404Employer from "../DisplayJobsAppliedTo/Display404Employer";
-import NavBar from "../../NavBar";
+import Display404EmployerOrApplicant from "../DisplayJobsAppliedTo/Display404EmployerOrApplicant";
 
 const AvailableJobs = () => {
     const [uploadedJobs, setUploadedJobs] = useState([])
@@ -50,10 +49,7 @@ const AvailableJobs = () => {
             )}
             <ToastContainer position="top-center"/>
             {redirect ?
-                <>
-                <NavBar />
-                <Display404Employer />
-                </>
+                <Display404EmployerOrApplicant />
                 :
                 <>
             <GenericRibbon text={"Available Jobs"}/>
