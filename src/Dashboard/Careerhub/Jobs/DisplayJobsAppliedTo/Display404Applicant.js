@@ -1,8 +1,11 @@
 import Image404 from "../../../../Images/404_illustration.png";
 import {NavLink} from "react-router-dom";
+import NavBar from "../../NavBar";
 
 const Display404Applicant = ()=>{
     return (
+        <>
+            <NavBar />
         <div className="flex flex-col justify-center items-center mt-12">
             <div>
                 <img src={Image404} alt="" className="w-[127px] h-[196px]"/>
@@ -20,6 +23,7 @@ const Display404Applicant = ()=>{
                 </div>
             </div>
         </div>
+            </>
     )
 }
 export default Display404Applicant

@@ -13,7 +13,7 @@ const JobDetails = ({job, name, role, applied}) => {
     }
 
     return (
-        <div className="ml-14 mb-8 w-full">
+        <div className="ml-10 mb-12 w-full">
             {job && (
                 <>
                     <div className="w-[94%] h-[200px] flex flex-col justify-center items-center border-2 rounded-md">

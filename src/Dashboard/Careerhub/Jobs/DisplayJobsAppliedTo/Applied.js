@@ -2,17 +2,17 @@ import {useEffect, useState} from "react";
 import GetAppliedJobs from "../FetchJobs/GetAppliedJobs";
 import {toast, ToastContainer} from "react-toastify";
 import GenericRibbon from "../../GenericRibbon";
-import NavBar from "../../NavBar";
 import Display404Applicant from "./Display404Applicant";
 import DisplayAppliedJobs from "./DisplayAppliedJobs";
 import NoTasks from "./NoTasks";
 import CompanyInfo from "./CompanyInfo";
 import {useMediaQuery} from "react-responsive";
-import Display404Employer from "./Display404Employer";
+import Display404EmployerOrApplicant from "./Display404EmployerOrApplicant";
 
 const Applied = () => {
     const [appliedJobs, setAppliedJobs] = useState({})
     const userInfo = JSON.parse(localStorage.getItem('user'))
+    const role = userInfo.role
     const applicantEmail = userInfo.email
     const mediaQuery = useMediaQuery({minWidth: "1464px"})
 
@@ -20,14 +20,16 @@ const Applied = () => {
         const controller = new AbortController()
 
         const fetchAppliedJobs = async () => {
-            try {
-                const response = userInfo.role === 'Applicant' && await GetAppliedJobs(applicantEmail)
-                if (response.ok) {
-                    const jobs = await response.json()
-                    setAppliedJobs(jobs)
+            if (role === 'Applicant') {
+                try {
+                    const response = await GetAppliedJobs(applicantEmail)
+                    if (response.ok) {
+                        const jobs = await response.json()
+                        setAppliedJobs(jobs)
+                    }
+                } catch (err) {
+                    toast.error("Encountered an error when fetching jobs", err)
                 }
-            } catch (err) {
-                toast.error("Encountered an error when fetching jobs", err)
             }
         }
         fetchAppliedJobs()
@@ -39,16 +41,10 @@ const Applied = () => {
 
         <div className="max-h-screen mb-10">
             <ToastContainer position="top-center"/>
-            {Object.keys(appliedJobs).length === 0 ? (userInfo.role === 'Employer' ? (
-                <>
-                    <NavBar />
-                    <Display404Employer />
-                </>
-                        )
-                        : <>
-                            <NavBar/>
-                            <Display404Applicant/>
-                        </>
+            {Object.keys(appliedJobs).length === 0 ? (role === 'Employer' ?
+                        <Display404EmployerOrApplicant role={role}/>
+                        :
+                        <Display404Applicant/>
                 )
                 : (
                     <div>
