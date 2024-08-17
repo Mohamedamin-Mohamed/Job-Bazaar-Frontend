@@ -6,9 +6,10 @@ import GetAvailableJobs from "../FetchJobs/GetAvailableJobs";
 import DisplayAvailableJobs from "./DisplayAvailableJobs";
 import {ScaleLoader} from "react-spinners";
 import Display404EmployerOrApplicant from "../DisplayJobsAppliedTo/Display404EmployerOrApplicant";
+import NoAvailableJobs from "./NoAvailableJobs";
 
 const AvailableJobs = () => {
-    const [uploadedJobs, setUploadedJobs] = useState([])
+    const [availableJobs, setAvailableJobs] = useState([])
     const[loading, setLoading] = useState(false)
     const userInfo = JSON.parse(localStorage.getItem('user'))
     const[redirect, setRedirect] = useState(false)
@@ -25,7 +26,7 @@ const AvailableJobs = () => {
                 setLoading(false)
                 if (response.ok) {
                     const jobs = await response.json()
-                    setUploadedJobs(jobs)
+                    setAvailableJobs(jobs)
                 } else {
                     const text = response.text()
                     toast.error(text);
@@ -52,9 +53,13 @@ const AvailableJobs = () => {
                 <Display404EmployerOrApplicant />
                 :
                 <>
+                {Object.keys(availableJobs).length === 0 ? <NoAvailableJobs role={"Applicant"}/> : (
+               <>
             <GenericRibbon text={"Available Jobs"}/>
-            <DisplayAvailableJobs uploadedJobs={uploadedJobs}/>
+            <DisplayAvailableJobs availableJobs={availableJobs}/>
             <Outlet/>
+                   </>
+               )}
                 </>
             }
         </div>
