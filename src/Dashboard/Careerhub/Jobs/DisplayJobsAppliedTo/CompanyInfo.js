@@ -12,7 +12,7 @@ const CompanyInfo = () => {
                 setHeight(refHeight.current.offsetHeight)
             }
         }
-        updateHeight()
+        updateHeight() //initial render
         window.addEventListener('resize', updateHeight)
         return () => {
             window.removeEventListener('resize', updateHeight)
