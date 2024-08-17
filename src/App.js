@@ -19,7 +19,11 @@ import Applied from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/Applied";
 import UploadedJobs from "./Dashboard/Careerhub/Jobs/UploadedJobs/UploadedJobs";
 import JobDetails from "./Dashboard/Careerhub/Jobs/Details/JobDetails";
 import AvailableJobs from "./Dashboard/Careerhub/Jobs/AvailableJobs/AvailableJobs";
-import Display404EmployerOrApplicant from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/Display404EmployerOrApplicant";
+import Display404EmployerOrApplicant
+    from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/Display404EmployerOrApplicant";
+import ApplicationDescription
+    from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/Job Description/ApplicationDescription";
+import ViewApplication from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/View Application/ViewApplication";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -47,6 +51,10 @@ const router = createBrowserRouter(
                         <Route path=":jobId" element={<JobDetails/>}/>
                     </Route>
                     <Route path="applied" element={<Applied/>}/>
+                </Route>
+                <Route path="Job_Bazaar_Careers">
+                    <Route path="job/:position" element={<ApplicationDescription/>}/>
+                    <Route path="viewApplication/:jobId" element={<ViewApplication/>}/>
                 </Route>
                 <Route path="explore/jobs" element={<AvailableJobs/>}>
                     <Route path=":jobId" element={<JobDetails/>}/>
