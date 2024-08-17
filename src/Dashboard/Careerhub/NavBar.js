@@ -1,6 +1,6 @@
 import {NavLink, useNavigate} from "react-router-dom";
 import {CgMenuGridO} from "react-icons/cg";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useEffect, useRef, useState} from "react";
 import {MdArrowDropDown} from "react-icons/md";
 import {IoMdArrowDropup} from "react-icons/io";
@@ -10,17 +10,21 @@ import {clearLocationInfo} from "../../Redux/LocationSlice";
 import localStorage from "redux-persist/es/storage";
 
 const NavBar = () => {
-    const usrInfo = useSelector(state => state.userInfo);
     const dispatch = useDispatch()
 
     const [userSettingDropDown, setUserSettingDropDown] = useState(false)
     const [menuGrid, setMenuGrid] = useState(false)
     const [referrals, setReferrals] = useState(false)
     const [jobs, setJobs] = useState(false)
-    const[role, setRole] = useState("")
+    const [role, setRole] = useState()
     const navigate = useNavigate()
     const isMediumScreen = useMediaQuery({minWidth: 993}); // Set the breakpoint for md screens
-    const abbreviatedName = usrInfo.firstName.substring(0, 1) + usrInfo.lastName.substring(0, 1)
+
+    const [name, setName] = useState({
+        abbrFirstName: '',
+        abbrLastName: ''
+    })
+    const abbreviatedName = name.abbrFirstName + name.abbrLastName
 
     const dropDownRef = useRef(null)
     const feedBackRef = useRef(null)
@@ -87,28 +91,28 @@ const NavBar = () => {
     }, [jobs])
 
     useEffect(() => {
-        const getRoleFromLocalStorage = async ()=>{
+        const getRoleFromLocalStorage = async () => {
             try {
                 const userJson = await localStorage.getItem("user")
                 if (userJson) {
-                    const user = JSON.parse(userJson)
-
-                    const role = user.role
-                    if (role) {
-                        setRole(role)
+                    const userInfo = JSON.parse(userJson)
+                    if (userInfo) {
+                        setRole(userInfo.role)
+                        setName((prevState => ({
+                            abbrFirstName: userInfo.firstName.substring(0, 1),
+                            abbrLastName: userInfo.lastName.substring(0, 1)
+                        })))
                     } else {
-                        console.error("Role key doesn't exist in the user object.")
+                        console.error("User object failed to parse.")
                     }
-                }
-                else{
+                } else {
                     console.error('User object nor found in localStorage')
                 }
-            }
-            catch (err){
+            } catch (err) {
                 console.error('Error parsing JSON from localStorage:', err)
             }
         }
-        getRoleFromLocalStorage()
+        getRoleFromLocalStorage().catch(err => console.error(err))
     }, []);
 
     return (
@@ -120,26 +124,30 @@ const NavBar = () => {
                     Interests</NavLink>
                 <NavLink to='/careerhub/profile/experience' className="hover:text-[#367c2b] font-medium text-lg pl-2">My
                     Profile</NavLink>
-                <div className="flex hover:cursor-pointer" onClick={handleJobs} >
+                <div className="flex hover:cursor-pointer" onClick={handleJobs}>
                     <p className="hover:text-[#367c2b] font-medium text-lg pl-2">Jobs</p>
                     {!jobs ? <MdArrowDropDown size={28} color="black"/> :
                         <IoMdArrowDropup size={24} color="black"/>}
                 </div>
                 <div ref={jobsRef}>
-                {jobs && (
-                    <div
-                        className="flex justify-center absolute left-1/2 transform -translate-x-1/2 w-full z-50 hover:cursor-pointer"
-                        onClick={handleJobs}>
-                        <nav className="flex flex-col mt-12 bg-white p-[12px] w-[220px] h-[94px] ml-96 border">
-                            {role === 'Employer' ? "" :  <NavLink to='/careerhub/explore/jobs' className="p-1">Job Search</NavLink>}
-                            <NavLink to={role === "Employer" ? '/careerhub/my/jobs/uploaded' : '/careerhub/my/jobs/applied'} className="p-1">My Jobs</NavLink>
-                            {role === "Employer" ? <NavLink to='/careerhub/jobs/upload' className="p-1">Post a job</NavLink> : "" }
-                        </nav>
-                    </div>
-                )}
+                    {jobs && (
+                        <div
+                            className="flex justify-center absolute left-1/2 transform -translate-x-1/2 w-full z-50 hover:cursor-pointer"
+                            onClick={handleJobs}>
+                            <nav className="flex flex-col mt-12 bg-white p-[12px] w-[220px] h-[94px] ml-96 border">
+                                {role === 'Employer' ? "" :
+                                    <NavLink to='/careerhub/explore/jobs' className="p-1">Job Search</NavLink>}
+                                <NavLink
+                                    to={role === "Employer" ? '/careerhub/my/jobs/uploaded' : '/careerhub/my/jobs/applied'}
+                                    className="p-1">My Jobs</NavLink>
+                                {role === "Employer" ?
+                                    <NavLink to='/careerhub/jobs/upload' className="p-1">Post a job</NavLink> : ""}
+                            </nav>
+                        </div>
+                    )}
                 </div>
                 <div className="flex hover:cursor-pointer" onClick={handleReferrals}>
-                    <p className="hover:text-[#367c2b] font-medium text-lg px-2">Referrals</p>
+                    <p className="hover:text-[#367c2b] font-medium text-lg">Referrals</p>
                     {!referrals ? <MdArrowDropDown size={28} color="black"/> :
                         <IoMdArrowDropup size={24} color="black"/>}
                 </div>
@@ -172,9 +180,9 @@ const NavBar = () => {
                 {userSettingDropDown && (
                     <div>
                         <nav
-                            className={"flex flex-col absolute right-0 mt-[22px] mr-4 w-[350px] border p-4 bg-white z-50 hover:cursor-pointer"}
+                            className={"flex flex-col absolute right-0 mt-[34px] mr-4 w-[350px] border p-4 bg-white z-50 hover:cursor-pointer"}
                             ref={dropDownRef} onClick={handleUserSettingDropDown}>
-                            <NavLink to="/careerhub" className="mb-1">{usrInfo.firstName} {usrInfo.lastName}</NavLink>
+                            <NavLink to="/careerhub" className="mb-1">{name.firstName} {name.lastName}</NavLink>
                             <div className="flex flex-col pb-4">
                                 <NavLink to="/careerhub/profile/experience" className="p-1">My
                                     Profile</NavLink>
@@ -182,12 +190,15 @@ const NavBar = () => {
                                     Interests</NavLink>
                             </div>
                             <div className="flex flex-col border-t border-b py-4">
-                                {role !== 'Employer' &&  <NavLink to="/careerhub/explore/jobs" className="p-1">Job Search</NavLink>}
+                                {role !== 'Employer' &&
+                                    <NavLink to="/careerhub/explore/jobs" className="p-1">Job Search</NavLink>}
                                 <NavLink to="/careerhub/explore/projects" className="p-1">Project Search</NavLink>
                                 <NavLink to="/careerhub/explore/courses" className="p-1">Courses Search</NavLink>
                             </div>
                             <div className="flex flex-col border-b py-4">
-                                <NavLink to={role === 'Employer' ? "/careerhub/my/jobs/uploaded" : "/careerhub/my/jobs/applied"} className="p-1">My Jobs</NavLink>
+                                <NavLink
+                                    to={role === 'Employer' ? "/careerhub/my/jobs/uploaded" : "/careerhub/my/jobs/applied"}
+                                    className="p-1">My Jobs</NavLink>
                                 <NavLink to="/careerhub/myreferrals" className="p-1">My Referrals</NavLink>
                             </div>
                             <div className="flex flex-col pt-4">
