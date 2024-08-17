@@ -1,7 +1,13 @@
 import {useMediaQuery} from "react-responsive";
+import {useNavigate} from "react-router-dom";
 
 const DisplayAppliedJobs = ({appliedJobs}) => {
     const mediaQuery = useMediaQuery({minWidth: "1050px"})
+    const navigate = useNavigate()
+
+    const handlePosition = (application) => {
+        navigate(`/careerhub/Job_Bazaar_Careers/job/${application.position}_${application.jobId}`, {state: {application}})
+    }
     return (
         <div className="flex flex-col ml-12 mt-12 bg-white mx-8 p-4 rounded-xl md:mb-8">
             <div className="w-full">
@@ -49,7 +55,8 @@ const DisplayAppliedJobs = ({appliedJobs}) => {
                     <div key={index} className="flex justify-between border-b py-3">
                         {/* Job Title */}
                         <div className="md:w-[40%] w-full">
-                            <h1>{application.position}</h1>
+                            <button onClick={() => handlePosition(application)}
+                                    className="text-[#0875e1] text-sm hover:bg-gray-100 hover:">{application.position}</button>
                         </div>
                         {mediaQuery && (
                             <div className="flex space-x-8 justify-end w-full mr-12">
@@ -67,13 +74,12 @@ const DisplayAppliedJobs = ({appliedJobs}) => {
                         )}
                         {!mediaQuery && (
                             <div className="flex justify-end w-[10%] mr-8">
-                                    <p>....</p>
+                                <p>....</p>
                             </div>
                         )}
                     </div>
                 ))}
             </div>
-
         </div>
     )
 }
