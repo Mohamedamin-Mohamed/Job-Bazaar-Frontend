@@ -9,6 +9,7 @@ import {useNavigate} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
 import SaveJobs from "../FetchJobs/SaveJobs";
 import {useSelector} from "react-redux";
+import {format} from "date-fns";
 
 const UploadJobs = () => {
     const userInfo = useSelector(state => state.userInfo)
@@ -64,8 +65,12 @@ const UploadJobs = () => {
             });
             return;
         }
+        //will evaluate the current date to map to the posted job date
+        const date = new Date().toISOString()
+        const formattedDate = date ? format(date, 'MM-dd-yyy') : ''
+
         const requestBody = {
-            ...jobDetails, employerEmail: userInfo.usrEmail
+            ...jobDetails, employerEmail: userInfo.usrEmail, postedDate: formattedDate
         }
         const response = await SaveJobs(requestBody)
         const text = await response.text()
