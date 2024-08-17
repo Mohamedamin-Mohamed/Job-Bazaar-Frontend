@@ -1,10 +1,11 @@
 import {useCallback, useEffect, useState} from "react";
 import GetUploadedJobs from "../FetchJobs/GetUploadedJobs";
-import {toast, ToastContainer} from "react-toastify";
+import {ToastContainer} from "react-toastify";
 import DisplayUploadedJobs from "./DisplayUploadedJobs";
 import GenericRibbon from "../../GenericRibbon";
 import {Outlet} from "react-router-dom";
 import Display404EmployerOrApplicant from "../DisplayJobsAppliedTo/Display404EmployerOrApplicant";
+import NoAvailableJobs from "../AvailableJobs/NoAvailableJobs";
 
 const UploadedJobs = () => {
     const userInfo = JSON.parse(localStorage.getItem('user'))
@@ -20,9 +21,6 @@ const UploadedJobs = () => {
                 if (response.ok) {
                     const jobs = await response.json()
                     setUploadedJobs(jobs)
-                } else {
-                    const text = await response.text()
-                    toast.error(text);
                 }
             }
         } catch (err) {
@@ -45,9 +43,14 @@ const UploadedJobs = () => {
                 <Display404EmployerOrApplicant role={role}/>
                 :
                 <>
-                    <GenericRibbon text={"Uploaded Jobs"}/>
-                    <DisplayUploadedJobs uploadedJobs={uploadedJobs} employerEmail={employerEmail}/>
-                    <Outlet/>
+                    {Object.keys(uploadedJobs).length === 0 ? <NoAvailableJobs role={"Employer"}/>
+                        :
+                        <>
+                            <GenericRibbon text={"Uploaded Jobs"}/>
+                            <DisplayUploadedJobs uploadedJobs={uploadedJobs} employerEmail={employerEmail}/>
+                            <Outlet/>
+                        </>
+                    }
                 </>
             }
         </div>
