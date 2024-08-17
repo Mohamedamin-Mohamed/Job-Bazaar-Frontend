@@ -5,6 +5,7 @@ const ApplyToJob = async (controller, jobApplication, user) => {
     const formData = new FormData();
 
     formData.append("applicantEmail", user.email);
+    formData.append("employerEmail", jobApplication.employerEmail);
     formData.append("jobId", jobApplication.jobId);
     formData.append("position", jobApplication.position)
     formData.append("resumeName", jobApplication.resume.name)
