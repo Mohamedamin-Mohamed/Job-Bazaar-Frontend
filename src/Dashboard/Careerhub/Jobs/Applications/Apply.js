@@ -23,7 +23,8 @@ const Apply = ({job, handleClose, open}) => {
         additionalDocument: {name: '', file: ''},
         employerContact: '',
         position: job.position,
-        jobId: job.jobId
+        jobId: job.jobId,
+        employerEmail: job.employerEmail
     }
     const [jobApplication, setJobApplication] = useState(initialJobApplicationState)
     const countryNames = Object.values(countries).map(country => country.name)
