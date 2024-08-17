@@ -45,6 +45,17 @@ const DisplayUploadedJobs = ({uploadedJobs, employerEmail}) => {
     }
 
     useEffect(() => {
+        if (uploadedJobs.length > 0) {
+            const firstJob = uploadedJobs[0]
+            setJobById(firstJob)
+            navigate(`${firstJob.jobId}`)
+            setClicked((prevState) => ({
+                [firstJob.jobId]: true
+            }))
+        }
+    }, [navigate, uploadedJobs]);
+
+    useEffect(() => {
         setLoading(true)
         const fetchName = async () => {
             const response = await GetName(employerEmail, new AbortController())
@@ -53,20 +64,20 @@ const DisplayUploadedJobs = ({uploadedJobs, employerEmail}) => {
                 firstName: data.firstName,
                 lastName: data.lastName
             })
-                setLoading(false)
+            setLoading(false)
         }
         fetchName()
     }, [employerEmail]);
     return (
         <div className="flex h-screen my-8">
             {loading && (
-            <div className="fixed flex justify-center items-center inset-0 backdrop-brightness-50">
-                <ScaleLoader
-                    color="#1c3e17"
-                    height={100}
-                    width={4}
-                />
-            </div>
+                <div className="fixed flex justify-center items-center inset-0 backdrop-brightness-50">
+                    <ScaleLoader
+                        color="#1c3e17"
+                        height={100}
+                        width={4}
+                    />
+                </div>
             )}
             <div className="flex h-[700px] pr-4">
                 <div className="cursor-pointer overflow-y-scroll h-screen w-[700px] mr-4">

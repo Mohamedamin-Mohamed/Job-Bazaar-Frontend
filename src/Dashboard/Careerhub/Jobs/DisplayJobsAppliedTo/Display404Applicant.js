@@ -1,4 +1,4 @@
-import Image404 from "../../../../Images/404_illustration.png";
+import Image404 from "../../../../Images/No+Application_Illustration.svg";
 import {NavLink} from "react-router-dom";
 import NavBar from "../../NavBar";
 
