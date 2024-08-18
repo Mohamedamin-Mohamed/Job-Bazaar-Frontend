@@ -4,11 +4,11 @@ import {HiOutlineClock} from "react-icons/hi2";
 import {FaIdBadge} from "react-icons/fa";
 import {format} from "date-fns";
 
-const Header = ({job, applicationDate}) => {
+const Header = ({job, postedDate}) => {
     const date = new Date().toISOString()
     const formattedDate = format(date, 'MM-dd-yyy')
 
-    const appliedDate = new Date(applicationDate)
+    const appliedDate = new Date(postedDate)
     const currDate = new Date(formattedDate)
 
     const timeDifference = currDate - appliedDate
