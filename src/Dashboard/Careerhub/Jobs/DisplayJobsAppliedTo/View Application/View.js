@@ -17,6 +17,7 @@ const View = () => {
     const {application} = location.state || {}
 
     const applicantEmail = application.applicantEmail
+
     const applicationDate = application.applicationDate
     const date = new Date().toISOString()
     const formattedDate = format(date, 'MM-dd-yyy')
