@@ -38,8 +38,9 @@ const Applied = () => {
             controller.abort()
         }
     }, [fetchAppliedJobs]);
+
     return (
-        <div className="max-h-screen mb-10">
+        <div className="mb-10">
             <ToastContainer position="top-center"/>
             {Object.keys(appliedJobs).length === 0 ? (role === 'Employer' ?
                         <Display404EmployerOrApplicant role={role}/>
@@ -48,14 +49,9 @@ const Applied = () => {
                 )
                 : (
                     <div>
-                        <div className="flex flex-col mt-2 bg-[#f0f1f2]">
+                        <div className="flex flex-col bg-[#f0f1f2]">
                             <GenericRibbon text={"Applied Jobs"}/>
-                            <div className="flex space-x-4 text-2xl font-semibold md:ml-14 ml-12 pb-4 pt-8">
-                                <h1>Welcome,</h1>
-                                <p>{userInfo.firstName}</p>
-                                <p>{userInfo.lastName}</p>
-                            </div>
-                            <div className={mediaQuery ? "flex" : "flex-col"}>
+                            <div className={mediaQuery ? "flex justify-center items-center" : "flex-col"}>
                                 <div className="flex flex-col">
                                     <NoTasks/>
                                     <DisplayAppliedJobs appliedJobs={appliedJobs}/>
