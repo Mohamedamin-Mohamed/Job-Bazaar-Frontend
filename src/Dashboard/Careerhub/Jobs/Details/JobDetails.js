@@ -5,7 +5,6 @@ import EditJob from "../Edits/EditJob";
 import Apply from "../Applications/Apply";
 
 const JobDetails = ({job, name, role, applied}) => {
-    const [height, setHeight] = useState('')
     const [editOrApply, setEditOrApply] = useState(false)
 
     const handleClose = () => {
@@ -13,9 +12,9 @@ const JobDetails = ({job, name, role, applied}) => {
     }
 
     return (
-        <div className="ml-10 mb-12 w-full">
+        <div className="ml-10 w-full">
             {job && (
-                <>
+                <div className="pb-12">
                     <div className="w-[94%] h-[200px] flex flex-col justify-center items-center border-2 rounded-md">
                         <div className="flex space-x-2 text-2xl font-semibold mb-8">
                             <p>{job.jobId}</p>
@@ -29,11 +28,11 @@ const JobDetails = ({job, name, role, applied}) => {
                             </button>
                         </div>
                     </div>
-                    <div className={`w-[94%] h-[${height + 20}px border rounded-md my-8`}>
+                    <div className={`w-[94%] border rounded-md my-8 `}>
                         <Headers job={job} name={name} role={role}/>
-                        <Details job={job} setHeight={setHeight}/>
+                        <Details job={job} />
                     </div>
-                </>
+                </div>
             )
             }
             {editOrApply ? role === 'Employer' ?

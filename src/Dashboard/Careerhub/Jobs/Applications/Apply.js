@@ -13,6 +13,8 @@ import {toast, ToastContainer} from "react-toastify";
 const Apply = ({job, handleClose, open}) => {
     const countriesRef = useRef(null)
     const genderRef = useRef(null)
+    const [disabled, setDisabled] = useState(false)
+
     const initialJobApplicationState = {
         resume: {name: '', file: ''},
         country: '',
@@ -94,6 +96,17 @@ const Apply = ({job, handleClose, open}) => {
         setJobApplication(initialJobApplicationState)
     }
     const handleSave = async () => {
+        setDisabled(true)
+        if ((jobApplication.resume.name === '' || jobApplication.resume.file === '') || jobApplication.country === '' || jobApplication.city === ''
+            || jobApplication.postalCode === '' || jobApplication.gender === '' || jobApplication.nationality === ''
+            || jobApplication.employerContact === '') {
+            toast.error('Please fill out all the required fields*', {
+                onClose: () => {
+                    setDisabled(false)
+                }
+            })
+            return
+        }
         const nameResponse = await GetName(userInfo.usrEmail, new AbortController())
         const user = await nameResponse.json()
         const response = await ApplyToJob(new AbortController(), jobApplication, user)
@@ -300,7 +313,8 @@ const Apply = ({job, handleClose, open}) => {
                         </div>
                     </div>
                 </div>
-                <FixedButtons handleClear={handleClear} handleOpen={handleClose} handleSave={handleSave}/>
+                <FixedButtons disabled={disabled} handleClear={handleClear} handleOpen={handleClose}
+                              handleSave={handleSave}/>
             </div>
         </div>
     )

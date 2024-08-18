@@ -1,13 +1,8 @@
-import {useEffect, useRef} from "react";
+import {useRef} from "react";
 
-const Details = ({job, setHeight}) => {
+const Details = ({job}) => {
     const refHeight = useRef(null)
 
-    useEffect(() => {
-        if (refHeight.current) {
-            setHeight(refHeight.current.offsetHeight)
-        }
-    }, [])
     return (
         <div className="border border-t rounded-md mt-8 w-[90%] ml-8 mb-8 flex-col" ref={refHeight}>
             <div className="flex space-x-4 px-8 pt-6">

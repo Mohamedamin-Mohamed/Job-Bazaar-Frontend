@@ -14,28 +14,30 @@ const AvailableJobs = () => {
     const userInfo = JSON.parse(localStorage.getItem('user'))
     const[redirect, setRedirect] = useState(false)
 
+    const fetchAvailableJobs = async () => {
+        try {
+            setLoading(true)
+            const response = await GetAvailableJobs(new AbortController())
+            setLoading(false)
+            if (response.ok) {
+                const jobs = await response.json()
+                setAvailableJobs(jobs)
+            } else {
+                const text = response.text()
+                toast.error(text);
+            }
+        } catch (err) {
+            console.error('Error fetching jobs:', err)
+        }
+    }
+
     useEffect(() => {
         if(userInfo.role === 'Employer'){
             setRedirect(true)
             return
         }
-        const fetchAvailableJobs = async () => {
-            try {
-                setLoading(true)
-                const response = await GetAvailableJobs(new AbortController())
-                setLoading(false)
-                if (response.ok) {
-                    const jobs = await response.json()
-                    setAvailableJobs(jobs)
-                } else {
-                    const text = response.text()
-                    toast.error(text);
-                }
-            } catch (err) {
-                console.error('Error fetching jobs:', err)
-            }
-        }
-        fetchAvailableJobs()
+        fetchAvailableJobs().catch(err => console.error(err))
+
     }, [userInfo.role]);
     return (
         <div className="flex flex-col h-screen">
@@ -50,7 +52,7 @@ const AvailableJobs = () => {
             )}
             <ToastContainer position="top-center"/>
             {redirect ?
-                <Display404EmployerOrApplicant />
+                <Display404EmployerOrApplicant role={"Employer"}/>
                 :
                 <>
                 {Object.keys(availableJobs).length === 0 ? <NoAvailableJobs role={"Applicant"}/> : (
