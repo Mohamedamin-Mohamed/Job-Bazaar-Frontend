@@ -2,7 +2,7 @@ import {useMediaQuery} from "react-responsive";
 import {useEffect, useRef, useState} from "react";
 
 const CompanyInfo = () => {
-    const mediaQuery = useMediaQuery({minWidth: "1440px"})
+    const mediaQuery = useMediaQuery({minWidth: "1464px"})
     const refHeight = useRef(null)
     const [height, setHeight] = useState("")
 
@@ -19,7 +19,7 @@ const CompanyInfo = () => {
         }
     },[])
     return (
-        <div className={`flex flex-col ${mediaQuery ? "mx-6" : "mx-10"} mt-4 bg-white p-6 border rounded-xl mb-8`} style={{height: `${height}px`}} ref={refHeight}>
+        <div className={`flex flex-col ${mediaQuery ? "mx-6" : "mx-10 mt-8"} bg-white p-6 border rounded-xl mb-8`} style={{height: `${height}px`}} ref={refHeight}>
             <div className={`${!mediaQuery ? `` : "w-[300px]"}`}>
                 <h1 className="text-xl font-semibold my-3">Welcome</h1>
                 <p className="text-[#494949]">Thank you for using Job Bazaar</p>
