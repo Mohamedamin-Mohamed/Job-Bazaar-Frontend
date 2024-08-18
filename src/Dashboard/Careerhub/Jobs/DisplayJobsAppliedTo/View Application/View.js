@@ -5,14 +5,28 @@ import GetEducation from "../../../../Profile/Experience/Education/FetchEducatio
 import {GoFileSymlinkFile} from "react-icons/go";
 import GetWorkExperience from "../../../../Profile/Experience/Work Experience/FetchWorkExperience/GetWorkExperience";
 import {useMediaQuery} from "react-responsive";
+import {format} from "date-fns";
 
 const View = () => {
     const [education, setEducation] = useState({})
     const [workExperience, setWorkExperience] = useState({})
+
     const mediaQuery = useMediaQuery({minWidth: "1100px"})
+
     const location = useLocation()
     const {application} = location.state || {}
+
     const applicantEmail = application.applicantEmail
+    const applicationDate = application.applicationDate
+    const date = new Date().toISOString()
+    const formattedDate = format(date, 'MM-dd-yyy')
+
+    const appliedDate = new Date(applicationDate)
+    const currDate = new Date(formattedDate)
+
+    const timeDifference = currDate - appliedDate
+    const daysDifference = timeDifference / (1000 * 60 * 60 * 24)
+
     if (!application) {
         toast.error("No application data found.")
     }
@@ -42,7 +56,7 @@ const View = () => {
             <div className={`${mediaQuery ? "border-l border-r" : ""} w-full mx-24 p-4`}>
                 <h1 className="font-semibold text-lg">{application.jobId} {application.position} - Submitted
                     Application</h1>
-                <h1 className="pl-2 my-6 font-medium text-[#4a4a4a]">Applied {application.applicationDate}</h1>
+                <h1 className="pl-2 my-6 font-medium text-[#4a4a4a]">Applied {daysDifference > 0 ? (daysDifference + ` day${daysDifference !== 1 ? "'s" : ""} ago`) : "less than a day ago"}</h1>
                 <h1 className="font-semibold text-lg mb-6 text-[#333333]">My Information</h1>
                 <div className="pl-2">
                     <div className="flex flex-col text-[#4a4a4a] space-y-2 my-6">
