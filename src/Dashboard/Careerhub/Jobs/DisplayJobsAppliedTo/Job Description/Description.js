@@ -8,7 +8,7 @@ import {useMediaQuery} from "react-responsive";
 import WorkPlaceTypeMapping from "./WorkPlaceTypeMapping";
 
 const Description = () => {
-    const mediaQuery = useMediaQuery({minWidth: "1050px"})
+    const mediaQuery = useMediaQuery({minWidth: "1284px"})
     const [job, setJob] = useState({})
     const navigate = useNavigate()
     const workPlaceTypeMapping = WorkPlaceTypeMapping
@@ -39,9 +39,9 @@ const Description = () => {
         navigate(`../viewApplication/${application.jobId}`, {state: {application}})
     }
     return (
-        <div className={`${mediaQuery ? "mx-6" : "mx-10"} pb-10`}>
+        <div className={`${mediaQuery ? "mx-6 w-[850px]" : "mx-10"} pb-10`}>
             <ToastContainer position="top-center"/>
-            <div className={`p-4 bg-white border rounded-md mt-4`}>
+            <div className={`p-10 bg-white border rounded-md mt-4`}>
                 <div className="border-b pb-4">
                     <h1 className="text-2xl font-semibold p-2 ml-1">{application.position}</h1>
                     <p className="p-3">You applied for this job on {application.applicationDate}</p>
@@ -51,10 +51,10 @@ const Description = () => {
                         Application
                     </button>
                 </div>
-                <Header job={job}/>
+                <Header job={job} applicationDate={application.applicationDate}/>
                 <Info/>
                 <h1 className="underline font-medium text-lg pb-2">Job Description</h1>
-                <p className="font-medium pb-2 mb-6">What you'll do</p>
+                <p className="font-medium pb-2 mb-6">What you'll do:</p>
                 <p>{job.description}</p>
                 <h1 className="font-medium text-lg py-6">Basic Qualifications:</h1>
                 <p>{job.requirements}</p>
