@@ -2,10 +2,10 @@ import {FaPlus} from "react-icons/fa6";
 import {useEffect, useState} from "react";
 import AddEducation from "./AddEducation";
 import {useSelector} from "react-redux";
-import GetEducation from "./FetchEducation/GetEducation";
+import getEducation from "./FetchEducation/getEducation";
 import {MdOutlineDelete} from "react-icons/md";
 import {IoPencilSharp} from "react-icons/io5";
-import DeleteEducation from "./FetchEducation/DeleteEducation";
+import deleteEducation from "./FetchEducation/deleteEducation";
 import {toast, ToastContainer} from "react-toastify";
 import ImageSearch from "../ImageSearch/ImageSearch";
 import {format} from "date-fns";
@@ -34,7 +34,7 @@ const Education = () => {
         const fetchData = async () => {
             const abortController = new AbortController()
             try {
-                const response = await GetEducation(email, abortController)
+                const response = await getEducation(email, abortController)
 
                 setLoading(false)
 
@@ -57,7 +57,7 @@ const Education = () => {
     }, []);
 
     const handleDelete = async () => {
-        const response = await DeleteEducation(usrInfo.usrEmail)
+        const response = await deleteEducation(usrInfo.usrEmail)
         const result = await response.text();
         if (response.ok) {
             toast.success(result, {
