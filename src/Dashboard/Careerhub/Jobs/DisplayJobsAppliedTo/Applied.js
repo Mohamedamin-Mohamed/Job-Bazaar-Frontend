@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState} from "react";
-import GetAppliedJobs from "../FetchJobs/GetAppliedJobs";
+import getAppliedJobs from "../FetchJobs/getAppliedJobs";
 import {toast, ToastContainer} from "react-toastify";
 import GenericRibbon from "../../GenericRibbon";
 import Display404Applicant from "./Display404Applicant";
@@ -19,7 +19,7 @@ const Applied = () => {
     const fetchAppliedJobs = useCallback(async () => {
         if (role === 'Applicant') {
             try {
-                const response = await GetAppliedJobs(applicantEmail)
+                const response = await getAppliedJobs(applicantEmail, new AbortController())
                 if (response.ok) {
                     const jobs = await response.json()
                     setAppliedJobs(jobs)
