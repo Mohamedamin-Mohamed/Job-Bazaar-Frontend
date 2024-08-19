@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {toast, ToastContainer} from "react-toastify";
 import GenericRibbon from "../../GenericRibbon";
 import {Outlet} from "react-router-dom";
-import GetAvailableJobs from "../FetchJobs/GetAvailableJobs";
+import getAvailableJobs from "../FetchJobs/getAvailableJobs";
 import DisplayAvailableJobs from "./DisplayAvailableJobs";
 import {ScaleLoader} from "react-spinners";
 import Display404EmployerOrApplicant from "../DisplayJobsAppliedTo/Display404EmployerOrApplicant";
@@ -17,7 +17,7 @@ const AvailableJobs = () => {
     const fetchAvailableJobs = async () => {
         try {
             setLoading(true)
-            const response = await GetAvailableJobs(new AbortController())
+            const response = await getAvailableJobs(new AbortController())
             setLoading(false)
             if (response.ok) {
                 const jobs = await response.json()
