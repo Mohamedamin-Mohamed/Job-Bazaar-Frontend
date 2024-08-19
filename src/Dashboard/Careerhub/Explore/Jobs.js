@@ -1,6 +1,6 @@
 const Jobs = ({handleExplore})=>{
     return (
-        <div className={`border w-full md:w-full h-[288px] bg-[#fff89c] p-6 text-[#5c5500] mt-8`}>
+        <div className={`flex flex-col w-full border h-[288px] bg-[#fff89c] p-6 text-[#5c5500] mt-8 z-50`}>
             <div className="flex flex-col mb-6">
                 <h1 className="font-medium text-lg">Jobs</h1>
                 <p className="font-semibold">Browse opportunities for you or friends</p>
