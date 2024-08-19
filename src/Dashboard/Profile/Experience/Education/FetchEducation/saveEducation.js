@@ -1,4 +1,4 @@
-const SaveEducation = async (postRequest) => {
+const saveEducation = async (postRequest) => {
     const token = localStorage.getItem("token")
     if(token) {
         return await fetch('http://localhost:8080/api/user-education/save', {
@@ -11,4 +11,4 @@ const SaveEducation = async (postRequest) => {
         })
     }
 }
-export default SaveEducation
+export default saveEducation

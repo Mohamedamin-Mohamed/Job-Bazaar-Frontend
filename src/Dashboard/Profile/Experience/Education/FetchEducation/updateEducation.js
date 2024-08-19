@@ -1,4 +1,4 @@
-const UpdateEducation = async (updateRequest)=>{
+const updateEducation = async (updateRequest)=>{
     const token = localStorage.getItem("token")
     if(token) {
         return await fetch('http://localhost:8080/api/user-education/update', {
@@ -11,4 +11,4 @@ const UpdateEducation = async (updateRequest)=>{
         })
     }
 }
-export default UpdateEducation
+export default updateEducation
