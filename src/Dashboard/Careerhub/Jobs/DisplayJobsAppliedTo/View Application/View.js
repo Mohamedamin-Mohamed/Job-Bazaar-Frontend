@@ -1,7 +1,7 @@
 import {useLocation} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
 import {useEffect, useState} from "react";
-import GetEducation from "../../../../Profile/Experience/Education/FetchEducation/GetEducation";
+import getEducation from "../../../../Profile/Experience/Education/FetchEducation/getEducation";
 import {GoFileSymlinkFile} from "react-icons/go";
 import GetWorkExperience from "../../../../Profile/Experience/Work Experience/FetchWorkExperience/GetWorkExperience";
 import {useMediaQuery} from "react-responsive";
@@ -35,7 +35,7 @@ const View = () => {
     useEffect(() => {
         const fetchEducation = async () => {
             try {
-                const educationResponse = await GetEducation(applicantEmail, new AbortController());
+                const educationResponse = await getEducation(applicantEmail, new AbortController());
                 const workExperienceResponse = await GetWorkExperience(applicantEmail, new AbortController())
                 if (educationResponse.ok && workExperienceResponse.ok) {
                     const educationData = await educationResponse.json()
@@ -57,7 +57,7 @@ const View = () => {
             <div className={`${mediaQuery ? "border-l border-r" : ""} w-full mx-24 p-4`}>
                 <h1 className="font-semibold text-lg">{application.jobId} {application.position} - Submitted
                     Application</h1>
-                <h1 className="pl-2 my-6 font-medium text-[#4a4a4a]">Applied {daysDifference > 0 ? (daysDifference + ` day${daysDifference !== 1 ? "'s" : ""} ago`) : "less than a day ago"}</h1>
+                <h1 className="pl-2 my-6 font-medium text-[#4a4a4a]">Applied {daysDifference > 0 ? (daysDifference + ` Day${daysDifference !== 1 ? "s" : ""} ago`) : "less than a day ago"}</h1>
                 <h1 className="font-semibold text-lg mb-6 text-[#333333]">My Information</h1>
                 <div className="pl-2">
                     <div className="flex flex-col text-[#4a4a4a] space-y-2 my-6">
