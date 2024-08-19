@@ -6,8 +6,8 @@ import EndDate from "../Calendar/EndDate";
 import {format, parse} from "date-fns";
 import {useSelector} from "react-redux";
 import {toast, ToastContainer} from "react-toastify";
-import SaveEducation from "./FetchEducation/SaveEducation";
-import getEducation from "./FetchEducation/GetEducation";
+import saveEducation from "./FetchEducation/saveEducation";
+import getEducation from "./FetchEducation/getEducation";
 
 const AddEducation = ({open, handleOpen, statusCode}) => {
     const usrInfo = useSelector(state => state.userInfo);
@@ -147,7 +147,7 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
         }
 
         //store the object in the database based on if we are creating a new resource or updating an existing resource
-        const response = statusCode === 200 ? await SaveEducation(processedData) : await SaveEducation(education);
+        const response = statusCode === 200 ? await saveEducation(processedData) : await saveEducation(education);
         const text = await response.text();
 
         if (response.status === 200) {
