@@ -24,9 +24,7 @@ import Display404EmployerOrApplicant
 import ApplicationDescription
     from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/Job Description/ApplicationDescription";
 import ViewApplication from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/View Application/ViewApplication";
-
-const userInfo = localStorage.getItem('user')
-const role = userInfo.role
+import Management from "./Dashboard/Careerhub/Management/Management";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -61,8 +59,9 @@ const router = createBrowserRouter(
                 </Route>
                 <Route path="explore/jobs" element={<AvailableJobs/>}>
                     <Route path=":jobId" element={<JobDetails/>}/>
-                    <Route path="*" element={<Display404EmployerOrApplicant role={role}/>}/>
+                    <Route path="*" element={<Display404EmployerOrApplicant />}/>
                 </Route>
+                <Route path="employer/management" element={<Management/>}/>
             </Route>
             <Route path="refer" element={<Refer/>}/>
             <Route path="feedback">
