@@ -6,8 +6,8 @@ import WorkPlaceTypeDropDown from "../DropDowns/WorkPlaceTypeDropDown";
 import JobTypeDropDown from "../DropDowns/JobTypeDropDown";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
-import SaveJobs from "../FetchJobs/SaveJobs";
-import { TfiClose } from "react-icons/tfi";
+import saveJobs from "../FetchJobs/saveJobs";
+import {TfiClose} from "react-icons/tfi";
 
 const EditJob = ({job, name, handleClose, edit}) => {
     const [jobDetails, setJobDetails] = useState({
@@ -62,7 +62,7 @@ const EditJob = ({job, name, handleClose, edit}) => {
             ...jobDetails, employerEmail: job.employerEmail, jobId: job.jobId
         }
 
-        const response = await SaveJobs(requestBody)
+        const response = await saveJobs(requestBody)
         const text = await response.text()
 
         if (response.ok) {

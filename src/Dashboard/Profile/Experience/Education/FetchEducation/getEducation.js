@@ -1,4 +1,4 @@
-const GetEducation = async (email, abortController)=>{
+const getEducation = async (email, abortController)=>{
     const token = localStorage.getItem("token")
     if(token) {
         return await fetch(`http://localhost:8080/api/user-education/get/${email}`, {
@@ -10,4 +10,4 @@ const GetEducation = async (email, abortController)=>{
         })
     }
 }
-export default GetEducation
+export default getEducation

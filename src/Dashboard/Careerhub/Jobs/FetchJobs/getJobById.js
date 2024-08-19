@@ -1,4 +1,4 @@
-const GetJobById = async (employerEmail, jobId, abortController)=>{
+const getJobById = async (employerEmail, jobId, abortController)=>{
     const token = localStorage.getItem('token')
     if(token){
         return await fetch(`http://localhost:8080/api/jobs/${employerEmail}/${jobId}`, {
@@ -10,4 +10,4 @@ const GetJobById = async (employerEmail, jobId, abortController)=>{
         })
     }
 }
-export default GetJobById
+export default getJobById

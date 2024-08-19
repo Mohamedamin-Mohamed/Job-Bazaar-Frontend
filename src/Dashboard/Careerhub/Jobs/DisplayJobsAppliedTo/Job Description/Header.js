@@ -27,7 +27,7 @@ const Header = ({job, postedDate}) => {
                 </div>
                 <div className="flex space-x-2 p-2">
                     <HiOutlineClock size={22} color="gray"/>
-                    <p>Posted {daysDifference > 0 ? (daysDifference + ` day${daysDifference !== 1 ? "'s" : ""} ago`) : "less than a day ago"}</p>
+                    <p>Posted {daysDifference > 0 ? (daysDifference + ` Day${daysDifference !== 1 ? "s" : ""} ago`) : "less than a day ago"}</p>
                 </div>
                 <div className="flex space-x-2 p-2">
                     <FaIdBadge size={22} color="gray"/>

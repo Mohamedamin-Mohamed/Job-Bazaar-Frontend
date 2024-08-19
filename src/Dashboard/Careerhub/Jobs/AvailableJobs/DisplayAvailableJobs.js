@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import JobDetails from "../Details/JobDetails";
 import {ScaleLoader} from "react-spinners";
 import GetUserInfo from "../UploadedJobs/GetUserInfo";
-import GetJobById from "../FetchJobs/GetJobById";
+import getJobById from "../FetchJobs/getJobById";
 import ApplicationChecker from "../FetchJobs/ApplicationChecker";
 
 const DisplayAvailableJobs = ({availableJobs}) => {
@@ -27,7 +27,7 @@ const DisplayAvailableJobs = ({availableJobs}) => {
         setEmployerEmail(employerEmail)
         if (role === 'Applicant') {
             try {
-                const response = await GetJobById(employerEmail, jobId, new AbortController())
+                const response = await getJobById(employerEmail, jobId, new AbortController())
                 const hasAppliedTo = await ApplicationChecker(applicantEmail, jobId, new AbortController())
                 const applied = await hasAppliedTo.json()
 

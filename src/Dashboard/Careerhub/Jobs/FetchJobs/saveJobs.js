@@ -1,4 +1,4 @@
-const SaveJobs = async (jobRequest)=>{
+const saveJobs = async (jobRequest)=>{
     const abortController = new AbortController()
     const token = localStorage.getItem('token')
     if(token) {
@@ -13,4 +13,4 @@ const SaveJobs = async (jobRequest)=>{
         })
     }
 }
-export default SaveJobs
+export default saveJobs

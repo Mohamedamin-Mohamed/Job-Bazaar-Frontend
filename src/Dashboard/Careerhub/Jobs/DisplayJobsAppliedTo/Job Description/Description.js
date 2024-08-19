@@ -1,7 +1,7 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
 import {useCallback, useEffect, useState} from "react";
-import GetJobById from "../../FetchJobs/GetJobById";
+import getJobById from "../../FetchJobs/getJobById";
 import Header from "./Header";
 import Info from "./Info";
 import {useMediaQuery} from "react-responsive";
@@ -36,7 +36,7 @@ const Description = () => {
     }
     const fetchJobById = useCallback(async () => {
         try {
-            const response = await GetJobById(application.employerEmail, application.jobId, new AbortController())
+            const response = await getJobById(application.employerEmail, application.jobId, new AbortController())
             if (response.ok) {
                 const data = await response.json()
                 setJob(data)

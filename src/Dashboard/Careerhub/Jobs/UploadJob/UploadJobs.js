@@ -7,7 +7,7 @@ import JobTypeDropDown from "../DropDowns/JobTypeDropDown";
 import {useMediaQuery} from "react-responsive";
 import {useNavigate} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
-import SaveJobs from "../FetchJobs/SaveJobs";
+import saveJobs from "../FetchJobs/saveJobs";
 import {useSelector} from "react-redux";
 import {format} from "date-fns";
 
@@ -72,7 +72,7 @@ const UploadJobs = () => {
         const requestBody = {
             ...jobDetails, employerEmail: userInfo.usrEmail, postedDate: formattedDate
         }
-        const response = await SaveJobs(requestBody)
+        const response = await saveJobs(requestBody)
         const text = await response.text()
 
         if(response.ok){
