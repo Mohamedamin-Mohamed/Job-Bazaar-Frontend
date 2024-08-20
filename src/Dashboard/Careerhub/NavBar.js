@@ -134,32 +134,42 @@ const NavBar = () => {
                         <div
                             className="flex justify-center absolute left-1/2 transform -translate-x-1/2 w-full z-50 hover:cursor-pointer"
                             onClick={handleJobs}>
-                            <nav className={`flex flex-col mt-12 bg-white p-[12px] w-[220px] ${role === 'Applicant' ? "h-[94px]" : " h-[124px]"} ml-96 border`}>
+                            <nav
+                                className={`flex flex-col mt-12 bg-white p-[12px] w-[220px] ${role === 'Applicant' ? "h-[94px]" : " h-[124px]"} ml-96 border`}>
                                 {role === 'Employer' ? "" :
                                     <NavLink to='/careerhub/explore/jobs' className="p-1">Job Search</NavLink>}
-                                <NavLink to={role === "Employer" ? '/careerhub/my/jobs/uploaded' : '/careerhub/my/jobs/applied'}
+                                <NavLink
+                                    to={role === "Employer" ? '/careerhub/my/jobs/uploaded' : '/careerhub/my/jobs/applied'}
                                     className="p-1">My Jobs</NavLink>
-                                {role === "Employer" ? <NavLink to='/careerhub/jobs/upload' className="p-1">Post a job</NavLink> : ""}
-                                {role === "Employer" ? <NavLink to='/careerhub/employer/management' className="p-1">Management Hub</NavLink> : ""}
+                                {role === "Employer" ?
+                                    <NavLink to='/careerhub/jobs/upload' className="p-1">Post a job</NavLink> : ""}
+                                {role === "Employer" ? <NavLink to='/careerhub/employer/management' className="p-1">Management
+                                    Hub</NavLink> : ""}
                             </nav>
                         </div>
                     )}
                 </div>
-                <div className="flex hover:cursor-pointer" onClick={handleReferrals}>
-                    <p className="hover:text-[#367c2b] font-medium text-lg">Referrals</p>
-                    {!referrals ? <MdArrowDropDown size={28} color="black"/> :
-                        <IoMdArrowDropup size={24} color="black"/>}
-                </div>
-                {referrals && (
-                    <div
-                        className="flex justify-center absolute left-1/2 transform -translate-x-1/2 w-full z-50 hover:cursor-pointer"
-                        onClick={handleReferrals}>
-                        <nav className="flex flex-col mt-12 bg-white p-[12px] w-[220px] h-[94px] ml-[556px] border">
-                            <NavLink to='/refer' className="p-1">Refer a friend</NavLink>
-                            <NavLink to='/careerhub/myreferrals' className="p-1">My Referrals</NavLink>
-                        </nav>
-                    </div>
-                )}
+                {role === 'Applicant' && (
+                    <>
+                        <div className="flex hover:cursor-pointer" onClick={handleReferrals}>
+                            <p className="hover:text-[#367c2b] font-medium text-lg">Referrals</p>
+                            {!referrals ? <MdArrowDropDown size={28} color="black"/> :
+                                <IoMdArrowDropup size={24} color="black"/>}
+                        </div>
+                        {referrals && (
+                            <div
+                                className="flex justify-center absolute left-1/2 transform -translate-x-1/2 w-full z-50 hover:cursor-pointer"
+                                onClick={handleReferrals}>
+                                <nav
+                                    className="flex flex-col mt-12 bg-white p-[12px] w-[220px] h-[94px] ml-[556px] border">
+                                    <NavLink to='/refer' className="p-1">Refer a friend</NavLink>
+                                    <NavLink to='/careerhub/myreferrals' className="p-1">My Referrals</NavLink>
+                                </nav>
+                            </div>
+                        )}
+                    </>
+                )
+                }
             </nav>
             <div className="flex items-center" ref={feedBackRef}>
                 <CgMenuGridO size={30} className="mr-4 hover:cursor-pointer" onClick={handleMenuGrid}/>
@@ -179,28 +189,30 @@ const NavBar = () => {
                 {userSettingDropDown && (
                     <div>
                         <nav
-                            className={"flex flex-col absolute right-0 mt-[34px] mr-4 w-[350px] border p-4 bg-white z-50 hover:cursor-pointer"}
+                            className={"flex flex-col absolute right-8 mt-[36px] mr-4 w-[300px] border p-4 space-y-2 bg-white z-50 hover:cursor-pointer"}
                             ref={dropDownRef} onClick={handleUserSettingDropDown}>
                             <NavLink to="/careerhub" className="mb-1">{name.firstName} {name.lastName}</NavLink>
-                            <div className="flex flex-col pb-4">
+                            <div className="flex flex-col">
                                 <NavLink to="/careerhub/profile/experience" className="p-1">My
                                     Profile</NavLink>
                                 <NavLink to="/careerhub/profile/career" className="p-1">Career
                                     Interests</NavLink>
                             </div>
-                            <div className="flex flex-col border-t border-b py-4">
-                                {role !== 'Employer' &&
-                                    <NavLink to="/careerhub/explore/jobs" className="p-1">Job Search</NavLink>}
-                                <NavLink to="/careerhub/explore/projects" className="p-1">Project Search</NavLink>
-                                <NavLink to="/careerhub/explore/courses" className="p-1">Courses Search</NavLink>
-                            </div>
-                            <div className="flex flex-col border-b py-4">
+                            {role === 'Applicant' &&
+                                <div className="flex flex-col">
+                                    <NavLink to="/careerhub/explore/jobs" className="p-1">Job Search</NavLink>
+                                    <NavLink to="/careerhub/explore/projects" className="p-1">Project Search</NavLink>
+                                    <NavLink to="/careerhub/explore/courses" className="p-1">Courses Search</NavLink>
+                                </div>
+                            }
+                            <div className={`flex flex-col`}>
                                 <NavLink
                                     to={role === 'Employer' ? "/careerhub/my/jobs/uploaded" : "/careerhub/my/jobs/applied"}
                                     className="p-1">My Jobs</NavLink>
-                                <NavLink to="/careerhub/myreferrals" className="p-1">My Referrals</NavLink>
+                                {role === 'Applicant' &&
+                                    <NavLink to="/careerhub/myreferrals" className="p-1">My Referrals</NavLink>}
                             </div>
-                            <div className="flex flex-col pt-4">
+                            <div className="flex flex-col">
                                 <NavLink to="/careerhub/settings"
                                          className="p-1">Settings</NavLink>
                                 <NavLink to={''} onClick={() => handleLogout()} className="p-1">Logout</NavLink>
