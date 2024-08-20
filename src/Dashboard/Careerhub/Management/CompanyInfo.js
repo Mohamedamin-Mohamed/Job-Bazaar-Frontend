@@ -1,7 +1,7 @@
 import {useMediaQuery} from "react-responsive";
 
 const CompanyInfo = () => {
-    const mediaQuery = useMediaQuery({minWidth: "1284px"})
+    const mediaQuery = useMediaQuery({minWidth: "1400px"})
 
     return (
         <div
