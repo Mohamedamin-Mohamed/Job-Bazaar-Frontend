@@ -1,8 +1,8 @@
 import {NavLink} from "react-router-dom";
 import {useMediaQuery} from "react-responsive";
 import {useEffect, useState} from "react";
-import getAppliedJobs from "./Jobs/FetchJobs/getAppliedJobs";
-import getUploadedJobs from "./Jobs/FetchJobs/getUploadedJobs";
+import getAppliedJobs from "./Jobs/FetchJobsAndApplications/getAppliedJobs";
+import getUploadedJobs from "./Jobs/FetchJobsAndApplications/getUploadedJobs";
 
 const Activity = () => {
     const isMediumScreen = useMediaQuery({minWidth: 998});// Set the breakpoint for md screens
