@@ -23,7 +23,7 @@ import Display404EmployerOrApplicant
     from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/Display404EmployerOrApplicant";
 import ApplicationDescription
     from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/JobDescription/ApplicationDescription";
-import ViewApplication from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/View Application/ViewApplication";
+import ViewApplication from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/ViewApplication/ViewApplication";
 import ManagementHub from "./Dashboard/Careerhub/Management/ManagementHub";
 import ViewJob from "./Dashboard/Careerhub/Management/View Job/ViewJob";
 import JobDescription from "./Dashboard/Careerhub/Management/Description/JobDescription";
