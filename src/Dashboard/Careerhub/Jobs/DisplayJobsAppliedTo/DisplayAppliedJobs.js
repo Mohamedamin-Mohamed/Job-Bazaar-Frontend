@@ -9,7 +9,6 @@ const DisplayAppliedJobs = ({appliedJobs}) => {
     const mediaQuery = useMediaQuery({minWidth: "1100px"})
 
     const [activeButton, setActiveButton] = useState('active');
-    console.log(appliedJobs.length)
     const activeApplications = countActiveApplications(appliedJobs)
     const inActiveApplications = countInactiveApplications(appliedJobs)
 

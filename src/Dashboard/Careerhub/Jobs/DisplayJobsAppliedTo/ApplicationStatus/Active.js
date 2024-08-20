@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import NoApplication from "./NoApplication";
 import {useEffect, useRef, useState} from "react";
 import {toast, ToastContainer} from "react-toastify";
-import deleteApplication from "../../FetchJobs/deleteApplication";
+import deleteApplication from "../../FetchJobsAndApplications/deleteApplication";
 
 const Active = ({appliedJobs, activeApplications}) => {
     const mediaQuery = useMediaQuery({minWidth: "1080px"});

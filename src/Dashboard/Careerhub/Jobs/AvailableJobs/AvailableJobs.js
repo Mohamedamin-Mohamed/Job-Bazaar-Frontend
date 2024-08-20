@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {toast, ToastContainer} from "react-toastify";
 import GenericRibbon from "../../GenericRibbon";
 import {Outlet} from "react-router-dom";
-import getAvailableJobs from "../FetchJobs/getAvailableJobs";
+import getAvailableJobs from "../FetchJobsAndApplications/getAvailableJobs";
 import DisplayAvailableJobs from "./DisplayAvailableJobs";
 import {ScaleLoader} from "react-spinners";
 import Display404EmployerOrApplicant from "../DisplayJobsAppliedTo/Display404EmployerOrApplicant";

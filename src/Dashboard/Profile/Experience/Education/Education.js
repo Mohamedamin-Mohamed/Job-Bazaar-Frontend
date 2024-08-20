@@ -50,11 +50,11 @@ const Education = () => {
             }
         }
         scrollHandle()
-        fetchData()
+        fetchData().catch(err => console.error(err))
         return () => {
             document.body.style.overflow = ''
         }
-    }, []);
+    }, [email]);
 
     const handleDelete = async () => {
         const response = await deleteEducation(usrInfo.usrEmail)

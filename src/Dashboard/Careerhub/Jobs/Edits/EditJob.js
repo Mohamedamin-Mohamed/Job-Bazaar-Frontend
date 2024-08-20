@@ -6,7 +6,7 @@ import WorkPlaceTypeDropDown from "../DropDowns/WorkPlaceTypeDropDown";
 import JobTypeDropDown from "../DropDowns/JobTypeDropDown";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
-import saveJobs from "../FetchJobs/saveJobs";
+import saveJobs from "../FetchJobsAndApplications/saveJobs";
 import {TfiClose} from "react-icons/tfi";
 
 const EditJob = ({job, name, handleClose, edit}) => {

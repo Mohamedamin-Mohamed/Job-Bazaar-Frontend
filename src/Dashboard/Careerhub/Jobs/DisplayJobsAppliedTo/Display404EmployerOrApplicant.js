@@ -23,7 +23,7 @@ const Display404EmployerOrApplicant = () => {
                             Support</NavLink>
                         <NavLink to={role === 'Employer' ? "/careerhub/my/jobs/uploaded" : "/careerhub/explore/jobs"}
                                  className="bg-[#2575a7] text-white w-[220px] h-[32px] font-semibold text-center pt-1">
-                            View {role === 'Applicant' ? "Available Jobs" : "Your Uploaded Jobs"}</NavLink>
+                             {role === 'Applicant' ? "Search For Jobs" : "View Your Uploaded Jobs"}</NavLink>
                     </div>
                 </div>
             </div>

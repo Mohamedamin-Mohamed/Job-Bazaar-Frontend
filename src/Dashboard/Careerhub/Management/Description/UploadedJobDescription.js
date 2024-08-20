@@ -1,24 +1,24 @@
-import {useLocation, useNavigate} from "react-router-dom";
-import {toast, ToastContainer} from "react-toastify";
-import {useCallback, useEffect, useState} from "react";
-import getJobById from "../../FetchJobsAndApplications/getJobById";
-import Header from "./Header";
-import Info from "./Info";
 import {useMediaQuery} from "react-responsive";
-import WorkPlaceTypeMapping from "./WorkPlaceTypeMapping";
+import {useCallback, useEffect, useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
+import WorkPlaceTypeMapping from "../../Jobs/DisplayJobsAppliedTo/Job Description/WorkPlaceTypeMapping";
+import {toast, ToastContainer} from "react-toastify";
+import getJobById from "../../Jobs/FetchJobsAndApplications/getJobById";
+import Header from "../../Jobs/DisplayJobsAppliedTo/Job Description/Header";
+import Info from "../../Jobs/DisplayJobsAppliedTo/Job Description/Info";
 
-const Description = () => {
+const UploadedJobDescription = () => {
     const mediaQuery = useMediaQuery({minWidth: "1284px"})
     const [job, setJob] = useState({})
     const navigate = useNavigate()
     const workPlaceTypeMapping = WorkPlaceTypeMapping
 
     const location = useLocation()
-    const {application} = location.state || {}
+    const {jobUploaded} = location.state || {}
 
-    const applicationDate = application.applicationDate
+    const applicationDate = jobUploaded.postedDate
 
-    const[month, day, year] = applicationDate.split('-')
+    const [month, day, year] = applicationDate.split('-')
     const monthNames = [
         'January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'
@@ -27,12 +27,12 @@ const Description = () => {
     const monthName = monthNames[month - 1]
     const appliedDate = monthName + " " + day + ", " + year
 
-    if (!application) {
+    if (!jobUploaded) {
         toast.error("No application data found.")
     }
     const fetchJobById = useCallback(async () => {
         try {
-            const response = await getJobById(application.employerEmail, application.jobId, new AbortController())
+            const response = await getJobById(jobUploaded.employerEmail, jobUploaded.jobId, new AbortController())
             if (response.ok) {
                 const data = await response.json()
                 setJob(data)
@@ -40,14 +40,14 @@ const Description = () => {
         } catch (err) {
             console.error("Couldn't fetch job by id: ", err)
         }
-    }, [application.employerEmail, application.jobId])
+    }, [jobUploaded.employerEmail, jobUploaded.jobId])
 
     useEffect(() => {
         fetchJobById().catch(err => console.error(err))
     }, [fetchJobById]);
 
     const handleNavigation = (application) => {
-        navigate(`../viewApplication/${application.jobId}`, {state: {application}})
+        navigate(`../viewJob/${jobUploaded.jobId}`, {state: {jobUploaded}})
     }
     return (
         <div className={`${mediaQuery ? "mx-6 w-[850px]" : "mx-10"} pb-10`}>
@@ -56,12 +56,12 @@ const Description = () => {
                     <ToastContainer position="top-center"/>
                     <div className={`p-10 bg-white border rounded-md mt-4`}>
                         <div className="border-b pb-4">
-                            <h1 className="text-2xl font-semibold p-2 ml-1">{application.position}</h1>
-                            <p className="p-3">You applied for this job on {appliedDate}</p>
+                            <h1 className="text-2xl font-semibold p-2 ml-1">{jobUploaded.position}</h1>
+                            <p className="p-3">You uploaded this job on {appliedDate}</p>
                             <button
                                 className="p-2 bg-[#e6f0e1] text-[#367c2b] hover:bg-[#367c2b] hover:text-white w-[142px] h-[40px] rounded-md ml-2"
-                                onClick={() => handleNavigation(application)}>View
-                                Application
+                                onClick={() => handleNavigation(jobUploaded)}>View
+                                Job
                             </button>
                         </div>
                         <Header job={job} postedDate={job.postedDate}/>
@@ -80,4 +80,4 @@ const Description = () => {
 
     )
 }
-export default Description
+export default UploadedJobDescription

@@ -7,7 +7,7 @@ import JobTypeDropDown from "../DropDowns/JobTypeDropDown";
 import {useMediaQuery} from "react-responsive";
 import {useNavigate} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
-import saveJobs from "../FetchJobs/saveJobs";
+import saveJobs from "../FetchJobsAndApplications/saveJobs";
 import {useSelector} from "react-redux";
 import {format} from "date-fns";
 
