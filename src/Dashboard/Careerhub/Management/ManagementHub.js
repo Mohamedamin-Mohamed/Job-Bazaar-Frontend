@@ -8,7 +8,7 @@ import CompanyInfo from "./CompanyInfo";
 import {useMediaQuery} from "react-responsive";
 import NoAvailableJobs from "../Jobs/AvailableJobs/NoAvailableJobs";
 
-const Management = () => {
+const ManagementHub = () => {
     const [uploadedJobs, setUploadedJobs] = useState([])
     const [isInitialized, setIsInitialized] = useState(false)
     const userInfo = JSON.parse(localStorage.getItem('user'))
@@ -46,7 +46,7 @@ const Management = () => {
                         : (
                             <div>
                                 <div className="flex flex-col bg-[#f0f1f2]">
-                                    <GenericRibbon text={"Applied Jobs"}/>
+                                    <GenericRibbon text={"Manage Hub"}/>
                                     <div className={mediaQuery ? "flex justify-center mb-10" : "flex-col"}>
                                         <div className="flex flex-col">
                                             <JobPosted uploadedJobs={uploadedJobs}/>
@@ -61,4 +61,4 @@ const Management = () => {
         </div>
     )
 }
-export default Management
+export default ManagementHub
