@@ -3,8 +3,8 @@ import {useNavigate} from "react-router-dom";
 import JobDetails from "../Details/JobDetails";
 import {ScaleLoader} from "react-spinners";
 import GetUserInfo from "../UploadedJobs/GetUserInfo";
-import getJobById from "../FetchJobs/getJobById";
-import ApplicationChecker from "../FetchJobs/ApplicationChecker";
+import getJobById from "../FetchJobsAndApplications/getJobById";
+import ApplicationChecker from "../FetchJobsAndApplications/ApplicationChecker";
 
 const DisplayAvailableJobs = ({availableJobs}) => {
     const [jobById, setJobById] = useState()
