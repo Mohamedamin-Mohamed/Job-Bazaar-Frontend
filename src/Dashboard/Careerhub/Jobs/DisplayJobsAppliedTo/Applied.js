@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState} from "react";
-import getAppliedJobs from "../FetchJobs/getAppliedJobs";
+import getAppliedJobs from "../FetchJobsAndApplications/getAppliedJobs";
 import {toast, ToastContainer} from "react-toastify";
 import GenericRibbon from "../../GenericRibbon";
 import Display404Applicant from "./Display404Applicant";
@@ -51,7 +51,7 @@ const Applied = () => {
                     <div>
                         <div className="flex flex-col bg-[#f0f1f2]">
                             <GenericRibbon text={"Applied Jobs"}/>
-                            <div className={mediaQuery ? "flex justify-center items-center" : "flex-col"}>
+                            <div className={mediaQuery ? "flex justify-center" : "flex-col"}>
                                 <div className="flex flex-col">
                                     <NoTasks/>
                                     <DisplayAppliedJobs appliedJobs={appliedJobs}/>
