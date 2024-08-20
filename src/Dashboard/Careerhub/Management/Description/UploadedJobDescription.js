@@ -1,11 +1,11 @@
 import {useMediaQuery} from "react-responsive";
 import {useCallback, useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import WorkPlaceTypeMapping from "../../Jobs/DisplayJobsAppliedTo/Job Description/WorkPlaceTypeMapping";
+import WorkPlaceTypeMapping from "../../Jobs/DisplayJobsAppliedTo/JobDescription/WorkPlaceTypeMapping";
 import {toast, ToastContainer} from "react-toastify";
 import getJobById from "../../Jobs/FetchJobsAndApplications/getJobById";
-import Header from "../../Jobs/DisplayJobsAppliedTo/Job Description/Header";
-import Info from "../../Jobs/DisplayJobsAppliedTo/Job Description/Info";
+import Header from "../../Jobs/DisplayJobsAppliedTo/JobDescription/Header";
+import Info from "../../Jobs/DisplayJobsAppliedTo/JobDescription/Info";
 
 const UploadedJobDescription = () => {
     const mediaQuery = useMediaQuery({minWidth: "1284px"})
