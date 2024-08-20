@@ -22,13 +22,12 @@ import AvailableJobs from "./Dashboard/Careerhub/Jobs/AvailableJobs/AvailableJob
 import Display404EmployerOrApplicant
     from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/Display404EmployerOrApplicant";
 import ApplicationDescription
-    from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/Job Description/ApplicationDescription";
-import ViewApplication from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/View Application/ViewApplication";
+    from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/JobDescription/ApplicationDescription";
+import ViewApplication from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/ViewApplication/ViewApplication";
 import ManagementHub from "./Dashboard/Careerhub/Management/ManagementHub";
-import UploadedJobDescription from "./Dashboard/Careerhub/Management/Description/UploadedJobDescription";
-import ViewJobUploaded from "./Dashboard/Careerhub/Management/View Job/ViewJobUploaded";
 import ViewJob from "./Dashboard/Careerhub/Management/View Job/ViewJob";
 import JobDescription from "./Dashboard/Careerhub/Management/Description/JobDescription";
+import ViewApplicants from "./Dashboard/Careerhub/Management/ViewApplicants/ViewApplicants";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -63,12 +62,13 @@ const router = createBrowserRouter(
                 </Route>
                 <Route path="explore/jobs" element={<AvailableJobs/>}>
                     <Route path=":jobId" element={<JobDetails/>}/>
-                    <Route path="*" element={<Display404EmployerOrApplicant />}/>
+                    <Route path="*" element={<Display404EmployerOrApplicant/>}/>
                 </Route>
                 <Route path="employer/management" element={<ManagementHub/>}/>
                 <Route path="my-jobs">
-                    <Route path=":position" element={<JobDescription />} />
-                    <Route path="viewJob/:jobId" element={<ViewJob />} />
+                    <Route path=":position" element={<JobDescription/>}/>
+                    <Route path="viewJob/:jobId" element={<ViewJob/>}/>
+                    <Route path="viewApplicants/:jobId" element={<ViewApplicants/>}/>
                 </Route>
             </Route>
             <Route path="refer" element={<Refer/>}/>

@@ -1,11 +1,11 @@
 import {useMediaQuery} from "react-responsive";
 import {useCallback, useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import WorkPlaceTypeMapping from "../../Jobs/DisplayJobsAppliedTo/Job Description/WorkPlaceTypeMapping";
+import WorkPlaceTypeMapping from "../../Jobs/DisplayJobsAppliedTo/JobDescription/WorkPlaceTypeMapping";
 import {toast, ToastContainer} from "react-toastify";
 import getJobById from "../../Jobs/FetchJobsAndApplications/getJobById";
-import Header from "../../Jobs/DisplayJobsAppliedTo/Job Description/Header";
-import Info from "../../Jobs/DisplayJobsAppliedTo/Job Description/Info";
+import Header from "../../Jobs/DisplayJobsAppliedTo/JobDescription/Header";
+import Info from "../../Jobs/DisplayJobsAppliedTo/JobDescription/Info";
 
 const UploadedJobDescription = () => {
     const mediaQuery = useMediaQuery({minWidth: "1284px"})
@@ -14,8 +14,7 @@ const UploadedJobDescription = () => {
     const workPlaceTypeMapping = WorkPlaceTypeMapping
 
     const location = useLocation()
-    const {jobUploaded} = location.state || {}
-
+    const {jobUploaded, applicantsPerJob} = location.state || {}
     const applicationDate = jobUploaded.postedDate
 
     const [month, day, year] = applicationDate.split('-')
@@ -27,8 +26,8 @@ const UploadedJobDescription = () => {
     const monthName = monthNames[month - 1]
     const appliedDate = monthName + " " + day + ", " + year
 
-    if (!jobUploaded) {
-        toast.error("No application data found.")
+    if (!jobUploaded && !applicantsPerJob) {
+        toast.error("No job data found.")
     }
     const fetchJobById = useCallback(async () => {
         try {
@@ -46,8 +45,11 @@ const UploadedJobDescription = () => {
         fetchJobById().catch(err => console.error(err))
     }, [fetchJobById]);
 
-    const handleNavigation = (application) => {
+    const handleJobNavigation = (application) => {
         navigate(`../viewJob/${jobUploaded.jobId}`, {state: {jobUploaded}})
+    }
+    const handleApplicantsNavigation = (jobId)=>{
+        navigate(`../viewApplicants/${jobId}`, {state: {jobId}})
     }
     return (
         <div className={`${mediaQuery ? "mx-6 w-[850px]" : "mx-10"} pb-10`}>
@@ -58,13 +60,18 @@ const UploadedJobDescription = () => {
                         <div className="border-b pb-4">
                             <h1 className="text-2xl font-semibold p-2 ml-1">{jobUploaded.position}</h1>
                             <p className="p-3">You uploaded this job on {appliedDate}</p>
-                            <button
-                                className="p-2 bg-[#e6f0e1] text-[#367c2b] hover:bg-[#367c2b] hover:text-white w-[142px] h-[40px] rounded-md ml-2"
-                                onClick={() => handleNavigation(jobUploaded)}>View
-                                Job
-                            </button>
+                            <div className="flex space-x-6">
+                                <button
+                                    className="p-2 bg-[#e6f0e1] text-[#367c2b] hover:bg-[#367c2b] hover:text-white w-[142px] h-[40px] rounded-md ml-2"
+                                    onClick={() => handleJobNavigation(jobUploaded)}>View Job
+                                </button>
+                                <button
+                                    className="p-2 bg-[#e6f0e1] text-[#367c2b] hover:bg-[#367c2b] hover:text-white w-[142px] h-[40px] rounded-md ml-2"
+                                    onClick={() => handleApplicantsNavigation(jobUploaded.jobId)}>View Applicants
+                                </button>
+                            </div>
                         </div>
-                        <Header job={job} postedDate={job.postedDate}/>
+                        <Header job={job} postedDate={job.postedDate} applicantsPerJob={applicantsPerJob}/>
                         <Info/>
                         <h1 className="underline font-medium text-lg pb-2">Job Description</h1>
                         <p className="font-medium pb-2 mb-6">What you'll do:</p>

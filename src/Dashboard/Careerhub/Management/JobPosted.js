@@ -11,12 +11,12 @@ const JobPosted = ({uploadedJobs}) => {
     const navigate = useNavigate();
     const [hoveredIndex, setHoveredIndex] = useState({})
     const [showOptions, setShowOptions] = useState({})
-    const [applicantsPerJob, setApplicantsperJob] = useState([])
+    const [applicantsPerJob, setApplicantsPerJob] = useState([])
     const [jobIds, setJobIds] = useState([])
     const ref = useRef(null)
 
     const handlePosition = (jobUploaded) => {
-        navigate(`/careerhub/my-jobs/${jobUploaded.position}_${jobUploaded.jobId}`, {state: {jobUploaded}});
+        navigate(`/careerhub/my-jobs/${jobUploaded.position}_${jobUploaded.jobId}`, {state: {jobUploaded, applicantsPerJob}});
     };
 
     const handleHoveredIndexes = (index, isHovered) => {
@@ -80,7 +80,7 @@ const JobPosted = ({uploadedJobs}) => {
                 const response = jobIds && await getApplicantsPerJob(jobIds, new AbortController())
                 if (response.ok) {
                     const jobApplicationCounts = await response.json()
-                    setApplicantsperJob(jobApplicationCounts)
+                    setApplicantsPerJob(jobApplicationCounts)
                 }
             } catch (err) {
                 console.error("Couldn't fetch job applicants per job")
