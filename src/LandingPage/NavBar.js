@@ -5,9 +5,9 @@ import {BsBoxArrowInRight} from "react-icons/bs";
 import {useState} from "react";
 import {useMediaQuery} from "react-responsive";
 import {useNavigate} from "react-router-dom";
-import Community from "./Community";
-import Jobs from "./Jobs";
-import Companies from "./Companies";
+import CommunityConnect from "./CommunityConnect";
+import Jobs from "./JobExplorer";
+import TalentHiring from "./TalentHiring";
 
 const NavBar = ()=>{
     const[navShow, setNavShow] = useState(false)
@@ -72,9 +72,9 @@ const NavBar = ()=>{
                     </div>
                 </div>
             </div>
-            { community && <Community setCommunity={setCommunity}/>}
+            { community && <CommunityConnect setCommunity={setCommunity}/>}
             { jobs && <Jobs setJobs={setJobs} /> }
-            { companies && <Companies setCompanies={setCompanies} />}
+            { companies && <TalentHiring setCompanies={setCompanies} />}
         </div>
     )
 }
