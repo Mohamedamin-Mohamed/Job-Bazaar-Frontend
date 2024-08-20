@@ -4,20 +4,14 @@ const CompanyInfo = () => {
     const mediaQuery = useMediaQuery({minWidth: "1284px"})
 
     return (
-
-        <div
-            className={`flex ${mediaQuery ? "mx-6 w-[350px] " : "mx-10"} max-h-screen mt-4 bg-white p-10 border rounded-xl`}>
-            <div className="flex flex-col">
+        <div className={`flex ${mediaQuery ? "mx-6 w-[350px] h-[760px]" : "mx-10"} mt-4 bg-white p-10 border rounded-xl`}>
+            <div className="flex flex-col ">
                 <div>
                     <h1 className="text-xl font-semibold my-3">Welcome</h1>
                     <p className="text-[#494949]">Thank you for using Job Bazaar</p>
-                    <p className="text-[#494949]">We appreciate you taking time to complete an application. We encourage
-                        you
-                        to track your progress through the
-                        selection process and through new job alerts you can sign up to receive. If you are not already
-                        doing so,
-                        please join our conversation on our social media platforms (Facebook, Instagram, and
-                        LinkedIn).</p>
+                    <p className="text-[#494949]">We appreciate your application. Track your progress and sign up
+                        for job alerts. Stay updated on new opportunities and continue exploring career options with
+                        us...</p>
                 </div>
                 <div>
                     <h1 className="my-6 text-xl font-semibold">About Us</h1>
