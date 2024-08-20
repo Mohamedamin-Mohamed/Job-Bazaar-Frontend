@@ -1,8 +1,7 @@
 import NavBar from "../../NavBar";
-import Description from "../../Jobs/DisplayJobsAppliedTo/Job Description/Description";
-import CompanyInfo from "../../Jobs/DisplayJobsAppliedTo/Job Description/CompanyInfo";
 import {useMediaQuery} from "react-responsive";
 import UploadedJobDescription from "./UploadedJobDescription";
+import CompanyInfo from "../CompanyInfo";
 
 const JobDescription = ()=>{
     const mediaQuery = useMediaQuery({minWidth: "1284px"})
@@ -18,3 +17,4 @@ const JobDescription = ()=>{
         </div>
     )
 }
+export default JobDescription
