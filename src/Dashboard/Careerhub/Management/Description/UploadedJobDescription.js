@@ -3,22 +3,22 @@ import {useCallback, useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import WorkPlaceTypeMapping from "../../Jobs/DisplayJobsAppliedTo/Job Description/WorkPlaceTypeMapping";
 import {toast, ToastContainer} from "react-toastify";
-import getJobById from "../../Jobs/FetchJobs/getJobById";
+import getJobById from "../../Jobs/FetchJobsAndApplications/getJobById";
 import Header from "../../Jobs/DisplayJobsAppliedTo/Job Description/Header";
 import Info from "../../Jobs/DisplayJobsAppliedTo/Job Description/Info";
 
-const JobDescription = ()=>{
+const UploadedJobDescription = () => {
     const mediaQuery = useMediaQuery({minWidth: "1284px"})
     const [job, setJob] = useState({})
     const navigate = useNavigate()
     const workPlaceTypeMapping = WorkPlaceTypeMapping
 
     const location = useLocation()
-    const { jobUploaded } = location.state || {}
+    const {jobUploaded} = location.state || {}
 
     const applicationDate = jobUploaded.postedDate
 
-    const[month, day, year] = applicationDate.split('-')
+    const [month, day, year] = applicationDate.split('-')
     const monthNames = [
         'January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'
@@ -80,4 +80,4 @@ const JobDescription = ()=>{
 
     )
 }
-export default JobDescription
+export default UploadedJobDescription
