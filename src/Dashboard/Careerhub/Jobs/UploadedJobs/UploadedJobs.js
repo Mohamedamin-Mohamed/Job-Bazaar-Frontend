@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState} from "react";
-import getUploadedJobs from "../FetchJobs/getUploadedJobs";
+import getUploadedJobs from "../FetchJobsAndApplications/getUploadedJobs";
 import {ToastContainer} from "react-toastify";
 import DisplayUploadedJobs from "./DisplayUploadedJobs";
 import GenericRibbon from "../../GenericRibbon";
