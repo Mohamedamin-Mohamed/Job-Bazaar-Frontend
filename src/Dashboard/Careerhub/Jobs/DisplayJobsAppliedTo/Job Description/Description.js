@@ -1,7 +1,7 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
 import {useCallback, useEffect, useState} from "react";
-import getJobById from "../../FetchJobs/getJobById";
+import getJobById from "../../FetchJobsAndApplications/getJobById";
 import Header from "./Header";
 import Info from "./Info";
 import {useMediaQuery} from "react-responsive";
@@ -17,19 +17,15 @@ const Description = () => {
     const {application} = location.state || {}
 
     const applicationDate = application.applicationDate
-    const dateSplit = applicationDate.split('-')
 
-    const monthNumber = dateSplit[0]
-    const dayNumber = dateSplit[1]
-    const yearNumber = dateSplit[2]
-
+    const[month, day, year] = applicationDate.split('-')
     const monthNames = [
         'January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'
     ];
 
-    const monthName = monthNames[monthNumber - 1]
-    const appliedDate = monthName + " " + dayNumber + ", " + yearNumber
+    const monthName = monthNames[month - 1]
+    const appliedDate = monthName + " " + day + ", " + year
 
     if (!application) {
         toast.error("No application data found.")
