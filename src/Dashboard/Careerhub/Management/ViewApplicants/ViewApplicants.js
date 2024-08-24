@@ -5,6 +5,7 @@ import getJobApplicants from "../../Jobs/FetchJobsAndApplications/getJobApplican
 import {useMediaQuery} from "react-responsive";
 import deleteJob from "../../Jobs/FetchJobsAndApplications/deleteJob";
 import MimeTypes from "./MimeTypes";
+import NavBar from "../../NavBar";
 
 const ViewApplicants = () => {
     const [jobApplicants, setJobApplicants] = useState([])
@@ -141,6 +142,7 @@ const ViewApplicants = () => {
         <div className="flex flex-col ml-12 mt-5 bg-white mx-10 p-4 rounded-xl md:mb-8 text-sm">
             {Object.keys(jobApplicants).length > 0 && (
                 <>
+                    <NavBar />
                     <ToastContainer position="top-center"/>
                     <div className="flex justify-between border-b border-b-gray-400 pb-4">
                         <div className="flex md:w-[40%] w-full space-x-6">
