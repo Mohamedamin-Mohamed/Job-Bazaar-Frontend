@@ -5,7 +5,7 @@ import {FaIdBadge} from "react-icons/fa";
 import {format} from "date-fns";
 import {FaUsers} from "react-icons/fa6";
 
-const Header = ({job, postedDate, applicantsPerJob}) => {
+const Header = ({ job, postedDate }) => {
     const date = new Date().toISOString()
     const formattedDate = format(date, 'MM-dd-yyy')
 
@@ -33,10 +33,6 @@ const Header = ({job, postedDate, applicantsPerJob}) => {
                 <div className="flex space-x-2 p-2">
                     <FaIdBadge size={22} color="gray"/>
                     <p>{job.jobId}</p>
-                </div>
-                <div className="flex space-x-2 p-2">
-                    <FaUsers size={22} color="gray"/>
-                    <p>{applicantsPerJob[job.jobId]} </p>
                 </div>
             </div>
         </div>
