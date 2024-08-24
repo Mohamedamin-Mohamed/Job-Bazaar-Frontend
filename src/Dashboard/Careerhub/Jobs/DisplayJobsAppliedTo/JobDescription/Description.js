@@ -1,6 +1,6 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
-import {useCallback, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import getJobById from "../../FetchJobsAndApplications/getJobById";
 import Header from "./Header";
 import Info from "./Info";
@@ -12,46 +12,50 @@ const Description = () => {
     const [job, setJob] = useState({})
     const navigate = useNavigate()
     const workPlaceTypeMapping = WorkPlaceTypeMapping
-
     const location = useLocation()
     const {application} = location.state || {}
-
     const applicationDate = application.applicationDate
-
-    const[month, day, year] = applicationDate.split('-')
+    const [month, day, year] = applicationDate.split('-') || []
     const monthNames = [
         'January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'
     ];
 
-    const monthName = monthNames[month - 1]
-    const appliedDate = monthName + " " + day + ", " + year
+    const monthName = month ? monthNames[month - 1] : ''
+    const appliedDate = monthName ? `${monthName} ${day}, ${year}` : ''
 
     if (!application) {
         toast.error("No application data found.")
     }
-    const fetchJobById = useCallback(async () => {
+
+    const fetchJobById = async () => {
+        if (!application) {
+            return; // Don't fetch if application is not present
+        }
+
         try {
-            const response = await getJobById(application.employerEmail, application.jobId, new AbortController())
+            const response = await getJobById(application.employerEmail, application.jobId, new AbortController());
             if (response.ok) {
-                const data = await response.json()
-                setJob(data)
+                const data = await response.json();
+                setJob(data);
+            } else {
+                console.log('Failed to fetch job data:', response.status);
             }
         } catch (err) {
-            console.error("Couldn't fetch job by id: ", err)
+            console.error("Couldn't fetch job by id:", err);
         }
-    }, [application.employerEmail, application.jobId])
+    };
 
     useEffect(() => {
         fetchJobById().catch(err => console.error(err))
-    }, [fetchJobById]);
+    }, [application]);
 
     const handleNavigation = (application) => {
         navigate(`../viewApplication/${application.jobId}`, {state: {application}})
     }
     return (
         <div className={`${mediaQuery ? "mx-6 w-[850px]" : "mx-10"} pb-10`}>
-            {job && (
+            {Object.keys(job).length !== 0 && (
                 <>
                     <ToastContainer position="top-center"/>
                     <div className={`p-10 bg-white border rounded-md mt-4`}>
@@ -77,7 +81,6 @@ const Description = () => {
                 </>
             )}
         </div>
-
     )
 }
 export default Description

@@ -4,8 +4,8 @@ import {useLocation, useNavigate} from "react-router-dom";
 import WorkPlaceTypeMapping from "../../Jobs/DisplayJobsAppliedTo/JobDescription/WorkPlaceTypeMapping";
 import {toast, ToastContainer} from "react-toastify";
 import getJobById from "../../Jobs/FetchJobsAndApplications/getJobById";
-import Header from "../../Jobs/DisplayJobsAppliedTo/JobDescription/Header";
 import Info from "../../Jobs/DisplayJobsAppliedTo/JobDescription/Info";
+import Header from "./Header";
 
 const UploadedJobDescription = () => {
     const mediaQuery = useMediaQuery({minWidth: "1284px"})
@@ -48,7 +48,7 @@ const UploadedJobDescription = () => {
     const handleJobNavigation = (application) => {
         navigate(`../viewJob/${jobUploaded.jobId}`, {state: {jobUploaded}})
     }
-    const handleApplicantsNavigation = (jobId)=>{
+    const handleApplicantsNavigation = (jobId) => {
         navigate(`../viewApplicants/${jobId}`, {state: {jobId}})
     }
     return (

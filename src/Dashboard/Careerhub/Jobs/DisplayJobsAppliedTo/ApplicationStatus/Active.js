@@ -168,7 +168,8 @@ const Active = ({appliedJobs, activeApplications}) => {
                                                         onClick={() => handlePosition(application)}>View Application
                                                 </button>
                                                 <button className="hover:bg-gray-300 w-full text-black p-2 "
-                                                        onClick={() => handleDeleteApplication(application)}>Withdraw Application
+                                                        onClick={() => handleDeleteApplication(application)}>Withdraw
+                                                    Application
                                                 </button>
                                             </div>
                                         )}
