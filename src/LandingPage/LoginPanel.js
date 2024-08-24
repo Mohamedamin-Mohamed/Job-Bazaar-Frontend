@@ -6,22 +6,22 @@ import {useDispatch, useSelector} from "react-redux";
 import {ClipLoader} from "react-spinners";
 import {MdOutlineDoNotDisturb} from "react-icons/md";
 import EmailValidation from "./EmailValidation";
-const LoginPanel = ()=>{
+
+const LoginPanel = () => {
     const usr = useSelector(state => state.userInfo)
     const dispatch = useDispatch()
-    const[email, setEmail] = useState("")
-    const[emailValid, setEmailValid] = useState(true)
-    const handleValidation = async ()=>{
+    const [email, setEmail] = useState("")
+    const [emailValid, setEmailValid] = useState(true)
+    const handleValidation = async () => {
         dispatch(setUsrEmail(email))
 
-        if(email === '' || email === null ){
+        if (email === '' || email === null) {
             setEmailValid(true)
             setEmail(null)
             return
-        }
-        else{
+        } else {
             let valid = EmailValidation(email)
-            if(!valid){
+            if (!valid) {
                 setEmailValid(false)
                 return
             }
@@ -35,19 +35,17 @@ const LoginPanel = ()=>{
         })
         dispatch(setLoading(false))
 
-        const data = await response.text()
-            if(response.ok){
-                dispatch(setCredentials(true))
-                dispatch(setFirstPanel(false))
-                dispatch(setSecondPanel(true))
+        if (response.ok) {
+            dispatch(setCredentials(true))
+            dispatch(setFirstPanel(false))
+            dispatch(setSecondPanel(true))
+        } else {
+            dispatch(setCredentials(false))
+            dispatch(setFirstPanel(false))
+            dispatch(setSecondPanel(true))
         }
-            else{
-                dispatch(setCredentials(false))
-                dispatch(setFirstPanel(false))
-                dispatch(setSecondPanel(true))
-            }
     }
-    return(
+    return (
         <>
             <div className="flex flex-col justify-center mb-4  lg:ml-32 lg:mt-4 mt-10">
 
@@ -63,12 +61,12 @@ const LoginPanel = ()=>{
                 </button>
                 <p className="mt-4 mb-2 text-[#00060c] font-medium">Enter Email</p>
 
-                <input value={email} required type="email" onChange={(e)=> setEmail(e.target.value)}
+                <input value={email} required type="email" onChange={(e) => setEmail(e.target.value)}
                        className={`w-[350px] border p-2 outline-none ${email === null || !emailValid ? 'bg-[#fff1f0] border-[#c13833]' : 'border-gray-600'} rounded-md outline-none`}/>
                 {email === null && (
                     <div className="flex mt-3">
-                    <MdOutlineDoNotDisturb size={20} color="red"/>
-                    <p className=" text-[#c13833] ml-[8px] text-sm mt-">Email is mandatory.</p>
+                        <MdOutlineDoNotDisturb size={20} color="red"/>
+                        <p className=" text-[#c13833] ml-[8px] text-sm mt-">Email is mandatory.</p>
                     </div>
                 )}
                 {
@@ -79,9 +77,11 @@ const LoginPanel = ()=>{
                         </div>
                     )
                 }
-                <button className="hover:bg-[#367c2b] hover:text-white text-[#367c2b] font-semibold p-3 border border-gray-600 rounded-md mt-5"
-                        type="submit"
-                        onClick={handleValidation}> {usr.loading ? <ClipLoader color="#36d7b7" /> : "Continue with email"}</button>
+                <button
+                    className="hover:bg-[#367c2b] hover:text-white text-[#367c2b] font-semibold p-3 border border-gray-600 rounded-md mt-5"
+                    type="submit"
+                    onClick={handleValidation}> {usr.loading ?
+                    <ClipLoader color="#36d7b7"/> : "Continue with email"}</button>
 
             </div>
         </>
