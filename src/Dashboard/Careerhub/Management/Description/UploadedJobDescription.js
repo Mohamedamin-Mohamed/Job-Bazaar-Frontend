@@ -65,10 +65,12 @@ const UploadedJobDescription = () => {
                                     className="p-2 bg-[#e6f0e1] text-[#367c2b] hover:bg-[#367c2b] hover:text-white w-[142px] h-[40px] rounded-md ml-2"
                                     onClick={() => handleJobNavigation(jobUploaded)}>View Job
                                 </button>
-                                <button
-                                    className="p-2 bg-[#e6f0e1] text-[#367c2b] hover:bg-[#367c2b] hover:text-white w-[142px] h-[40px] rounded-md ml-2"
-                                    onClick={() => handleApplicantsNavigation(jobUploaded.jobId)}>View Applicants
-                                </button>
+                                {applicantsPerJob[job.jobId] > 0 &&
+                                    <button
+                                        className="p-2 bg-[#e6f0e1] text-[#367c2b] hover:bg-[#367c2b] hover:text-white w-[142px] h-[40px] rounded-md ml-2"
+                                        onClick={() => handleApplicantsNavigation(jobUploaded.jobId)}>View Applicants
+                                    </button>
+                                }
                             </div>
                         </div>
                         <Header job={job} postedDate={job.postedDate} applicantsPerJob={applicantsPerJob}/>
