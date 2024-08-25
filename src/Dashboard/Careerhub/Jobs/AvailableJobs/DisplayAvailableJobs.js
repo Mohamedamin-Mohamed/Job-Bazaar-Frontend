@@ -21,6 +21,16 @@ const DisplayAvailableJobs = ({availableJobs}) => {
         firstName: '',
         lastName: '',
     })
+    const parseDate = (date)=>{
+        const[month, day, year] = date.split('-').map(Number)
+        return new Date(year, month - 1, day)
+
+    }
+    const sortedAvailableJobs = [...availableJobs].sort((a,b) =>{
+        const dateA = parseDate(a.postedDate)
+        const dateB = parseDate(b.postedDate)
+        return dateB - dateA
+    })
 
     const handleFetchJobById = useCallback(async (jobId, employerEmail) => {
         setHasApplied(false) //reason being we want to make sure that every request is stateless and fresh
@@ -89,7 +99,7 @@ const DisplayAvailableJobs = ({availableJobs}) => {
             )}
             <div className="flex h-[700px] pr-4">
                 <div className="cursor-pointer overflow-y-scroll h-screen w-[700px]">
-                    {availableJobs.map((job) => (
+                    {sortedAvailableJobs.map((job) => (
                         <div key={job.jobId}
                              className={`${clicked[job.jobId] ? "border border-[#367c2b] rounded-lg" : ""} p-6 ml-8 my-8 hover:cursor-pointer"`}
                              onClick={() => handleFetchJobById(job.jobId, job.employerEmail)}>
