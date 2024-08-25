@@ -50,7 +50,7 @@ const InActive = ({appliedJobs, inActiveApplications}) => {
                                                 <p>{application.jobId}</p>
                                                 <div>
                                                     <p className="mr-14 text-[#a31b12] bg-[#ffefee] font-semibold px-1 w-[132px] overflow-hidden text-ellipsis whitespace-nowrap"
-                                                    title="No Longer Under Consideration">
+                                                    title={application.applicationStatus}>
                                                         {application.applicationStatus}</p>
                                                 </div>
                                             </div>
