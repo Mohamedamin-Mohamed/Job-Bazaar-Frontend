@@ -15,6 +15,18 @@ const DisplayUploadedJobs = ({uploadedJobs, employerEmail}) => {
         firstName: '',
         lastName: ''
     })
+
+    const parseDate = (date) => {
+        const [month, year, day] = date.split('-').map(Number)
+        return new Date(year, month - 1, day)
+    }
+
+    const sortedUploadedJobs = [...uploadedJobs].sort((a, b) => {
+        const dateA = parseDate(a.postedDate)
+        const dateB = parseDate(b.postedDate)
+
+        return dateB - dateA
+    })
     const handleFetchJobById = async (jobId) => {
         try {
             const controller = new AbortController()
@@ -81,7 +93,7 @@ const DisplayUploadedJobs = ({uploadedJobs, employerEmail}) => {
             )}
             <div className="flex h-[700px] pr-4">
                 <div className="cursor-pointer overflow-y-scroll h-screen w-[700px] mr-4">
-                    {uploadedJobs.map((job) => (
+                    {sortedUploadedJobs.map((job) => (
                         <div key={job.jobId}
                              className={`${clicked[job.jobId] ? "border border-[#367c2b] rounded-lg" : ""} p-6 ml-8 my-8 hover:cursor-pointer"`}
                              onClick={() => handleFetchJobById(job.jobId)}>
