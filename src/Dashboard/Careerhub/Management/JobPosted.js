@@ -22,7 +22,7 @@ const JobPosted = ({uploadedJobs}) => {
                 <p>As you evaluate the qualifications of the candidates, we encourage you to reach out if you require additional information.
                     Thank you for utilizing Job Bazaar to find the right talent for your team.</p>
             </div>
-            <div className={`flex mt-6 w-full space-x-12 my-4 ${!mediaQuery ? "w-full" : ""}`}>
+            <div className={`flex mt-6 w-full space-x-12 ${!mediaQuery ? "w-full" : ""}`}>
                 <div className={`${activeButton !== 'active' ? 'hover:bg-gray-200 cursor-pointer' : ""} 
                 ${!mediaQuery ? "w-[50%]" : "w-[105px]"} ${activeButton === 'active'
                     ? 'border-b-4 rounded-sm border-[#0875e1] cursor-default'
@@ -46,7 +46,7 @@ const JobPosted = ({uploadedJobs}) => {
                     </button>
                 </div>
             </div>
-            <div className="my-2 border-t py-3">
+            <div className="my-2 py-3">
                 {activeButton === 'active' ?
                     <Active uploadedJobs={uploadedJobs} activeJobs={activeJobs}/> :
                     <InActive uploadedJobs={uploadedJobs} inActiveJobs={inActiveJobs}/>}
