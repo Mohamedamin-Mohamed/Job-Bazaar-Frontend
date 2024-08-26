@@ -21,12 +21,12 @@ const DisplayAvailableJobs = ({availableJobs}) => {
         firstName: '',
         lastName: '',
     })
-    const parseDate = (date)=>{
-        const[month, day, year] = date.split('-').map(Number)
+    const parseDate = (date) => {
+        const [month, day, year] = date.split('-').map(Number)
         return new Date(year, month - 1, day)
 
     }
-    const sortedAvailableJobs = [...availableJobs].sort((a,b) =>{
+    const sortedAvailableJobs = [...availableJobs].sort((a, b) => {
         const dateA = parseDate(a.postedDate)
         const dateB = parseDate(b.postedDate)
         return dateB - dateA
@@ -62,11 +62,15 @@ const DisplayAvailableJobs = ({availableJobs}) => {
 
     useEffect(() => {
         if (availableJobs.length > 0) {
-            const firstJob = availableJobs[0]
-            setJobById(firstJob)
-            navigate(`${firstJob.jobId}`)
+            const firstActiveJob = availableJobs.filter(job => job.jobStatus === 'active').sort((a, b) => {
+                const dateA = parseDate(a.postedDate)
+                const dateB = parseDate(b.postedDate)
+                return dateB - dateA
+            })[0]
+            setJobById(firstActiveJob)
+            navigate(`${firstActiveJob.jobId}`)
             setClicked((prevState) => ({
-                [firstJob.jobId]: true
+                [firstActiveJob.jobId]: true
             }))
         }
     }, [navigate, availableJobs]);
@@ -83,9 +87,10 @@ const DisplayAvailableJobs = ({availableJobs}) => {
                 })
                 setLoading(false)
             }
-            fetchUserInfo()
+            fetchUserInfo().catch(err => console.error(err))
         }
     }, [employerEmail]);
+
     return (
         <div className="flex h-screen my-8">
             {loading && (
@@ -99,21 +104,25 @@ const DisplayAvailableJobs = ({availableJobs}) => {
             )}
             <div className="flex h-[700px] pr-4">
                 <div className="cursor-pointer overflow-y-scroll h-screen w-[700px]">
-                    {sortedAvailableJobs.map((job) => (
-                        <div key={job.jobId}
-                             className={`${clicked[job.jobId] ? "border border-[#367c2b] rounded-lg" : ""} p-6 ml-8 my-8 hover:cursor-pointer"`}
-                             onClick={() => handleFetchJobById(job.jobId, job.employerEmail)}>
-                            <div className="flex font-semibold space-x-2">
-                                <h1>{job.jobId}</h1>
-                                <h1>{job.position}</h1>
-                            </div>
-                            <div className="flex space-x-2 my-4">
-                                <div className="flex">
-                                    <p>{name.firstName}</p>
-                                    <p>{name.lastName}</p>
+                    {sortedAvailableJobs.map((job, index) => (
+                        <div key={index}>
+                        {job.jobStatus === 'active' &&
+                            <div key={job.jobId}
+                                 className={`${clicked[job.jobId] ? "border border-[#367c2b] rounded-lg" : ""} p-6 ml-8 my-8 hover:cursor-pointer"`}
+                                 onClick={() => handleFetchJobById(job.jobId, job.employerEmail)}>
+                                <div className="flex font-semibold space-x-2">
+                                    <h1>{job.jobId}</h1>
+                                    <h1>{job.position}</h1>
                                 </div>
-                                <p>{job.location}</p>
+                                <div className="flex space-x-2 my-4">
+                                    <div className="flex">
+                                        <p>{name.firstName}</p>
+                                        <p>{name.lastName}</p>
+                                    </div>
+                                    <p>{job.location}</p>
+                                </div>
                             </div>
+                        }
                         </div>
                     ))}
                 </div>
