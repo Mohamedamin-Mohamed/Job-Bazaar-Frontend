@@ -2,7 +2,7 @@ const saveJobs = async (jobRequest)=>{
     const abortController = new AbortController()
     const token = localStorage.getItem('token')
     if(token) {
-        return await fetch('http://localhost:8080/api/jobs/', {
+        return await fetch('http://localhost:8080/api/jobs/upload', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
