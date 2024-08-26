@@ -1,4 +1,4 @@
-const SaveWorkExperience = async (postRequest)=>{
+const saveWorkExperience = async (postRequest)=>{
     const token = localStorage.getItem("token")
     if(token) {
         return await fetch('http://localhost:8080/api/work-experience/save', {
@@ -11,4 +11,4 @@ const SaveWorkExperience = async (postRequest)=>{
         })
     }
 }
-export default SaveWorkExperience
+export default saveWorkExperience
