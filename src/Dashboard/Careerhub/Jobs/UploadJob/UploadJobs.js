@@ -13,7 +13,7 @@ import {format} from "date-fns";
 
 const UploadJobs = () => {
     const userInfo = useSelector(state => state.userInfo)
-    const [jobDetails, setJobDetails] = useState({
+    const initialJobDetails = {
         position: '',
         company: '',
         workPlace: '',
@@ -21,8 +21,9 @@ const UploadJobs = () => {
         jobFunction: '',
         jobType: '',
         description: '',
-        requirements: ''
-    })
+        requirements: '',
+    }
+    const [jobDetails, setJobDetails] = useState(initialJobDetails)
     const handleChange = (e)=>{
         const{name, value} = e.target
         setJobDetails((prevDetails) =>({
@@ -40,16 +41,7 @@ const UploadJobs = () => {
     const[disable, setDisable] = useState(false)
 
     const handleClear = () => {
-        setJobDetails({
-            position: '',
-            company: '',
-            workPlace: '',
-            location: '',
-            jobFunction: '',
-            jobType: '',
-            description: '',
-            requirements: ''
-        })
+        setJobDetails(initialJobDetails)
     }
     const handleOpen = () => {
         navigate(-1)
@@ -70,7 +62,7 @@ const UploadJobs = () => {
         const formattedDate = date ? format(date, 'MM-dd-yyy') : ''
 
         const requestBody = {
-            ...jobDetails, employerEmail: userInfo.usrEmail, postedDate: formattedDate
+            ...jobDetails, employerEmail: userInfo.usrEmail, postedDate: formattedDate, jobStatus: 'active'
         }
         const response = await saveJobs(requestBody)
         const text = await response.text()
