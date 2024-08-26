@@ -1,4 +1,4 @@
-const UpdateWorkExperience = async (updateRequest)=>{
+const updateWorkExperience = async (updateRequest)=>{
     const token = localStorage.getItem("token")
     if(token) {
         return await fetch('http://localhost:8080/api/work-experience/update', {
@@ -11,4 +11,4 @@ const UpdateWorkExperience = async (updateRequest)=>{
         })
     }
 }
-export default UpdateWorkExperience
+export default updateWorkExperience

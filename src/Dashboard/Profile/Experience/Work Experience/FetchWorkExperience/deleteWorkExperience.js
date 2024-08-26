@@ -1,4 +1,4 @@
-const DeleteWorkExperience = async (email)=>{
+const deleteWorkExperience = async (email)=>{
     const token = localStorage.getItem("token")
     if(token) {
         return await fetch(`http://localhost:8080/api/work-experience/delete/${email}`, {
@@ -9,4 +9,4 @@ const DeleteWorkExperience = async (email)=>{
         });
     }
 }
-export default DeleteWorkExperience
+export default deleteWorkExperience

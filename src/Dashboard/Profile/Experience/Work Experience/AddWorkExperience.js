@@ -6,8 +6,8 @@ import EndDate from "../Calendar/EndDate";
 import {format, parse} from "date-fns";
 import {useSelector} from "react-redux";
 import {toast, ToastContainer} from "react-toastify";
-import GetWorkExperience from "./FetchWorkExperience/GetWorkExperience";
-import SaveWorkExperience from "./FetchWorkExperience/SaveWorkExperience";
+import getWorkExperience from "./FetchWorkExperience/getWorkExperience";
+import saveWorkExperience from "./FetchWorkExperience/saveWorkExperience";
 
 const AddWorkExperience = ({open, handleOpen, statusCode}) => {
     const usrInfo = useSelector(state => state.userInfo);
@@ -76,8 +76,8 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
     useEffect(() => {
         const abortController = new AbortController();
         const fetchEducation = async () => {
-            const response = await GetWorkExperience(email, abortController);
-            if (response.status === 200) {
+            const response = await getWorkExperience(email, abortController);
+            if (response.ok) {
                 const result = await response.json()
 
                 setTitle(result.title)
@@ -93,7 +93,7 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
 
             }
         }
-        fetchEducation()
+        fetchEducation().catch(err => console.error(err))
         return () => {
             abortController.abort()
         }
@@ -102,6 +102,7 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
     const getFormattedDate = (date) => {
         return date ? format(date, "MM-yyy") : ""
     }
+
     const handleCalendarsShow = (calendar) => {
         if (calendar === 'start') {
             setStartDateCalender(true)
@@ -111,6 +112,7 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
             setStartDateCalender(false)
         }
     }
+
     const handleStartDateCalendarHide = () => {
         setStartDateCalender(false)
         setStartDate(null)
@@ -148,11 +150,11 @@ const AddWorkExperience = ({open, handleOpen, statusCode}) => {
         }
 
         //store the object in the database based on if we are creating a new resource or updating an existing resource
-        const response = statusCode === 200 ? await SaveWorkExperience(processedData) : await SaveWorkExperience(work);
+        const response = statusCode === 200 ? await saveWorkExperience(processedData) : await saveWorkExperience(work);
 
         const text = await response.text();
 
-        if (response.status === 200) {
+        if (response.ok) {
             toast.success(text, {
                 onClose: () => {
                     handleOpen()

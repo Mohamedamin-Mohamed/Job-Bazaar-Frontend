@@ -1,31 +1,29 @@
-import {useMediaQuery} from "react-responsive";
 import {useNavigate} from "react-router-dom";
-import NoApplication from "./NoApplication";
 import {useEffect, useRef, useState} from "react";
-import {ToastContainer} from "react-toastify";
-import updateApplication from "../../FetchJobsAndApplications/updateApplication";
+import updateJob from "../../Jobs/FetchJobsAndApplications/updateJob";
+import {toast, ToastContainer} from "react-toastify";
+import getApplicantsPerJob from "../../Jobs/FetchJobsAndApplications/getApplicantsPerJob";
 
-const Active = ({appliedJobs, activeApplications}) => {
-    const mediaQuery = useMediaQuery({minWidth: "1080px"});
+import {useMediaQuery} from "react-responsive";
+import NoApplication from "./NoApplication"
+
+const Active = ({uploadedJobs, activeJobs}) => {
+    const mediaQuery = useMediaQuery({minWidth: "1050px"});
     const navigate = useNavigate();
     const [hoveredIndex, setHoveredIndex] = useState({})
     const [showOptions, setShowOptions] = useState({})
+    const [applicantsPerJob, setApplicantsPerJob] = useState([])
+    const [jobIds, setJobIds] = useState([])
     const ref = useRef(null)
 
-    const parseDate = (dateString) => {
-        const [month, day, year] = dateString.split('-').map(Number);
-        return new Date(year, month - 1, day);
-    };
-
-    // sorting appliedJobs by applicationDate
-    const sortedAppliedJobs = [...appliedJobs].sort((a, b) => {
-        const dateA = parseDate(a.applicationDate);
-        const dateB = parseDate(b.applicationDate);
-        return dateB - dateA; // sort descending
-    });
-
-    const handlePosition = (application) => {
-        navigate(`/careerhub/Job_Bazaar_Careers/job/${application.position}_${application.jobId}`, {state: {application}});
+    const handlePosition = (jobUploaded) => {
+        const cleanedPosition = jobUploaded.position.replace(/[^a-zA-Z]/g, " ")
+        navigate(`/careerhub/my-jobs/${cleanedPosition}_${jobUploaded.jobId}`, {
+            state: {
+                jobUploaded,
+                applicantsPerJob
+            }
+        });
     };
 
     const handleHoveredIndexes = (index, isHovered) => {
@@ -44,18 +42,22 @@ const Active = ({appliedJobs, activeApplications}) => {
         });
     }
 
-    const handleWithdrawApplication = async (application) => {
+    const handleWithdrawJob = async (job) => {
         try {
-            const applicationStatus = 'Candidate Withdrew Interest'
-            const updateResponse = await updateApplication(application.applicantEmail, application.jobId, applicationStatus)
-            if (!updateResponse.ok) {
-                const data = await updateResponse.json()
-                throw new Error(data)
+            const jobStatus = 'inActive'
+            const response = await updateJob(job.employerEmail, job.jobId, jobStatus, new AbortController())
+            const data = await response.json()
+            if (typeof data === 'boolean') {
+                if (!data) {
+                    toast.error("Couldn't update job");
+                } else {
+                    window.location.reload()
+                }
             } else {
-                window.location.reload()
+                throw new Error("Unexpected response format.")
             }
         } catch (err) {
-            console.error(err)
+            toast.error(`Couldn't update job: ${err.message}`)
         }
     }
     useEffect(() => {
@@ -72,23 +74,45 @@ const Active = ({appliedJobs, activeApplications}) => {
         };
     }, []);
 
+    useEffect(() => {
+        const ids = uploadedJobs.map(job => job.jobId);
+        setJobIds(ids);
+    }, [uploadedJobs]);
+
+    useEffect(() => {
+        const fetchApplicantsPerJob = async () => {
+            if (Object.keys(jobIds).length === 0) return //avoid fetching if no jobIds
+
+            try {
+                const response = jobIds && await getApplicantsPerJob(jobIds, new AbortController())
+                if (response.ok) {
+                    const jobApplicationCounts = await response.json()
+                    setApplicantsPerJob(jobApplicationCounts)
+                }
+            } catch (err) {
+                console.error("Couldn't fetch job applicants per job")
+            }
+        }
+        fetchApplicantsPerJob().catch(err => console.error(err))
+    }, [jobIds])
+
     return (
-        <div>
+        <div className="flex flex-col mt-5 bg-white p-4 rounded-xl md:mb-8">
             <ToastContainer position="top-center"/>
-            {activeApplications > 0 ? (
+            {activeJobs > 0 ? (
                 <>
                     <div className="flex justify-between border-b border-b-gray-400 pb-4">
                         <div className="md:w-[40%] w-full">
                             <h1>Job Title</h1>
                         </div>
                         {mediaQuery && (
-                            <div className="flex space-x-16 justify-end w-full mr-12">
-                                <div className="flex space-x-28">
+                            <div className="flex space-x-10 justify-end w-full mr-10">
+                                <div className="flex space-x-16">
                                     <h1>Job ID</h1>
-                                    <h1>My Application Status</h1>
+                                    <h1>Number of Applicants</h1>
                                 </div>
                                 <div className="flex space-x-12">
-                                    <h1>Date Submitted</h1>
+                                    <h1>Date Posted</h1>
                                     <h1>Action</h1>
                                 </div>
                             </div>
@@ -99,28 +123,25 @@ const Active = ({appliedJobs, activeApplications}) => {
                             </div>
                         )}
                     </div>
-                    {sortedAppliedJobs.map((application, index) => (
-                        application.applicationStatus === 'In Progress' ? (
-                            <div
-                                key={index}
-                                className={`flex justify-between border-b py-3`}
-                            >
+                    {
+                uploadedJobs.map((job, index) => (
+                    <>
+                        {job.jobStatus === 'active' &&
+                            <div key={job.jobId} className={`flex justify-between border-b py-3`}>
                                 <div className="flex w-[40%]">
-                                    <button onClick={() => handlePosition(application)}
-                                            className="text-[#0875e1] hover:bg-gray-100">{application.position}</button>
+                                    <button onClick={() => handlePosition(job)}
+                                            className="text-[#0875e1] hover:bg-gray-100">{job.position}</button>
                                 </div>
                                 {mediaQuery && (
                                     <div className="flex space-x-8 justify-end w-full mr-12">
                                         <div className="flex space-x-32">
-                                            <p>{application.jobId}</p>
+                                            <p>{job.jobId}</p>
                                             <div>
-                                                <p className="mr-14 text-[#217a37] bg-[#ebfff0] font-semibold px-1 w-[86px] overflow-hidden text-ellipsis whitespace-nowrap"
-                                                   title={application.applicationStatus}>
-                                                    {application.applicationStatus}</p>
+                                                <p className="mr-14 text-[#217a37] bg-[#ebfff0] font-semibold px-1">{applicantsPerJob[job.jobId]}</p>
                                             </div>
                                         </div>
-                                        <div className="flex space-x-20">
-                                            <p>{application.applicationDate}</p>
+                                        <div className="flex space-x-12">
+                                            <p>{job.postedDate}</p>
                                             <div className={`flex flex-col justify-center items-center w-[36px] h-[36px]
                                             ${hoveredIndex[index] ? "rounded-full bg-gray-200 text-center" : ""}`}>
                                                 <button
@@ -135,15 +156,16 @@ const Active = ({appliedJobs, activeApplications}) => {
                                                         className="absolute flex-col w-[180px] border rounded-md space-y-2 bg-white text-white mt-36 ml-40"
                                                         ref={ref}>
                                                         <button className="bg-[#0875e1] w-full p-2 mt-2"
-                                                                onClick={() => handlePosition(application)}>View
-                                                            Application
+                                                                onClick={() => handlePosition(job)}>View
+                                                            Job
                                                         </button>
                                                         <button className="hover:bg-gray-300 w-full text-black p-2 "
-                                                                onClick={() => handleWithdrawApplication(application)}>Withdraw
-                                                            Application
+                                                                onClick={() => handleWithdrawJob(job)}>Withdraw
+                                                            Job
                                                         </button>
                                                     </div>
                                                 )}
+
                                             </div>
                                         </div>
                                     </div>
@@ -162,23 +184,23 @@ const Active = ({appliedJobs, activeApplications}) => {
                                                 className="absolute flex-col w-[180px] border rounded-md space-y-2 bg-white text-white mt-36 mr-36"
                                                 ref={ref}>
                                                 <button className="bg-[#0875e1] w-full p-2 mt-2"
-                                                        onClick={() => handlePosition(application)}>View Application
+                                                        onClick={() => handlePosition(job)}>View Application
                                                 </button>
                                                 <button className="hover:bg-gray-300 w-full text-black p-2 "
-                                                        onClick={() => handleWithdrawApplication(application)}>Withdraw
-                                                    Application
+                                                        onClick={() => handleWithdrawJob(job)}>Withdraw
+                                                    Job
                                                 </button>
                                             </div>
                                         )}
                                     </div>
                                 )}
                             </div>
-                        ) : null
-                    ))}
+                        }
+                    </>
+                ))}
                 </>
             ) : <NoApplication/>}
         </div>
-    );
-};
-
-export default Active;
+    )
+}
+export default Active

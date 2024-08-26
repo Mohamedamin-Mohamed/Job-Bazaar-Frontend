@@ -80,6 +80,7 @@ const DisplayUploadedJobs = ({uploadedJobs, employerEmail}) => {
         }
         fetchName()
     }, [employerEmail]);
+
     return (
         <div className="flex h-screen my-8">
             {loading && (
@@ -94,27 +95,32 @@ const DisplayUploadedJobs = ({uploadedJobs, employerEmail}) => {
             <div className="flex h-[700px] pr-4">
                 <div className="cursor-pointer overflow-y-scroll h-screen w-[700px] mr-4">
                     {sortedUploadedJobs.map((job) => (
-                        <div key={job.jobId}
-                             className={`${clicked[job.jobId] ? "border border-[#367c2b] rounded-lg" : ""} p-6 ml-8 my-8 hover:cursor-pointer"`}
-                             onClick={() => handleFetchJobById(job.jobId)}>
-                            <div className="flex font-semibold space-x-2">
-                                <h1>{job.jobId}</h1>
-                                <h1>{job.position}</h1>
-                            </div>
-                            <div className="flex space-x-2 my-4">
-                                <div className="flex">
-                                    <p>{name.firstName}</p>
-                                    <p>{name.lastName}</p>
+                        job.jobStatus === 'active' && (
+                            <div
+                                key={job.jobId}
+                                className={`${clicked[job.jobId] ? "border border-[#367c2b] rounded-lg" : ""} p-6 ml-8 my-8 hover:cursor-pointer`}
+                                onClick={() => handleFetchJobById(job.jobId)}
+                            >
+                                <div className="flex font-semibold space-x-2">
+                                    <h1>{job.jobId}</h1>
+                                    <h1>{job.position}</h1>
                                 </div>
-                                <p>{job.location}</p>
+                                <div className="flex space-x-2 my-4">
+                                    <div className="flex">
+                                        <p>{name.firstName}</p>
+                                        <p>{name.lastName}</p>
+                                    </div>
+                                    <p>{job.location}</p>
+                                </div>
                             </div>
-                        </div>
+                        )
                     ))}
                 </div>
                 {jobById && <JobDetails job={jobById} name={name} role={'Employer'}/>}
-
             </div>
         </div>
-    )
+    );
+
+
 }
 export default DisplayUploadedJobs

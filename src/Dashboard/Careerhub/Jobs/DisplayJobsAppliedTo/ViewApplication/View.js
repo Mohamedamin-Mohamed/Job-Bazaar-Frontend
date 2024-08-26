@@ -3,7 +3,7 @@ import {toast, ToastContainer} from "react-toastify";
 import {useEffect, useState} from "react";
 import getEducation from "../../../../Profile/Experience/Education/FetchEducation/getEducation";
 import {GoFileSymlinkFile} from "react-icons/go";
-import GetWorkExperience from "../../../../Profile/Experience/Work Experience/FetchWorkExperience/GetWorkExperience";
+import GetWorkExperience from "../../../../Profile/Experience/Work Experience/FetchWorkExperience/getWorkExperience";
 import {useMediaQuery} from "react-responsive";
 import {format} from "date-fns";
 

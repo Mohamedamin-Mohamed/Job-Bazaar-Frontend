@@ -6,6 +6,7 @@ import GenericRibbon from "../../GenericRibbon";
 import {Outlet} from "react-router-dom";
 import Display404EmployerOrApplicant from "../DisplayJobsAppliedTo/Display404EmployerOrApplicant";
 import NoAvailableJobs from "../AvailableJobs/NoAvailableJobs";
+import countActiveJobs from "../../Management/CountJobs/countActiveJobs";
 
 const UploadedJobs = () => {
     const userInfo = JSON.parse(localStorage.getItem('user'))
@@ -13,6 +14,7 @@ const UploadedJobs = () => {
     const employerEmail = userInfo.email
     const [uploadedJobs, setUploadedJobs] = useState([])
     const [redirect, setRedirect] = useState(false)
+    const[activeJobsCount, setActiveJobsCount] = useState(0)
 
     const fetchUploadedJobs = useCallback(async () => {
         try {
@@ -36,6 +38,11 @@ const UploadedJobs = () => {
         fetchUploadedJobs().catch(err => console.error('Error in fetchUploadedJobs: ', err))
     }, [fetchUploadedJobs, role]);
 
+    useEffect(() => {
+        const countActiveUploadedJobs = countActiveJobs(uploadedJobs)
+        setActiveJobsCount(countActiveUploadedJobs)
+    }, [uploadedJobs]);
+
     return (
         <div>
             <ToastContainer position="top-center"/>
@@ -43,7 +50,7 @@ const UploadedJobs = () => {
                 <Display404EmployerOrApplicant role={role}/>
                 :
                 <>
-                    {Object.keys(uploadedJobs).length === 0 ? <NoAvailableJobs role={"Employer"}/>
+                    {Object.keys(uploadedJobs).length === 0 || activeJobsCount === 0 ? <NoAvailableJobs role={"Employer"}/>
                         :
                         <>
                             <GenericRibbon text={"Uploaded Jobs"}/>
