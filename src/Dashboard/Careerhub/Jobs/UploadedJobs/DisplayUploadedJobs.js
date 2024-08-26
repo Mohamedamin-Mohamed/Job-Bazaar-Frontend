@@ -83,7 +83,7 @@ const DisplayUploadedJobs = ({uploadedJobs, employerEmail}) => {
             })
             setLoading(false)
         }
-        fetchName()
+        fetchName().catch(err => console.error(err))
     }, [employerEmail]);
 
     return (
