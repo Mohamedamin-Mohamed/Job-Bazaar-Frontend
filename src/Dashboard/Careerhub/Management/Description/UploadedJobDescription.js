@@ -51,6 +51,7 @@ const UploadedJobDescription = () => {
     const handleApplicantsNavigation = (jobId) => {
         navigate(`../viewApplicants/${jobId}`, {state: {jobId}})
     }
+
     return (
         <div className={`${mediaQuery ? "mx-6 w-[850px]" : "mx-10"} pb-10`}>
             {job && (
@@ -65,10 +66,18 @@ const UploadedJobDescription = () => {
                                     className="p-2 bg-[#e6f0e1] text-[#367c2b] hover:bg-[#367c2b] hover:text-white w-[142px] h-[40px] rounded-md ml-2"
                                     onClick={() => handleJobNavigation(jobUploaded)}>View Job
                                 </button>
-                                {applicantsPerJob[job.jobId] > 0 &&
+                                {applicantsPerJob[job.jobId] > 0 ?
+
                                     <button
                                         className="p-2 bg-[#e6f0e1] text-[#367c2b] hover:bg-[#367c2b] hover:text-white w-[142px] h-[40px] rounded-md ml-2"
                                         onClick={() => handleApplicantsNavigation(jobUploaded.jobId)}>View Applicants
+                                    </button>
+                                    : ""
+                                }
+                                {job.jobStatus === 'inActive' &&
+                                    <button
+                                        className="p-2 bg-[#ffefee] text-[#a31b12] hover:bg-[#367c2b] hover:text-white w-[142px] h-[40px] rounded-md ml-2 hover:cursor-not-allowed"
+                                    >InActive Job
                                     </button>
                                 }
                             </div>
