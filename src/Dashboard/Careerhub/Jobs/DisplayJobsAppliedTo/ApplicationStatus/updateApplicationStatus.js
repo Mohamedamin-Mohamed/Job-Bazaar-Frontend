@@ -16,7 +16,6 @@ const updateApplicationStatus = async (appliedJobs) => {
                     if (jobExistsResponse.ok) {
                         const jobExists = await jobExistsResponse.json();
                         if (!jobExists) {
-                            console.log(application.applicationStatus)
                             //check if applicationStatus has the value job withdrawn
                             const applicationStatusUpdated = application.applicationStatus === 'Job Withdrawn'
 
