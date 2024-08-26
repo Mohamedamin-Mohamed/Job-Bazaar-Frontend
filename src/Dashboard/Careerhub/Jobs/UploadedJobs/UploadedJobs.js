@@ -9,58 +9,61 @@ import NoAvailableJobs from "../AvailableJobs/NoAvailableJobs";
 import countActiveJobs from "../../Management/CountJobs/countActiveJobs";
 
 const UploadedJobs = () => {
-    const userInfo = JSON.parse(localStorage.getItem('user'))
-    const role = userInfo.role
-    const employerEmail = userInfo.email
-    const [uploadedJobs, setUploadedJobs] = useState([])
-    const [redirect, setRedirect] = useState(false)
-    const[activeJobsCount, setActiveJobsCount] = useState(0)
+    const [uploadedJobs, setUploadedJobs] = useState([]);
+    const [redirect, setRedirect] = useState(false);
+    const [activeJobsCount, setActiveJobsCount] = useState(0);
+
+    const userInfo = JSON.parse(localStorage.getItem('user')) || {};
+    const role = userInfo.role || '';
+    const employerEmail = userInfo.email || '';
 
     const fetchUploadedJobs = useCallback(async () => {
         try {
-            if (role === 'Employer') {
-                const response = await getUploadedJobs(employerEmail, new AbortController())
+            if (role === 'Employer' && employerEmail) {
+                const response = await getUploadedJobs(employerEmail, new AbortController());
                 if (response.ok) {
-                    const jobs = await response.json()
-                    setUploadedJobs(jobs)
+                    const jobs = await response.json();
+                    setUploadedJobs(jobs);
                 }
             }
         } catch (err) {
-            console.error('Error fetching jobs:', err)
+            console.error('Error fetching jobs:', err);
         }
-    }, [role, employerEmail])
+    }, [role, employerEmail]);
 
     useEffect(() => {
         if (role === 'Applicant') {
-            setRedirect(true)
-            return
+            setRedirect(true);
+        } else {
+            fetchUploadedJobs().catch(err => console.error('Error in fetchUploadedJobs: ', err));
         }
-        fetchUploadedJobs().catch(err => console.error('Error in fetchUploadedJobs: ', err))
-    }, [fetchUploadedJobs, role]);
+    }, [role, fetchUploadedJobs]);
 
     useEffect(() => {
-        const countActiveUploadedJobs = countActiveJobs(uploadedJobs)
-        setActiveJobsCount(countActiveUploadedJobs)
+        const countActiveUploadedJobs = countActiveJobs(uploadedJobs);
+        setActiveJobsCount(countActiveUploadedJobs);
     }, [uploadedJobs]);
+
+    if (redirect) {
+        return <Display404EmployerOrApplicant role={role}/>;
+    }
+
+    const hasActiveJobs = uploadedJobs.filter(job => job.jobStatus === "active").length > 0;
 
     return (
         <div>
             <ToastContainer position="top-center"/>
-            {redirect ?
-                <Display404EmployerOrApplicant role={role}/>
-                :
+            {hasActiveJobs && activeJobsCount > 0 ? (
                 <>
-                    {Object.keys(uploadedJobs).length === 0 || activeJobsCount === 0 ? <NoAvailableJobs role={"Employer"}/>
-                        :
-                        <>
-                            <GenericRibbon text={"Uploaded Jobs"}/>
-                            <DisplayUploadedJobs uploadedJobs={uploadedJobs} employerEmail={employerEmail}/>
-                            <Outlet/>
-                        </>
-                    }
+                    <GenericRibbon text={"Uploaded Jobs"}/>
+                    <DisplayUploadedJobs uploadedJobs={uploadedJobs} employerEmail={employerEmail}/>
+                    <Outlet/>
                 </>
-            }
+            ) : (
+                <NoAvailableJobs role={"Employer"}/>
+            )}
         </div>
-    )
-}
-export default UploadedJobs
+    );
+};
+
+export default UploadedJobs;
