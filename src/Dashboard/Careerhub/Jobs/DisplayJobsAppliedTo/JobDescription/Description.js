@@ -6,6 +6,7 @@ import Header from "./Header";
 import Info from "./Info";
 import {useMediaQuery} from "react-responsive";
 import WorkPlaceTypeMapping from "./WorkPlaceTypeMapping";
+import NoApplication from "./NoApplication"
 
 const Description = () => {
     const mediaQuery = useMediaQuery({minWidth: "1284px"})
@@ -38,8 +39,6 @@ const Description = () => {
             if (response.ok) {
                 const data = await response.json();
                 setJob(data);
-            } else {
-                console.log('Failed to fetch job data:', response.status);
             }
         } catch (err) {
             console.error("Couldn't fetch job by id:", err);
@@ -53,9 +52,10 @@ const Description = () => {
     const handleNavigation = (application) => {
         navigate(`../viewApplication/${application.jobId}`, {state: {application}})
     }
+
     return (
-        <div className={`${mediaQuery ? "mx-6 w-[850px]" : "mx-10"} pb-10`}>
-            {Object.keys(job).length !== 0 && (
+        <div className={`${mediaQuery ? "mx-6 w-[700px]" : "mx-10"} pb-10`}>
+            {Object.keys(job).length !== 0 ? (
                 <>
                     <ToastContainer position="top-center"/>
                     <div className={`p-10 bg-white border rounded-md mt-4`}>
@@ -67,6 +67,12 @@ const Description = () => {
                                 onClick={() => handleNavigation(application)}>View
                                 Application
                             </button>
+                            {application.applicationStatus &&
+                                <button
+                                    className="p-2 bg-[#ffefee] text-[#a31b12] hover:bg-[#367c2b] hover:text-white w-[240px] h-[40px] rounded-md ml-2 hover:cursor-not-allowed"
+                                >{application.applicationStatus}
+                                </button>
+                            }
                         </div>
                         <Header job={job} postedDate={job.postedDate}/>
                         <Info/>
@@ -79,6 +85,10 @@ const Description = () => {
                         <p>This role is {job.workPlace}. {workPlaceTypeMapping[job.workPlace]}</p>
                     </div>
                 </>
+            ) : (
+                <div className="flex justify-center items-center">
+                    <NoApplication/>
+                </div>
             )}
         </div>
     )
