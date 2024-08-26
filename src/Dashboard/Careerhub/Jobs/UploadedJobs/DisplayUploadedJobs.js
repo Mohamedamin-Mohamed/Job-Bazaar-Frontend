@@ -58,11 +58,16 @@ const DisplayUploadedJobs = ({uploadedJobs, employerEmail}) => {
 
     useEffect(() => {
         if (uploadedJobs.length > 0) {
-            const firstJob = uploadedJobs[0]
-            setJobById(firstJob)
-            navigate(`${firstJob.jobId}`)
+            const firstActiveJob = uploadedJobs.filter(job => job.jobStatus === "active").sort((a, b) => {
+                const dateA = parseDate(a.postedDate)
+                const dateB = parseDate(b.postedDate)
+                return dateB - dateA
+            })[0] //filter by only selecting active jobs then sort the filter jobs by their posting date returning the most recent one
+
+            setJobById(firstActiveJob)
+            navigate(`${firstActiveJob.jobId}`)
             setClicked((prevState) => ({
-                [firstJob.jobId]: true
+                [firstActiveJob.jobId]: true
             }))
         }
     }, [navigate, uploadedJobs]);
