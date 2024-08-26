@@ -2,8 +2,8 @@ import {useMediaQuery} from "react-responsive";
 import {useNavigate} from "react-router-dom";
 import NoApplication from "./NoApplication";
 import {useEffect, useRef, useState} from "react";
-import {toast, ToastContainer} from "react-toastify";
-import deleteApplication from "../../FetchJobsAndApplications/deleteApplication";
+import {ToastContainer} from "react-toastify";
+import updateApplication from "../../FetchJobsAndApplications/updateApplication";
 
 const Active = ({appliedJobs, activeApplications}) => {
     const mediaQuery = useMediaQuery({minWidth: "1080px"});
@@ -44,22 +44,18 @@ const Active = ({appliedJobs, activeApplications}) => {
         });
     }
 
-    const handleDeleteApplication = async (application) => {
+    const handleWithdrawApplication = async (application) => {
         try {
-            const response = await deleteApplication(application.applicantEmail, application.jobId, new AbortController())
-            const data = await response.json()
-
-            if (typeof data === 'boolean') {
-                if (!data) {
-                    toast.error("Couldn't delete application");
-                } else {
-                    window.location.reload()
-                }
+            const applicationStatus = 'Candidate Withdrew Interest'
+            const updateResponse = await updateApplication(application.applicantEmail, application.jobId, applicationStatus)
+            if (!updateResponse.ok) {
+                const data = await updateResponse.json()
+                throw new Error(data)
             } else {
-                throw new Error("Unexpected response format.¬")
+                window.location.reload()
             }
         } catch (err) {
-            toast.error(`Couldn't delete application: ${err.message}`)
+            console.error(err)
         }
     }
     useEffect(() => {
@@ -109,7 +105,7 @@ const Active = ({appliedJobs, activeApplications}) => {
                                 key={index}
                                 className={`flex justify-between border-b py-3`}
                             >
-                                <div className="md:w-[44%] w-full">
+                                <div className="flex w-[40%]">
                                     <button onClick={() => handlePosition(application)}
                                             className="text-[#0875e1] hover:bg-gray-100">{application.position}</button>
                                 </div>
@@ -118,7 +114,9 @@ const Active = ({appliedJobs, activeApplications}) => {
                                         <div className="flex space-x-32">
                                             <p>{application.jobId}</p>
                                             <div>
-                                                <p className="mr-14 text-[#217a37] bg-[#ebfff0] font-semibold px-1">{application.applicationStatus}</p>
+                                                <p className="mr-14 text-[#217a37] bg-[#ebfff0] font-semibold px-1 w-[86px] overflow-hidden text-ellipsis whitespace-nowrap"
+                                                   title={application.applicationStatus}>
+                                                    {application.applicationStatus}</p>
                                             </div>
                                         </div>
                                         <div className="flex space-x-20">
@@ -141,12 +139,11 @@ const Active = ({appliedJobs, activeApplications}) => {
                                                             Application
                                                         </button>
                                                         <button className="hover:bg-gray-300 w-full text-black p-2 "
-                                                                onClick={() => handleDeleteApplication(application)}>Withdraw
+                                                                onClick={() => handleWithdrawApplication(application)}>Withdraw
                                                             Application
                                                         </button>
                                                     </div>
                                                 )}
-
                                             </div>
                                         </div>
                                     </div>
@@ -168,7 +165,7 @@ const Active = ({appliedJobs, activeApplications}) => {
                                                         onClick={() => handlePosition(application)}>View Application
                                                 </button>
                                                 <button className="hover:bg-gray-300 w-full text-black p-2 "
-                                                        onClick={() => handleDeleteApplication(application)}>Withdraw
+                                                        onClick={() => handleWithdrawApplication(application)}>Withdraw
                                                     Application
                                                 </button>
                                             </div>
