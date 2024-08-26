@@ -150,7 +150,7 @@ const AddEducation = ({open, handleOpen, statusCode}) => {
         const response = statusCode === 200 ? await saveEducation(processedData) : await saveEducation(education);
         const text = await response.text();
 
-        if (response.status === 200) {
+        if (response.ok) {
             toast.success(text, {
                 onClose: () => {
                     handleOpen()
