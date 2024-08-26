@@ -5,8 +5,8 @@ import {MdOutlineDelete} from "react-icons/md";
 import {IoPencilSharp} from "react-icons/io5";
 import {toast, ToastContainer} from "react-toastify";
 import ImageSearch from "../ImageSearch/ImageSearch";
-import GetWorkExperience from "./FetchWorkExperience/GetWorkExperience";
-import DeleteWorkExperience from "./FetchWorkExperience/DeleteWorkExperience";
+import getWorkExperience from "./FetchWorkExperience/getWorkExperience";
+import deleteWorkExperience from "./FetchWorkExperience/deleteWorkExperience";
 import AddWorkExperience from "./AddWorkExperience";
 import {format} from "date-fns";
 import {ScaleLoader} from "react-spinners";
@@ -34,7 +34,7 @@ const Work = () => {
         const abortController = new AbortController()
         const fetchData = async () => {
             try {
-                const response = await GetWorkExperience(email, abortController)
+                const response = await getWorkExperience(email, abortController)
 
                 setLoading(false)
 
@@ -59,7 +59,7 @@ const Work = () => {
     }, []);
 
     const handleDelete = async () => {
-        const response = await DeleteWorkExperience(usrInfo.usrEmail)
+        const response = await deleteWorkExperience(usrInfo.usrEmail)
         const result = await response.text();
         if (response.ok) {
             toast.success(result, {
