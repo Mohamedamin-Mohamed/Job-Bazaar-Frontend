@@ -97,7 +97,7 @@ const Active = ({uploadedJobs, activeJobs}) => {
     }, [jobIds])
 
     return (
-        <div className="flex flex-col mt-5 bg-white p-4 rounded-xl md:mb-8">
+        <div className="flex flex-col border-t bg-white p-4 rounded-xl md:mb-8">
             <ToastContainer position="top-center"/>
             {activeJobs > 0 ? (
                 <>
@@ -125,7 +125,7 @@ const Active = ({uploadedJobs, activeJobs}) => {
                     </div>
                     {
                 uploadedJobs.map((job, index) => (
-                    <>
+                    <div key={index}>
                         {job.jobStatus === 'active' &&
                             <div key={job.jobId} className={`flex justify-between border-b py-3`}>
                                 <div className="flex w-[40%]">
@@ -196,7 +196,7 @@ const Active = ({uploadedJobs, activeJobs}) => {
                                 )}
                             </div>
                         }
-                    </>
+                    </div>
                 ))}
                 </>
             ) : <NoApplication/>}
