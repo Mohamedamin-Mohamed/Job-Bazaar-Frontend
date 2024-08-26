@@ -7,7 +7,8 @@ const updateApplication = async (applicantEmail, jobId, applicationStatus, contr
                 'Content-type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({applicationStatus: applicationStatus})
+            body: JSON.stringify({applicationStatus: applicationStatus}),
+            signal: controller.signal
         })
     }
 }
