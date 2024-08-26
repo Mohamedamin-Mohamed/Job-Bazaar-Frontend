@@ -3,7 +3,7 @@ import {toast, ToastContainer} from "react-toastify";
 import {useEffect, useRef, useState} from "react";
 import getJobApplicants from "../../Jobs/FetchJobsAndApplications/getJobApplicants";
 import {useMediaQuery} from "react-responsive";
-import deleteJob from "../../Jobs/FetchJobsAndApplications/deleteJob";
+import updateJob from "../../Jobs/FetchJobsAndApplications/updateJob";
 import MimeTypes from "./MimeTypes";
 import NavBar from "../../NavBar";
 
@@ -73,7 +73,7 @@ const ViewApplicants = () => {
 
     const handleDeleteJob = async (job) => {
         try {
-            const response = await deleteJob(job.employerEmail, job.jobId, new AbortController())
+            const response = await updateJob(job.employerEmail, job.jobId, new AbortController())
             const data = await response.json()
             if (typeof data === 'boolean') {
                 if (!data) {
