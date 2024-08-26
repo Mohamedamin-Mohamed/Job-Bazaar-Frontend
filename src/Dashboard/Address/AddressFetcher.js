@@ -25,7 +25,7 @@ const AddressFetcher = ({latitude, longitude, onError}) => {
                 onError('Failed to fetch address')
             }
         }
-        fetchAddress()
+        fetchAddress().catch(err => console.error(err))
         return ()=>{
             abortController.abort("component unmounted or dependency changed")
         }

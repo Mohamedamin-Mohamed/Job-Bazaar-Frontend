@@ -16,6 +16,7 @@ const NavBar = () => {
     const [menuGrid, setMenuGrid] = useState(false)
     const [referrals, setReferrals] = useState(false)
     const [jobs, setJobs] = useState(false)
+    const[userInfo, setUserInfo] = useState({})
     const [role, setRole] = useState()
     const navigate = useNavigate()
     const isMediumScreen = useMediaQuery({minWidth: 993}); // Set the breakpoint for md screens
@@ -97,6 +98,7 @@ const NavBar = () => {
                 if (userJson) {
                     const userInfo = JSON.parse(userJson)
                     if (userInfo) {
+                        setUserInfo(userInfo)
                         setRole(userInfo.role)
                         setName((prevState => ({
                             abbrFirstName: userInfo.firstName.substring(0, 1),
@@ -189,10 +191,11 @@ const NavBar = () => {
                 {userSettingDropDown && (
                     <div>
                         <nav
-                            className={"flex flex-col absolute right-8 mt-[36px] mr-4 w-[300px] border p-4 space-y-2 bg-white z-50 hover:cursor-pointer"}
+                            className={"flex flex-col absolute right-8 mt-[36px] mr-4 w-[300px] border p-4 bg-white z-50 hover:cursor-pointer"}
                             ref={dropDownRef} onClick={handleUserSettingDropDown}>
                             <NavLink to="/careerhub" className="mb-1">{name.firstName} {name.lastName}</NavLink>
                             <div className="flex flex-col">
+                                <NavLink to="/careerhub" className="p-1">{userInfo.firstName} {userInfo.lastName}</NavLink>
                                 <NavLink to="/careerhub/profile/experience" className="p-1">My
                                     Profile</NavLink>
                                 <NavLink to="/careerhub/profile/career" className="p-1">Career
