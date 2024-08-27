@@ -5,7 +5,7 @@ const CompanyInfo = () => {
 
     return (
         <div
-            className={`flex ${mediaQuery ? "mx-6 w-[350px] h-[720px]" : "mx-10 mb-10"} mt-4 bg-white p-10 border rounded-xl`}>
+            className={`flex ${mediaQuery ? "mx-6 w-[350px] h-[920px]" : "mx-10 mb-10"} mt-4 bg-white p-10 border rounded-xl`}>
             <div className="flex flex-col ">
                 <div>
                     <h1 className="text-xl font-semibold my-3">Welcome</h1>
