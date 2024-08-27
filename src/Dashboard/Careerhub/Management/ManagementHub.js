@@ -47,7 +47,7 @@ const ManagementHub = () => {
                             <div>
                                 <div className="flex flex-col bg-[#f0f1f2]">
                                     <GenericRibbon text={"Management Hub"}/>
-                                    <div className={mediaQuery ? "flex justify-center mb-10" : "flex-col"}>
+                                    <div className={mediaQuery ? "flex justify-center mb-10 mx-10" : "flex-col"}>
                                         <div className="flex flex-col">
                                             <JobPosted uploadedJobs={uploadedJobs}/>
                                         </div>
