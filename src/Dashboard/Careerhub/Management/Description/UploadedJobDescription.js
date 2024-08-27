@@ -77,7 +77,7 @@ const UploadedJobDescription = () => {
                                 {job.jobStatus === 'inActive' &&
                                     <button
                                         className="p-2 bg-[#ffefee] text-[#a31b12] hover:bg-[#367c2b] hover:text-white w-[142px] h-[40px] rounded-md ml-2 hover:cursor-not-allowed"
-                                    >InActive Job
+                                    >In Active Job
                                     </button>
                                 }
                             </div>
