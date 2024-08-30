@@ -9,10 +9,13 @@ const ApplicationDescription = () => {
         <div>
             <NavBar/>
             <div className={`${mediaQuery ? "flex" : "flex-col"} py-6 justify-center bg-[#f0f1f2]`}>
-                <div className="flex flex-col justify-center items-center">
+                <div>
                     <Description/>
                 </div>
-                <CompanyInfo/>
+                <div>
+                    <CompanyInfo/>
+                </div>
+
             </div>
         </div>
     )
