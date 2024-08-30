@@ -4,7 +4,7 @@ const CompanyInfo = () => {
     const mediaQuery = useMediaQuery({minWidth: "1284px"})
 
     return (
-        <div className={`flex ${mediaQuery ? "mx-6 w-[350px] h-[760px]" : "mx-10"} mt-4 bg-white p-10 border rounded-xl`}>
+        <div className={`flex ${mediaQuery ? "mx-14 w-[350px] h-[760px]" : "mx-10"} mt-4 bg-white p-10 border rounded-xl`}>
             <div className="flex flex-col ">
                 <div>
                     <h1 className="text-xl font-semibold my-3">Welcome</h1>
