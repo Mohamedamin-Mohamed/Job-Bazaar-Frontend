@@ -15,6 +15,16 @@ const InActive = ({uploadedJobs, inActiveJobs}) => {
     const [jobIds, setJobIds] = useState([])
     const ref = useRef(null)
 
+    const parseDate = (date) => {
+        const [month, day, year] = date.split('-').map(Number)
+        return new Date(year, month - 1, day)
+    }
+    const sortedUploadedJobs = [...uploadedJobs].sort((a, b) => {
+        const dateA = parseDate(a.postedDate)
+        const dateB = parseDate(b.postedDate)
+        return dateB - dateA
+    })
+
     const handlePosition = (jobUploaded) => {
         const cleanedPosition = jobUploaded.position.replace(/[^a-zA-Z]/g, " ")
         navigate(`/careerhub/my-jobs/${cleanedPosition}_${jobUploaded.jobId}`, {
@@ -121,7 +131,7 @@ const InActive = ({uploadedJobs, inActiveJobs}) => {
                             </div>
                         )}
                     </div>
-                    {uploadedJobs.map((job, index) => (
+                    {sortedUploadedJobs.map((job, index) => (
                         <div key={index}>
                             {job.jobStatus === 'inActive' &&
                                 <div key={job.jobId} className={`flex justify-between border-b py-3`}>
