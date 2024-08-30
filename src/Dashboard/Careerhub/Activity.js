@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import getAppliedJobs from "./Jobs/FetchJobsAndApplications/getAppliedJobs";
 import getUploadedJobs from "./Jobs/FetchJobsAndApplications/getUploadedJobs";
 import countActiveApplications from "./Jobs/DisplayJobsAppliedTo/CountApplications/countActiveApplications";
+import countActiveJobs from "./Management/CountJobs/countActiveJobs";
 
 const Activity = () => {
     const isMediumScreen = useMediaQuery({minWidth: 998});// Set the breakpoint for md screens
@@ -32,10 +33,15 @@ const Activity = () => {
     }, [email, role]);
 
     useEffect(() => {
-        const count = countActiveApplications(jobs)
+        let count = 0;
+        if (role === 'Applicant') {
+            count = countActiveApplications(jobs)
+        } else {
+            count = countActiveJobs(jobs)
+        }
         setCount(count)
     }, [jobs]);
-    
+
     return (
         <div
             className={`"flex flex-col text-[#367c2b] mt-10 border ${!isMediumScreen ? "w-[88%] mx-12 p-4 mb-8" : "flex w-[345px] p-4"} h-[280px]"`}>

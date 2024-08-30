@@ -49,7 +49,7 @@ const DisplayAvailableJobs = ({availableJobs}) => {
                     }
                     if (clicked[jobId]) return
 
-                    setClicked((prevState) => ({
+                    setClicked(() => ({
                         [jobId]: true
                     }))
                     navigate(`${jobId}`)
@@ -58,22 +58,32 @@ const DisplayAvailableJobs = ({availableJobs}) => {
                 console.error('Error fetching job by ID: ', err)
             }
         }
-    }, [role, applicantEmail, clicked, navigate])
+    }, [])
 
-    useEffect(() => {
+    const displayFirstActiveJob = async () => {
         if (availableJobs.length > 0) {
             const firstActiveJob = availableJobs.filter(job => job.jobStatus === 'active').sort((a, b) => {
                 const dateA = parseDate(a.postedDate)
                 const dateB = parseDate(b.postedDate)
                 return dateB - dateA
             })[0]
+            const hasAppliedTo = await ApplicationChecker(applicantEmail, firstActiveJob.jobId, new AbortController())
+            const applied = await hasAppliedTo.json()
+
+            if (applied) {
+                setHasApplied(true)
+            }
+
             setJobById(firstActiveJob)
             navigate(`${firstActiveJob.jobId}`)
-            setClicked((prevState) => ({
+            setClicked(() => ({
                 [firstActiveJob.jobId]: true
             }))
         }
-    }, [navigate, availableJobs]);
+    }
+    useEffect(() => {
+        displayFirstActiveJob().catch(err => console.error(err))
+    }, [availableJobs]);
 
     useEffect(() => {
         if (employerEmail) {

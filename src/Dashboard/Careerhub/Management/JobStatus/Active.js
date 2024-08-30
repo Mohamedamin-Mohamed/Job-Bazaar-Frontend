@@ -16,6 +16,15 @@ const Active = ({uploadedJobs, activeJobs}) => {
     const [jobIds, setJobIds] = useState([])
     const ref = useRef(null)
 
+    const parseDate = (date) => {
+        const [month, day, year] = date.split('-').map(Number)
+        return new Date(year, month - 1, day)
+    }
+    const sortedUploadedJobs = [...uploadedJobs].sort((a, b) => {
+        const dateA = parseDate(a.postedDate)
+        const dateB = parseDate(b.postedDate)
+        return dateB - dateA
+    })
     const handlePosition = (jobUploaded) => {
         const cleanedPosition = jobUploaded.position.replace(/[^a-zA-Z]/g, " ")
         navigate(`/careerhub/my-jobs/${cleanedPosition}_${jobUploaded.jobId}`, {
@@ -124,24 +133,54 @@ const Active = ({uploadedJobs, activeJobs}) => {
                         )}
                     </div>
                     {
-                uploadedJobs.map((job, index) => (
-                    <div key={index}>
-                        {job.jobStatus === 'active' &&
-                            <div key={job.jobId} className={`flex justify-between border-b py-3`}>
-                                <div className="flex w-[40%]">
-                                    <button onClick={() => handlePosition(job)}
-                                            className="text-[#0875e1] hover:bg-gray-100">{job.position}</button>
-                                </div>
-                                {mediaQuery && (
-                                    <div className="flex space-x-8 justify-end w-full mr-12">
-                                        <div className="flex space-x-32">
-                                            <p>{job.jobId}</p>
-                                            <div>
-                                                <p className="mr-14 text-[#217a37] bg-[#ebfff0] font-semibold px-1">{applicantsPerJob[job.jobId]}</p>
-                                            </div>
+                        sortedUploadedJobs.map((job, index) => (
+                            <div key={index}>
+                                {job.jobStatus === 'active' &&
+                                    <div key={job.jobId} className={`flex justify-between border-b py-3`}>
+                                        <div className="flex w-[40%]">
+                                            <button onClick={() => handlePosition(job)}
+                                                    className="text-[#0875e1] hover:bg-gray-100">{job.position}</button>
                                         </div>
-                                        <div className="flex space-x-12">
-                                            <p>{job.postedDate}</p>
+                                        {mediaQuery && (
+                                            <div className="flex space-x-8 justify-end w-full mr-12">
+                                                <div className="flex space-x-32">
+                                                    <p>{job.jobId}</p>
+                                                    <div>
+                                                        <p className="mr-14 text-[#217a37] bg-[#ebfff0] font-semibold px-1">{applicantsPerJob[job.jobId]}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex space-x-12">
+                                                    <p>{job.postedDate}</p>
+                                                    <div className={`flex flex-col justify-center items-center w-[36px] h-[36px]
+                                            ${hoveredIndex[index] ? "rounded-full bg-gray-200 text-center" : ""}`}>
+                                                        <button
+                                                            className={`flex justify-center items-center w-full h-full pb-2`}
+                                                            onMouseEnter={() => handleHoveredIndexes(index, true)}
+                                                            onMouseLeave={() => handleHoveredIndexes(index, false)}
+                                                            onClick={() => handleShowOptions(index)}
+                                                        >...
+                                                        </button>
+                                                        {showOptions[index] && (
+                                                            <div
+                                                                className="absolute flex-col w-[180px] border rounded-md space-y-2 bg-white text-white mt-36 ml-40"
+                                                                ref={ref}>
+                                                                <button className="bg-[#0875e1] w-full p-2 mt-2"
+                                                                        onClick={() => handlePosition(job)}>View
+                                                                    Job
+                                                                </button>
+                                                                <button
+                                                                    className="hover:bg-gray-300 w-full text-black p-2 "
+                                                                    onClick={() => handleWithdrawJob(job)}>Withdraw
+                                                                    Job
+                                                                </button>
+                                                            </div>
+                                                        )}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                        {!mediaQuery && (
                                             <div className={`flex flex-col justify-center items-center w-[36px] h-[36px]
                                             ${hoveredIndex[index] ? "rounded-full bg-gray-200 text-center" : ""}`}>
                                                 <button
@@ -153,11 +192,10 @@ const Active = ({uploadedJobs, activeJobs}) => {
                                                 </button>
                                                 {showOptions[index] && (
                                                     <div
-                                                        className="absolute flex-col w-[180px] border rounded-md space-y-2 bg-white text-white mt-36 ml-40"
+                                                        className="absolute flex-col w-[180px] border rounded-md space-y-2 bg-white text-white mt-36 mr-36"
                                                         ref={ref}>
                                                         <button className="bg-[#0875e1] w-full p-2 mt-2"
-                                                                onClick={() => handlePosition(job)}>View
-                                                            Job
+                                                                onClick={() => handlePosition(job)}>View Application
                                                         </button>
                                                         <button className="hover:bg-gray-300 w-full text-black p-2 "
                                                                 onClick={() => handleWithdrawJob(job)}>Withdraw
@@ -165,39 +203,12 @@ const Active = ({uploadedJobs, activeJobs}) => {
                                                         </button>
                                                     </div>
                                                 )}
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                                {!mediaQuery && (
-                                    <div className={`flex flex-col justify-center items-center w-[36px] h-[36px]
-                                            ${hoveredIndex[index] ? "rounded-full bg-gray-200 text-center" : ""}`}>
-                                        <button className={`flex justify-center items-center w-full h-full pb-2`}
-                                                onMouseEnter={() => handleHoveredIndexes(index, true)}
-                                                onMouseLeave={() => handleHoveredIndexes(index, false)}
-                                                onClick={() => handleShowOptions(index)}
-                                        >...
-                                        </button>
-                                        {showOptions[index] && (
-                                            <div
-                                                className="absolute flex-col w-[180px] border rounded-md space-y-2 bg-white text-white mt-36 mr-36"
-                                                ref={ref}>
-                                                <button className="bg-[#0875e1] w-full p-2 mt-2"
-                                                        onClick={() => handlePosition(job)}>View Application
-                                                </button>
-                                                <button className="hover:bg-gray-300 w-full text-black p-2 "
-                                                        onClick={() => handleWithdrawJob(job)}>Withdraw
-                                                    Job
-                                                </button>
                                             </div>
                                         )}
                                     </div>
-                                )}
+                                }
                             </div>
-                        }
-                    </div>
-                ))}
+                        ))}
                 </>
             ) : <NoApplication/>}
         </div>

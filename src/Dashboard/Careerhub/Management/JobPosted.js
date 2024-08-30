@@ -13,15 +13,13 @@ const JobPosted = ({uploadedJobs}) => {
     const activeJobs = countActiveJobs(uploadedJobs)
     const inActiveJobs = countInActiveJobs(uploadedJobs)
 
-    console.log(activeJobs, inActiveJobs)
-
     return (
-        <div className="flex flex-col ml-12 mt-12 bg-white mx-8 p-4 rounded-xl md:mb-8">
-            <div className="">
+        <div className="flex ml-12 mt-8 bg-white mx-8 p-4 rounded-xl md:mb-8 ">
+            <div className="flex flex-col">
                 <h1 className="text-2xl font-semibold mb-6">Job Applications Overview</h1>
-                <p>As you evaluate the qualifications of the candidates, we encourage you to reach out if you require additional information.
+                <p>As you evaluate the qualifications of the candidates, we encourage you to reach out if you require
+                    additional information.
                     Thank you for utilizing Job Bazaar to find the right talent for your team.</p>
-            </div>
             <div className={`flex mt-6 w-full space-x-12 ${!mediaQuery ? "w-full" : ""}`}>
                 <div className={`${activeButton !== 'active' ? 'hover:bg-gray-200 cursor-pointer' : ""} 
                 ${!mediaQuery ? "w-[50%]" : "w-[105px]"} ${activeButton === 'active'
@@ -50,6 +48,7 @@ const JobPosted = ({uploadedJobs}) => {
                 {activeButton === 'active' ?
                     <Active uploadedJobs={uploadedJobs} activeJobs={activeJobs}/> :
                     <InActive uploadedJobs={uploadedJobs} inActiveJobs={inActiveJobs}/>}
+            </div>
             </div>
         </div>
     );

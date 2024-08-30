@@ -9,11 +9,13 @@ import ApplyToJob from "./ApplyToJob";
 import GetName from "../UploadedJobs/GetUserInfo";
 import {useSelector} from "react-redux";
 import {toast, ToastContainer} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 const Apply = ({job, handleClose, open}) => {
     const countriesRef = useRef(null)
     const genderRef = useRef(null)
     const [disabled, setDisabled] = useState(false)
+    const navigate = useNavigate()
 
     const initialJobApplicationState = {
         resume: {name: '', file: ''},
@@ -113,12 +115,17 @@ const Apply = ({job, handleClose, open}) => {
         const text = await response.text()
 
         const toastText = response.ok ? toast.success : toast.error
-        toastText(text, {
-            onClose: () => {
-                handleClose()
-                window.location.reload()
-            }
-        })
+
+        if (!response.ok) {
+            toastText(text, {
+                onClose: () => {
+                    handleClose()
+                }
+            })
+        } else {
+            handleClose()
+            navigate('/careerhub/jobs/application-confirmation')
+        }
     }
 
     useEffect(() => {

@@ -54,7 +54,7 @@ const Description = () => {
     }
 
     return (
-        <div className={`${mediaQuery ? "mx-6 w-[700px]" : "mx-10"} pb-10`}>
+        <div className={`${mediaQuery ? "w-[96%] mx-14" : "mx-10"} pb-10`}>
             {Object.keys(job).length !== 0 ? (
                 <>
                     <ToastContainer position="top-center"/>
@@ -67,9 +67,9 @@ const Description = () => {
                                 onClick={() => handleNavigation(application)}>View
                                 Application
                             </button>
-                            {application.applicationStatus &&
+                            {application.applicationStatus !== "In Progress" &&
                                 <button
-                                    className="p-2 bg-[#ffefee] text-[#a31b12] hover:bg-[#367c2b] hover:text-white w-[240px] h-[40px] rounded-md ml-2 hover:cursor-not-allowed"
+                                    className="p-2 bg-[#ffefee] text-[#a31b12] w-[240px] h-[40px] rounded-md ml-2 hover:cursor-not-allowed"
                                 >{application.applicationStatus}
                                 </button>
                             }

@@ -47,7 +47,7 @@ const Active = ({appliedJobs, activeApplications}) => {
     const handleWithdrawApplication = async (application) => {
         try {
             const applicationStatus = 'Candidate Withdrew Interest'
-            const updateResponse = await updateApplication(application.applicantEmail, application.jobId, applicationStatus)
+            const updateResponse = await updateApplication(application.applicantEmail, application.jobId, applicationStatus, new AbortController())
             if (!updateResponse.ok) {
                 const data = await updateResponse.json()
                 throw new Error(data)
