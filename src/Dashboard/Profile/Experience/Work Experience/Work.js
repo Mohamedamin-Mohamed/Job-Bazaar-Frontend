@@ -124,10 +124,10 @@ const Work = () => {
                                      handleImageUrl={(imageUrl) => setImageUrl(imageUrl)}
                                      onError={(err) => setErr(err)}/>
                         <div>
-                            <img src={imageUrl} alt={err} className="w-[140px] h-[100px]"/>
+                            <img src={imageUrl} alt={err} className="w-[140px] h-[120px]"/>
                         </div>
                         <div className="mt-4">
-                            <p className="text-[#000000de] font-semibold text-xl">{data.title}</p>
+                            <p className="text-[#000000de] font-semibold text-lg">{data.title}</p>
                             <div className="flex text-gray-500 font-semibold my-1">
                                 <p className="text-lg">{data.company}</p>
                             </div>
