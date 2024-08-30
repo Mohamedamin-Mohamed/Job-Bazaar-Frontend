@@ -53,7 +53,7 @@ const UploadedJobDescription = () => {
     }
 
     return (
-        <div className={`${mediaQuery ? "mx-6 w-[850px]" : "mx-10"} pb-10`}>
+        <div className={`${mediaQuery ? "mx-14 w-[96%]" : "mx-10"} pb-10`}>
             {job && (
                 <>
                     <ToastContainer position="top-center"/>
@@ -70,13 +70,14 @@ const UploadedJobDescription = () => {
 
                                     <button
                                         className="p-2 bg-[#e6f0e1] text-[#367c2b] hover:bg-[#367c2b] hover:text-white w-[142px] h-[40px] rounded-md ml-2"
-                                        onClick={() => handleApplicantsNavigation(jobUploaded.jobId)}>View Applicants
+                                        onClick={() => handleApplicantsNavigation(jobUploaded.jobId)}>View
+                                        Applicants
                                     </button>
                                     : ""
                                 }
                                 {job.jobStatus === 'inActive' &&
                                     <button
-                                        className="p-2 bg-[#ffefee] text-[#a31b12] hover:bg-[#367c2b] hover:text-white w-[142px] h-[40px] rounded-md ml-2 hover:cursor-not-allowed"
+                                        className="p-2 bg-[#ffefee] text-[#a31b12] w-[142px] h-[40px] rounded-md ml-2 hover:cursor-not-allowed"
                                     >In Active Job
                                     </button>
                                 }
