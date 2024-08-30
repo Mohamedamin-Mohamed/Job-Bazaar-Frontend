@@ -5,7 +5,7 @@ import getJobApplicants from "../../Jobs/FetchJobsAndApplications/getJobApplican
 import {useMediaQuery} from "react-responsive";
 import updateJob from "../../Jobs/FetchJobsAndApplications/updateJob";
 import MimeTypes from "./MimeTypes";
-import NavBar from "../../NavBar";
+import ApplicantDetails from "./ApplicantDetails";
 
 const ViewApplicants = () => {
     const [jobApplicants, setJobApplicants] = useState([])
@@ -13,7 +13,8 @@ const ViewApplicants = () => {
 
     const [hoveredIndex, setHoveredIndex] = useState({})
     const [showOptions, setShowOptions] = useState({})
-    const mediaQuery = useMediaQuery({minWidth: "1050px"});
+    const mediaQuery = useMediaQuery({minWidth: "1282px"});
+    const mediaQuery2 = useMediaQuery({minWidth: "715px"})
     const navigate = useNavigate()
     const ref = useRef(null)
     const mimeTypes = MimeTypes
@@ -137,132 +138,90 @@ const ViewApplicants = () => {
         };
     }, []);
 
+    const [selectedApplicant, setSelectedApplicant] = useState(null);
+
+    const handleApplicantClick = (applicant) => {
+        setSelectedApplicant(applicant);
+    };
+
+    const handleCloseDetails = () => {
+        setSelectedApplicant(null);
+    };
 
     return (
-        <div className="flex flex-col ml-12 mt-5 bg-white mx-10 p-4 rounded-xl md:mb-8 text-sm">
-            {Object.keys(jobApplicants).length > 0 && (
-                <>
-                    <NavBar />
-                    <ToastContainer position="top-center"/>
-                    <div className="flex justify-between border-b border-b-gray-400 pb-4">
-                        <div className="flex md:w-[40%] w-full space-x-6">
-                            <h1>Applicant Name</h1>
+        <div className="relative flex flex-col ml-12 mt-5 bg-white mx-10 p-14 rounded-xl md:mb-8 border">
+            <ToastContainer position="top-center"/>
+            <div className="flex w-full border-b border-b-gray-400 pb-4 text-sm">
+                <div className="w-[15%]">
+                    <h1>Applicant Name</h1>
+                </div>
+                {mediaQuery && (
+                    <div className="flex space-x-8 justify-center w-[90%] ml-20">
+                        <div className="flex space-x-32">
+                            <h1>Job Id</h1>
+                            <h1>Position</h1>
+                            <h1 className="ml-10">Application Date</h1>
+                            <h1>Resume Posted</h1>
                         </div>
-                        {mediaQuery && (
-                            <div className="flex space-x-10 justify-end w-full mr-10">
-                                <div className="flex space-x-16">
-                                    <h1>Job Id</h1>
-                                    <h1>Position</h1>
-                                    <h1>Application Date</h1>
-                                    <h1>Application Status</h1>
-                                </div>
-                                <div className="flex space-x-16">
-                                    <h1>City</h1>
-                                    <h1>Postal Code</h1>
-                                    <h1>Country</h1>
-                                    <h1>Nationality</h1>
-                                    <h1>Gender</h1>
-                                </div>
-                                <div className="flex space-x-12">
-                                    <h1>Resume Posted</h1>
-                                    <h1>Additional Doc</h1>
-                                    <h1>Employer Contact</h1>
-                                    <h1>Action</h1>
-                                </div>
-                            </div>
-                        )}
-                        {!mediaQuery && (
-                            <div className="flex justify-end w-[10%] mr-4">
-                                <h1>Action</h1>
-                            </div>
-                        )}
                     </div>
-                    {jobApplicants.map((jobApplicant, index) => (
-                        <div key={index} className={`flex justify-between border-b py-3`}>
-                            <div className="flex flex-col md:w-[48%] w-full">
-                                <button className="text-[#0875e1] hover:bg-gray-100 whitespace-nowrap mr-12 px-3">
-                                    {jobApplicant.firstName} {jobApplicant.lastName}</button>
-                                <p>{jobApplicant.applicantEmail}</p>
+                )}
+                {!mediaQuery && mediaQuery2 && (
+                    <div className="flex justify-end items-end w-[80%] space-x-32">
+                        <h1>Job Id</h1>
+                        <h1>Position</h1>
+                    </div>
+                )}
+                {!mediaQuery2 && (
+                    <div className="flex ml-auto mr-12">
+                        <h1>Position</h1>
+                    </div>
+                )}
+            </div>
+
+            {jobApplicants.map((jobApplicant, index) => (
+                <div key={index} className={`flex justify-between border-b py-3`}>
+                    <div className="flex">
+                        <button
+                            className={`text-[#0875e1] hover:bg-gray-100 whitespace-nowrap mr-12 ${!mediaQuery2 ? "text-sm" : ""}`}
+
+                            onClick={() => handleApplicantClick(jobApplicant)}
+                        >
+                            {jobApplicant.firstName} {jobApplicant.lastName}
+                        </button>
+                    </div>
+                    {mediaQuery && (
+                        <div className="flex space-x-8 justify-center w-[75%]">
+                            <div className="flex space-x-16">
+                                <p>{jobApplicant.jobId}</p>
+                                <p className="w-[158px]">{jobApplicant.position}</p>
+                                <p>{jobApplicant.applicationDate}</p>
                             </div>
-                            {mediaQuery && (
-                                <div className="flex space-x-8 justify-end w-full mr-12">
-                                    <div className="flex space-x-12">
-                                        <p>{jobApplicant.jobId}</p>
-                                        <p>{jobApplicant.position}</p>
-                                        <p>{jobApplicant.applicationDate}</p>
-                                        <p>{jobApplicant.applicationStatus}</p>
-                                    </div>
-                                    <div className="flex space-x-12">
-                                        <p>{jobApplicant.city}</p>
-                                        <p>{jobApplicant.postalCode}</p>
-                                        <p>{jobApplicant.country}</p>
-                                        <p>{jobApplicant.nationality}</p>
-                                        <p>{jobApplicant.gender}</p>
-                                    </div>
-                                    <div className="flex space-x-12">
-                                        <button className="text-[#0875e1] hover:bg-gray-100 w-full px-4"
-                                                onClick={() => handleResume(jobApplicant.resume, jobApplicant.resumeName)}>{jobApplicant.resumeName}</button>
-                                        {jobApplicant.additionalDoc &&
-                                            <button className="text-[#0875e1] hover:bg-gray-100 w-full px-4"
-                                                    onClick={() => handleResume(jobApplicant.additionalDoc, jobApplicant.additionalDocName)}>{jobApplicant.additionalDocName}</button>
-                                        }
-                                        <p>{jobApplicant.employerContact}</p>
-                                    </div>
-                                    <div className={`flex flex-col justify-center items-center w-[36px] h-[36px]
-                                            ${hoveredIndex[index] ? "rounded-full bg-gray-200 text-center" : ""}`}>
-                                        <button
-                                            className={`flex justify-center items-center w-full h-full pb-2`}
-                                            onMouseEnter={() => handleHoveredIndexes(index, true)}
-                                            onMouseLeave={() => handleHoveredIndexes(index, false)}
-                                            onClick={() => handleShowOptions(index)}
-                                        >...
-                                        </button>
-                                        {showOptions[index] && (
-                                            <div
-                                                className="absolute flex-col w-[180px] border rounded-md space-y-2 bg-white text-white mt-36 ml-40"
-                                                ref={ref}>
-                                                <button className="bg-[#0875e1] w-full p-2 mt-2"
-                                                        onClick={() => handlePosition(jobApplicant)}>View
-                                                    Application
-                                                </button>
-                                                <button className="hover:bg-gray-300 w-full text-black p-2 "
-                                                        onClick={() => handleDeleteJob(jobApplicant)}>Withdraw
-                                                    Job
-                                                </button>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            )}
-                            {!mediaQuery && (
-                                <div className={`flex flex-col justify-center items-center w-[36px] h-[36px]
-                                            ${hoveredIndex[index] ? "rounded-full bg-gray-200 text-center" : ""}`}>
-                                    <button className={`flex justify-center items-center w-full h-full pb-2`}
-                                            onMouseEnter={() => handleHoveredIndexes(index, true)}
-                                            onMouseLeave={() => handleHoveredIndexes(index, false)}
-                                            onClick={() => handleShowOptions(index)}
-                                    >...
-                                    </button>
-                                    {showOptions[index] && (
-                                        <div
-                                            className="absolute flex-col w-[180px] border rounded-md space-y-2 bg-white text-white mt-36 mr-36"
-                                            ref={ref}>
-                                            <button className="bg-[#0875e1] w-full p-2 mt-2"
-                                                    onClick={() => handlePosition(jobApplicant)}>View Application
-                                            </button>
-                                            <button className="hover:bg-gray-300 w-full text-black p-2 "
-                                                    onClick={() => handleDeleteJob(jobApplicant)}>Withdraw
-                                                Job
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
+                            <div className="flex space-x-12 w-[28%]">
+                                <button className="text-[#0875e1] hover:bg-gray-100 w-full px-4"
+                                        onClick={() => handleResume(jobApplicant.resume, jobApplicant.resumeName)}>{jobApplicant.resumeName}</button>
+                            </div>
                         </div>
-                    ))}
-                </>
+                    )}
+                    {!mediaQuery && mediaQuery2 && (
+                        <div className="flex justify-end items-end space-x-14">
+                            <p>{jobApplicant.jobId}</p>
+                            <p>{jobApplicant.position}</p>
+                        </div>
+                    )}
+                    {!mediaQuery2 && (
+                        <p className="text-sm w-[40%]">{jobApplicant.position}</p>
+                    )}
+                </div>
+            ))}
+
+            {selectedApplicant && (
+                <ApplicantDetails
+                    applicant={selectedApplicant}
+                    onClose={handleCloseDetails}
+                    handleResume={handleResume}
+                />
             )}
         </div>
-    )
+    );
 }
 export default ViewApplicants
