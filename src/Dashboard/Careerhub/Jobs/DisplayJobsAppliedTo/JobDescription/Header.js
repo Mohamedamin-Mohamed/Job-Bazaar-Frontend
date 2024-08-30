@@ -17,7 +17,7 @@ const Header = ({ job, postedDate }) => {
 
     return (
         <div className="flex md:flex-row md:space-x-16 flex-col mt-4">
-            <div className="flex space-x-2 p-2">
+            <div className="flex space-x-2 p-2 w-[40%]">
                 <SlLocationPin size={22} color="gray"/>
                 <p>{job.location}</p>
             </div>
