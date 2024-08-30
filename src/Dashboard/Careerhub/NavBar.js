@@ -16,7 +16,7 @@ const NavBar = () => {
     const [menuGrid, setMenuGrid] = useState(false)
     const [referrals, setReferrals] = useState(false)
     const [jobs, setJobs] = useState(false)
-    const[userInfo, setUserInfo] = useState({})
+    const [userInfo, setUserInfo] = useState({})
     const [role, setRole] = useState()
     const navigate = useNavigate()
     const isMediumScreen = useMediaQuery({minWidth: 993}); // Set the breakpoint for md screens
@@ -195,7 +195,8 @@ const NavBar = () => {
                             ref={dropDownRef} onClick={handleUserSettingDropDown}>
                             <NavLink to="/careerhub" className="mb-1">{name.firstName} {name.lastName}</NavLink>
                             <div className="flex flex-col">
-                                <NavLink to="/careerhub" className="p-1">{userInfo.firstName} {userInfo.lastName}</NavLink>
+                                <NavLink to="/careerhub"
+                                         className="p-1">{userInfo.firstName} {userInfo.lastName}</NavLink>
                                 <NavLink to="/careerhub/profile/experience" className="p-1">My
                                     Profile</NavLink>
                                 <NavLink to="/careerhub/profile/career" className="p-1">Career
@@ -212,6 +213,11 @@ const NavBar = () => {
                                 <NavLink
                                     to={role === 'Employer' ? "/careerhub/my/jobs/uploaded" : "/careerhub/my/jobs/applied"}
                                     className="p-1">My Jobs</NavLink>
+                                {role === 'Employer' &&
+                                    <NavLink
+                                        to="/careerhub/employer/management"
+                                        className="p-1">Management Hub</NavLink>
+                                }
                                 {role === 'Applicant' &&
                                     <NavLink to="/careerhub/myreferrals" className="p-1">My Referrals</NavLink>}
                             </div>
