@@ -20,13 +20,14 @@ const ManagementHub = () => {
         const fetchJobsUploaded = async () => {
             try {
                 const response = await getUploadedJobs(employerEmail, new AbortController())
-                setIsInitialized(true)
                 if (response.ok) {
                     const jobs = await response.json()
                     setUploadedJobs(jobs)
                 }
+                setIsInitialized(true)
             } catch (err) {
                 console.error(err.message + err)
+                setIsInitialized(true)
             }
         }
         fetchJobsUploaded().catch(err => console.error(err))
@@ -48,7 +49,7 @@ const ManagementHub = () => {
                                 <div className="flex flex-col bg-[#f0f1f2]">
                                     <GenericRibbon text={"Management Hub"}/>
                                     <div
-                                        className={`${mediaQuery ? "flex mb-10 mx-10 space-x-10" : "flex-col"} justify-center items-center`}>
+                                        className={`${mediaQuery ? "flex mb-10 mx-10 space-x-10" : "flex-col"}`}>
                                         <JobPosted uploadedJobs={uploadedJobs}/>
                                         <CompanyInfo/>
                                     </div>
