@@ -18,7 +18,9 @@ const EditJob = ({job, name, handleClose, edit}) => {
         jobFunction: job.jobFunction,
         jobType: job.jobType,
         description: job.description,
-        requirements: job.requirements
+        requirements: job.requirements,
+        jobStatus: 'active',
+        postedDate: job.postedDate
     })
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -61,13 +63,13 @@ const EditJob = ({job, name, handleClose, edit}) => {
         const requestBody = {
             ...jobDetails, employerEmail: job.employerEmail, jobId: job.jobId
         }
-
+        console.log('Job post request is ', requestBody)
         const response = await saveJobs(requestBody)
         const text = await response.text()
 
         if (response.ok) {
             setDisable(true)
-            toast.success(text, {
+            toast.success(text.replace('created', 'updated'), {
                 onClose: () => {
                     setDisable(false)
                     handleClose()
@@ -76,7 +78,7 @@ const EditJob = ({job, name, handleClose, edit}) => {
             })
         } else {
             setDisable(true)
-            toast.success(text, {
+            toast.error(text, {
                 onClose: () => {
                     setDisable(false)
                     window.location.reload()
