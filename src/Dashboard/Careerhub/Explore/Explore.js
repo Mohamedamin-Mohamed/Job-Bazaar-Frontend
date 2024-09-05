@@ -16,7 +16,7 @@ const Explore = () => {
             navigate('explore/projects')
     }
     return (
-        <div className={`"flex flex-col text-[#367c2b] mt-4 ${!isMediumScreen ? "mx-12 p-4 relative" : "flex px-4 pt-3.5"} w-full h-[280px] z-50 bg-white"`}>
+        <div className={`"flex flex-col text-[#367c2b] mt-4 ${!isMediumScreen ? "mx-6 p-4 relative" : "flex px-4 pt-3.5"} w-full h-[280px] z-50 bg-white"`}>
             <div className="flex flex-col pb-10 md:flex-row md:mb-8">
                 <div className={` ${arrowShow ? "h-[100px]" : "h-[460px]"} border w-full p-6 mr-8 mt-10 `}>
                     <div className={`${!arrowShow ? "border-b" : ""} pb-4`}>
