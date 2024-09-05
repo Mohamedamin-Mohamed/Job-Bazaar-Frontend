@@ -12,7 +12,7 @@ const UploadedJobs = () => {
     const [uploadedJobs, setUploadedJobs] = useState([]);
     const [redirect, setRedirect] = useState(false);
     const [activeJobsCount, setActiveJobsCount] = useState(0);
-
+    const [isInitialized, setIsInitialized] = useState(false)
     const userInfo = JSON.parse(localStorage.getItem('user')) || {};
     const role = userInfo.role || '';
     const employerEmail = userInfo.email || '';
@@ -25,9 +25,11 @@ const UploadedJobs = () => {
                     const jobs = await response.json();
                     setUploadedJobs(jobs);
                 }
+                setIsInitialized(true)
             }
         } catch (err) {
             console.error('Error fetching jobs:', err);
+            setIsInitialized(true)
         }
     }, [role, employerEmail]);
 
@@ -52,17 +54,22 @@ const UploadedJobs = () => {
 
     return (
         <div>
-            <ToastContainer position="top-center"/>
-            {hasActiveJobs && activeJobsCount > 0 ? (
+            {isInitialized &&
                 <>
-                    <GenericRibbon text={"Uploaded Jobs"}/>
-                    <DisplayUploadedJobs uploadedJobs={uploadedJobs} employerEmail={employerEmail}/>
-                    <Outlet/>
+                    <ToastContainer position="top-center"/>
+                    {hasActiveJobs && activeJobsCount > 0 ? (
+                        <>
+                            <GenericRibbon text={"Uploaded Jobs"}/>
+                            <DisplayUploadedJobs uploadedJobs={uploadedJobs} employerEmail={employerEmail}/>
+                            <Outlet/>
+                        </>
+                    ) : (
+                        <NoAvailableJobs role={"Employer"}/>
+                    )}
                 </>
-            ) : (
-                <NoAvailableJobs role={"Employer"}/>
-            )}
+            }
         </div>
+
     );
 };
 
