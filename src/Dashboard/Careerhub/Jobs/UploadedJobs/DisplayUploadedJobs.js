@@ -16,7 +16,7 @@ const DisplayUploadedJobs = ({uploadedJobs, employerEmail}) => {
     })
 
     const parseDate = (date) => {
-        const [month, year, day] = date.split('-').map(Number)
+        const [month, day, year] = date.split('-').map(Number)
         return new Date(year, month - 1, day)
     }
     const sortedUploadedJobs = [...uploadedJobs].sort((a, b) => {
