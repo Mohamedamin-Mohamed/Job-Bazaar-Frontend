@@ -9,7 +9,7 @@ const CareerInterests = () => {
     return (
         <>
             {mediaQuery ?
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center mb-6">
                 <div>
                     <Skills/>
                     <Roles/>

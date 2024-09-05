@@ -100,14 +100,14 @@ const Active = ({appliedJobs, activeApplications}) => {
                         )}
                     </div>
                     {sortedAppliedJobs.map((application, index) => (
-                        application.applicationStatus === 'In Progress' ? (
+                        application.isActive === "true" ? (
                             <div
                                 key={index}
                                 className={`flex justify-between border-b py-3`}
                             >
                                 <div className="flex w-[40%]">
                                     <button onClick={() => handlePosition(application)}
-                                            className="text-[#0875e1] hover:bg-gray-100">{application.position}</button>
+                                            className="text-[#0875e1] hover:bg-gray-100 p-4">{application.position}</button>
                                 </div>
                                 {mediaQuery && (
                                     <div className="flex space-x-8 justify-end w-full mr-12">

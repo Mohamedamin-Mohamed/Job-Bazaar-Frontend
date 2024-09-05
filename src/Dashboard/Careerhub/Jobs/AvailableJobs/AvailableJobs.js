@@ -14,6 +14,7 @@ const AvailableJobs = () => {
     const userInfo = JSON.parse(localStorage.getItem('user'));
     const role = userInfo.role
     const [redirect, setRedirect] = useState(false);
+    const [isInitialized, setIsInitialized] = useState(false)
 
     const fetchAvailableJobs = async () => {
         try {
@@ -27,8 +28,10 @@ const AvailableJobs = () => {
                 const text = await response.text();
                 toast.error(text);
             }
+            setIsInitialized(true)
         } catch (err) {
             console.error('Error fetching jobs:', err);
+            setIsInitialized(true)
         }
     };
 
@@ -51,16 +54,20 @@ const AvailableJobs = () => {
                     <ScaleLoader color="#1c3e17" height={100} width={4}/>
                 </div>
             )}
-            <ToastContainer position="top-center"/>
-            {availableJobs.filter(job => job.jobStatus === "active").length === 0 ? (
-                <NoAvailableJobs role={"Applicant"}/>
-            ) : (
+            {isInitialized &&
                 <>
-                    <GenericRibbon text={"Available Jobs"}/>
-                    <DisplayAvailableJobs availableJobs={availableJobs}/>
-                    <Outlet/>
+                    <ToastContainer position="top-center"/>
+                    {availableJobs.filter(job => job.jobStatus === "active").length === 0 ? (
+                        <NoAvailableJobs role={"Applicant"}/>
+                    ) : (
+                        <>
+                            <GenericRibbon text={"Available Jobs"}/>
+                            <DisplayAvailableJobs availableJobs={availableJobs}/>
+                            <Outlet/>
+                        </>
+                    )}
                 </>
-            )}
+            }
         </div>
     );
 };

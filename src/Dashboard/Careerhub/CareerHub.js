@@ -11,7 +11,7 @@ import {toast, ToastContainer} from "react-toastify";
 import AddressFetcher from "../Address/AddressFetcher";
 
 const CareerHub = () => {
-    const isMediumScreen = useMediaQuery({minWidth: 998}); // Set the breakpoint for md screens
+    const isMediumScreen = useMediaQuery({minWidth: 1370}); // Set the breakpoint for md screens
     const navigate = useNavigate()
     const [location, setLocation] = useState({latitude: null, longitude: null})
     const [error, setError] = useState(null)
@@ -93,9 +93,7 @@ const CareerHub = () => {
                 ) : (
                     <>
                         <div className={"flex flex-col justify-center items-center"}>
-                            <div className="mx-4">
-                                <Interests/>
-                            </div>
+                            <Interests/>
                             <Explore/>
 
                         </div>

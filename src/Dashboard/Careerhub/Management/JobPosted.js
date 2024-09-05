@@ -14,7 +14,7 @@ const JobPosted = ({uploadedJobs}) => {
     const inActiveJobs = countInActiveJobs(uploadedJobs)
 
     return (
-        <div className="flex ml-12 mt-8 bg-white mx-8 p-4 rounded-xl md:mb-8 ">
+        <div className="flex ml-12 mt-8 bg-white mx-8 p-4 rounded-xl md:mb-8 h-[80%]">
             <div className="flex flex-col">
                 <h1 className="text-2xl font-semibold mb-6">Job Applications Overview</h1>
                 <p>As you evaluate the qualifications of the candidates, we encourage you to reach out if you require

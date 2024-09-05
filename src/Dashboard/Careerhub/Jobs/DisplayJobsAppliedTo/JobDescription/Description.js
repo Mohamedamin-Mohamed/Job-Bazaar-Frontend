@@ -67,9 +67,9 @@ const Description = () => {
                                 onClick={() => handleNavigation(application)}>View
                                 Application
                             </button>
-                            {application.applicationStatus !== "In Progress" &&
+                            {application.isActive === "false" &&
                                 <button
-                                    className="p-2 bg-[#ffefee] text-[#a31b12] w-[240px] h-[40px] rounded-md ml-2 hover:cursor-not-allowed"
+                                    className={`p-2 bg-[#ffefee] text-[#a31b12] w-[240px] h-[40px] rounded-md ml-2 hover:cursor-not-allowed ${!mediaQuery && "mt-4"}`}
                                 >{application.applicationStatus}
                                 </button>
                             }

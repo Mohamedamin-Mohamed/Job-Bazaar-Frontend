@@ -20,6 +20,7 @@ const ApplyToJob = async (controller, jobApplication, user) => {
     formData.append("employerContact", jobApplication.employerContact)
     formData.append("firstName", user.firstName)
     formData.append("applicationStatus", "In Progress")
+    formData.append("isActive", "true")
     formData.append("lastName", user.lastName)
 
     const date = new Date().toISOString()

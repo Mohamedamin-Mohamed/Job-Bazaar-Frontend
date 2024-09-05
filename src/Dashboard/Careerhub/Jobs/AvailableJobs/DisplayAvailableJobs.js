@@ -62,7 +62,7 @@ const DisplayAvailableJobs = ({availableJobs}) => {
 
     const displayFirstActiveJob = async () => {
         if (availableJobs.length > 0) {
-            const firstActiveJob = availableJobs.filter(job => job.jobStatus === 'active').sort((a, b) => {
+            const firstActiveJob = sortedAvailableJobs.filter(job => job.jobStatus === 'active').sort((a, b) => {
                 const dateA = parseDate(a.postedDate)
                 const dateB = parseDate(b.postedDate)
                 return dateB - dateA
