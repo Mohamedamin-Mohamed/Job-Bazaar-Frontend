@@ -1,23 +1,19 @@
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
 import {useEffect, useRef, useState} from "react";
 import getJobApplicants from "../../Jobs/FetchJobsAndApplications/getJobApplicants";
 import {useMediaQuery} from "react-responsive";
-import updateJob from "../../Jobs/FetchJobsAndApplications/updateJob";
 import MimeTypes from "./MimeTypes";
 import ApplicantDetails from "./ApplicantDetails";
 
 const ViewApplicants = () => {
     const [jobApplicants, setJobApplicants] = useState([])
-    const [noJobApplicants, setNoJobApplicants] = useState(false)
 
-    const [hoveredIndex, setHoveredIndex] = useState({})
-    const [showOptions, setShowOptions] = useState({})
     const mediaQuery = useMediaQuery({minWidth: "1282px"});
-    const mediaQuery2 = useMediaQuery({minWidth: "715px"})
-    const navigate = useNavigate()
+    const mediaQuery2 = useMediaQuery({minWidth: "780px"})
     const ref = useRef(null)
     const mimeTypes = MimeTypes
+    const [selectedApplicant, setSelectedApplicant] = useState(null);
 
     const location = useLocation()
     const {jobId} = location.state || {}
@@ -25,70 +21,13 @@ const ViewApplicants = () => {
     if (!jobId) {
         toast.error("No Job Id found");
     }
-
-    useEffect(() => {
-        const fetchJobApplicants = async () => {
-            try {
-                const response = await getJobApplicants(jobId, new AbortController())
-
-                if (response.ok) {
-                    const jobsApplicants = await response.json()
-                    if (jobsApplicants && Array.isArray(jobsApplicants) && jobsApplicants.length > 0) {
-                        setJobApplicants(jobsApplicants)
-                    } else {
-                        setNoJobApplicants(true)
-                    }
-                }
-            } catch (err) {
-                console.error("Unknown error while fetching job applicants")
-            }
-        }
-
-        fetchJobApplicants().catch(err => console.error(err))
-    }, [jobId]);
-
-    const handlePosition = (jobUploaded) => {
-        navigate(`/careerhub/my-jobs/${jobUploaded.position}_${jobUploaded.jobId}`, {
-            state: {
-                jobUploaded,
-                jobApplicants
-            }
-        });
+    const handleApplicantClick = (applicant) => {
+        setSelectedApplicant(applicant);
     };
 
-    const handleHoveredIndexes = (index, isHovered) => {
-        setHoveredIndex(prevState => ({
-            ...prevState,
-            [index]: isHovered
-        }));
+    const handleCloseDetails = () => {
+        setSelectedApplicant(null);
     };
-
-    const handleShowOptions = (index) => {
-        setShowOptions(prevState => {
-            // Close the currently open menu if it's different from the clicked index
-            return (Object.keys(prevState).length && Object.keys(prevState)[0] === index.toString())
-                ? {}
-                : {[index]: true};
-        });
-    }
-
-    const handleDeleteJob = async (job) => {
-        try {
-            const response = await updateJob(job.employerEmail, job.jobId, new AbortController())
-            const data = await response.json()
-            if (typeof data === 'boolean') {
-                if (!data) {
-                    toast.error("Couldn't delete job");
-                } else {
-                    window.location.reload()
-                }
-            } else {
-                throw new Error("Unexpected response format.")
-            }
-        } catch (err) {
-            toast.error(`Couldn't delete job: ${err.message}`)
-        }
-    }
 
     const handleResume = (file, fileName) => {
         // extract file extension so that we can map each extension to its MIME type
@@ -125,28 +64,23 @@ const ViewApplicants = () => {
     }
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (ref.current && !ref.current.contains(event.target)) {
-                setShowOptions({});
+        const fetchJobApplicants = async () => {
+            try {
+                const response = await getJobApplicants(jobId, new AbortController())
+
+                if (response.ok) {
+                    const jobsApplicants = await response.json()
+                    if (jobsApplicants && Array.isArray(jobsApplicants) && jobsApplicants.length > 0) {
+                        setJobApplicants(jobsApplicants)
+                    }
+                }
+            } catch (err) {
+                console.error("Unknown error while fetching job applicants")
             }
-        };
+        }
 
-        document.addEventListener('mousedown', handleClickOutside);
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
-
-    const [selectedApplicant, setSelectedApplicant] = useState(null);
-
-    const handleApplicantClick = (applicant) => {
-        setSelectedApplicant(applicant);
-    };
-
-    const handleCloseDetails = () => {
-        setSelectedApplicant(null);
-    };
+        fetchJobApplicants().catch(err => console.error(err))
+    }, [jobId]);
 
     return (
         <div className="relative flex flex-col ml-12 mt-5 bg-white mx-10 p-14 rounded-xl md:mb-8 border">
@@ -182,9 +116,9 @@ const ViewApplicants = () => {
                 <div key={index} className={`flex justify-between border-b py-3`}>
                     <div className="flex">
                         <button
-                            className={`text-[#0875e1] hover:bg-gray-100 whitespace-nowrap mr-12 ${!mediaQuery2 ? "text-sm" : ""}`}
-
-                            onClick={() => handleApplicantClick(jobApplicant)}
+                            className={` ${jobApplicant.isActive === "true" ? "text-[#0875e1]" : "text-[#a31b12]"} hover:bg-gray-100 whitespace-nowrap mr-12 px-4 ${!mediaQuery2 ? "text-sm" : ""}
+                             ${jobApplicant.isActive === "false" && "cursor-not-allowed"}`}
+                            onClick={jobApplicant.isActive === "true" ? () => handleApplicantClick(jobApplicant) : null}
                         >
                             {jobApplicant.firstName} {jobApplicant.lastName}
                         </button>
@@ -197,7 +131,7 @@ const ViewApplicants = () => {
                                 <p>{jobApplicant.applicationDate}</p>
                             </div>
                             <div className="flex space-x-12 w-[28%]">
-                                <button className="text-[#0875e1] hover:bg-gray-100 w-full px-4"
+                                <button className="text-[#0875e1] hover:bg-gray-100 px-4"
                                         onClick={() => handleResume(jobApplicant.resume, jobApplicant.resumeName)}>{jobApplicant.resumeName}</button>
                             </div>
                         </div>
