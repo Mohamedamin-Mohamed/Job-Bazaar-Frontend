@@ -85,7 +85,7 @@ const InActive = ({appliedJobs, inActiveApplications}) => {
                         )}
                     </div>
                     {sortedAppliedJobs.map((application, index) => (
-                        application.applicationStatus !== 'In Progress' ? (
+                        application.isActive === "false" ? (
                             <div
                                 key={index}
                                 className={`flex justify-between border-b py-3`}
