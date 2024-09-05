@@ -139,7 +139,7 @@ const Active = ({uploadedJobs, activeJobs}) => {
                                     <div key={job.jobId} className={`flex justify-between border-b py-3`}>
                                         <div className="flex w-[40%]">
                                             <button onClick={() => handlePosition(job)}
-                                                    className="text-[#0875e1] hover:bg-gray-100">{job.position}</button>
+                                                    className="text-[#0875e1] hover:bg-gray-100 p-4">{job.position}</button>
                                         </div>
                                         {mediaQuery && (
                                             <div className="flex space-x-8 justify-end w-full mr-12">
