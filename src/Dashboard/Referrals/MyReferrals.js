@@ -1,29 +1,41 @@
-import Image from "../../Images/referrals.png";
 import Ribbon from "../Careerhub/GenericRibbon";
-import {useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
+import getReferrals from "../Careerhub/Jobs/FetchJobsAndApplications/getReferrals";
+import Display404NotReferred from "./Display404NotReferred";
+import DisplayReferrals from "./DisplayReferrals";
 
-const MyReferrals = ()=>{
-    const navigate = useNavigate()
+const MyReferrals = () => {
+    const userInfo = JSON.parse(localStorage.getItem('user'))
+    const [referrals, setReferrals] = useState({})
+    const [isInitialized, setIsInitialized] = useState(false)
 
-    const handleRefer = ()=>{
-        navigate('/refer')
-    }
+    useEffect(() => {
+            const fetchReferrals = async () => {
+                const response = await getReferrals(userInfo.email, new AbortController())
+                if (response.ok) {
+                    const data = await response.json()
+                    setReferrals(data)
+                }
+                setIsInitialized(true)
+            }
+            fetchReferrals().catch(err => {
+                console.error(err)
+                setIsInitialized(true)
+            })
+        }, []
+    )
+    ;
+
     return (
         <>
-            <Ribbon text={"My Referrals"} height={60}/>
-        <div className="flex flex-col justify-center items-center">
-            <div className="w-[206px] h-[142px] flex justify-center mt-8">
-                <img src={Image} alt="" className="w-[130px] h-[220px]"/>
-            </div>
-            <div className="flex flex-col justify-center mt-24 p-2">
-                <p className="text-[#4f5666]">You haven't referred anyone yet</p>
-                <button
-                    className="text-[#367c2b] font-medium w-[57.5%] border border-[#367c2b] flex ml-16 mt-4 pl-3 py-1 hover:bg-[#367c2b] hover:text-white"
-                    onClick={handleRefer}>Refer A Friend
-                </button>
-            </div>
-        </div>
-            </>
+            {isInitialized ?
+                <>
+                    <Ribbon text={"My Referrals"} height={60}/>
+                    {Object.keys(referrals).length === 0 ? <Display404NotReferred/> :
+                        <DisplayReferrals referrals={referrals}/>}
+                </>
+                : null}
+        </>
     )
 }
 export default MyReferrals
