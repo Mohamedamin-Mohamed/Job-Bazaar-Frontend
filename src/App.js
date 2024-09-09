@@ -29,6 +29,7 @@ import ViewJob from "./Dashboard/Careerhub/Management/View Job/ViewJob";
 import JobDescription from "./Dashboard/Careerhub/Management/Description/JobDescription";
 import ApplicationConfirmation from "./Dashboard/Careerhub/Confirmation/ApplicationConfirmation";
 import View from "./Dashboard/Careerhub/Management/ViewApplicants/View";
+import AvailableReferrals from "./Dashboard/Referrals/AvailableReferrals";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -72,8 +73,10 @@ const router = createBrowserRouter(
                     <Route path="viewApplicants/:jobId" element={<View/>}/>
                 </Route>
                 <Route path="jobs/application-confirmation" element={<ApplicationConfirmation/>}/>
+                <Route path="available-referrals" element={<AvailableReferrals/>}/>
             </Route>
             <Route path="refer" element={<Refer/>}/>
+
             <Route path="feedback">
                 <Route path="dashboard" element={<Feedback/>}/>
                 <Route path="*" element={<NotFound/>}/>
