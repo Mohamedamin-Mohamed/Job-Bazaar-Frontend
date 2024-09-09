@@ -44,20 +44,23 @@ const Activity = () => {
         setCount(count)
     }, [jobs]);
 
-    useEffect(() => {
-        const fetchReferrals = async () => {
-            const response = await getReferrals(userInfo.email, new AbortController())
-            if (response.ok) {
-                const data = await response.json()
-                setReferrals(data)
-            }
+    const fetchReferrals = async () => {
+        const response = await getReferrals(userInfo.email, new AbortController())
+        if (response.ok) {
+            const data = await response.json()
+            setReferrals(data)
         }
-        fetchReferrals().catch(err => console.error(err))
+    }
+
+    useEffect(() => {
+        if (role === 'Applicant') {
+            fetchReferrals().catch(err => console.error(err))
+        }
     }, []);
 
     return (
         <div
-            className={`"flex flex-col text-[#367c2b] mt-10 border ${!isMediumScreen ? "w-[93%] mx-12 p-4 relative" : "flex px-4 pt-3.5 mx-4"} h-[280px]"`}>
+            className={`"flex flex-col text-[#367c2b] mt-10 border ${!isMediumScreen ? "w-[93%] mx-12 p-4 relative" : "flex px-4 pt-3.5 mx-4 w-[20%]"} "`}>
             <h1 className="text-black font-bold p-1.5">My activity</h1>
             <div className="flex justify-between p-2 font-bold hover:underline hover:cursor-pointer">
                 <NavLink
