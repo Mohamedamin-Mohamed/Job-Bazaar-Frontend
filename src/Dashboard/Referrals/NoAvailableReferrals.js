@@ -1,6 +1,6 @@
 import Image from "../../Images/referrals.png";
 
-const NoReferralsAvailable = ()=>{
+const NoAvailableReferrals = ()=>{
     return (
         <div className="flex flex-col justify-center items-center">
             <div className="w-[206px] h-[142px] flex justify-center mt-8">
@@ -12,4 +12,4 @@ const NoReferralsAvailable = ()=>{
         </div>
     )
 }
-export default NoReferralsAvailable
+export default NoAvailableReferrals
