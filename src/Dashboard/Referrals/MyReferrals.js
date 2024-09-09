@@ -24,14 +24,14 @@ const MyReferrals = () => {
             })
         }, []
     )
-    ;
+
 
     return (
         <>
             {isInitialized ?
                 <>
                     <Ribbon text={"My Referrals"} height={60}/>
-                    {Object.keys(referrals).length === 0 ? <Display404NotReferred/> :
+                    {Object.keys(referrals).length === 0 ? <Display404NotReferred /> :
                         <DisplayReferrals referrals={referrals}/>}
                 </>
                 : null}
