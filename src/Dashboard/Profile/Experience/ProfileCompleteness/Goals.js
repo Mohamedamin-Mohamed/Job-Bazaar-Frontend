@@ -9,7 +9,7 @@ const Goals = ()=>{
             </div>
             <div>
                 <p className=" text-wrap mb-2">Get recommendations based on what you want to learn and which jobs you want in the future.</p>
-                <button className="bg-[#ffde00] w-[140px] h-[36px] rounded-sm mt-4gi">Add Goals</button>
+                <button className="bg-[#ffde00] w-[140px] h-[36px] rounded-sm mt-4 cursor-not-allowed">Add Goals</button>
             </div>
         </div>
     )

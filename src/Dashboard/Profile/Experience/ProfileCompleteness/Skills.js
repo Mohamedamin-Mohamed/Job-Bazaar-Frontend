@@ -8,7 +8,7 @@ const Skills = ()=>{
             </div>
             <div>
                 <p className="w-[90%] text-wrap mb-2">Show what you know to your teammates and managers. Get recommendations to grow.</p>
-                <button className="bg-[#ffde00] w-[140px] h-[36px] rounded-sm mt-4">Add Skills</button>
+                <button className="bg-[#ffde00] w-[140px] h-[36px] rounded-sm mt-4 cursor-not-allowed">Add Skills</button>
             </div>
         </div>
     )
