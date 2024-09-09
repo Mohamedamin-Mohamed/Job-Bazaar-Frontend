@@ -1,29 +1,72 @@
-import { IoIosSearch } from "react-icons/io"
-import Chat from '../../Images/empty_self_chat.svg'
-const FeedbackRequests = ()=>{
-    return(
-        <div className="flex flex-col mr-4">
-            <div className="flex w-full md: mt-4 border border-[#1a212e] p-2 mr-6">
-                <IoIosSearch size={20} color="gray"/>
-                <input placeholder="Search Candidate, Interview/Interaction, Feedback..." className="outline-none w-full ml-2"/>
-            </div>
-            <nav className="flex justify-between list-none text-[#9b9b9b] space-x-4 mt-3 border-t border-b pb-4 pt-4">
-                <li>Candidate</li>
-                <li>Position/Community & Requester</li>
-                <li>Feedback Form</li>
-                <li>Requested On </li>
-                <li>Actions</li>
-            </nav>
-            <div className="flex flex-col justify-center items-center text-[#69717f] mt-4">
-                <div>
-                    <img src={Chat} alt="" className="h-[120px]"/>
-                </div>
-                <h1 className="font-semibold mt-4 text-lg">No feedback requests</h1>
-                <div className="flex flex-col text-center mt-3">
-                <p >There are no requests</p>
-                <p>Matching your search criteria</p>
-                </div>
-            </div>
+import {useMediaQuery} from "react-responsive";
+import {useEffect, useState} from "react";
+import getFeedbacks from "../Careerhub/Jobs/FetchJobsAndApplications/getFeedbacks";
+import NoFeedback from "./NoFeedback";
+import DisplayFeedbacks from "./DisplayFeedbacks";
+
+const FeedbackRequests = ({startDate, endDate}) => {
+    const isMediumScreen = useMediaQuery({minWidth: 1040}); // Set the breakpoint for md screens
+    const userInfo = JSON.parse(localStorage.getItem('user'))
+    const applicantEmail = userInfo.email
+    const [feedbacks, setFeedbacks] = useState([])
+    const [isInitialized, setIsInitialized] = useState(false)
+
+    useEffect(() => {
+        const fetchFeedbacks = async () => {
+            try {
+                const response = await getFeedbacks(applicantEmail, new AbortController())
+                if (response.ok) {
+                    const data = await response.json()
+                    setFeedbacks(data)
+                }
+                setIsInitialized(true)
+            } catch (err) {
+                console.error("Couldn't fetch feedbacks ", err)
+                setIsInitialized(true)
+            }
+        }
+        fetchFeedbacks().catch(err => console.error(err))
+    }, []);
+
+    const parseDate = (dateString) => {
+        const [month, year, date] = dateString.split("-").map(Number)
+        return new Date(year, month - 1, date)
+    }
+
+    const filteredFeedbacks = feedbacks.filter((feedback) => {
+        const feedbackDate = parseDate(feedback.feedbackDate)
+        return feedbackDate >= startDate && feedbackDate <= endDate
+    })
+
+    const sortFeedbacks = filteredFeedbacks.sort((a, b) => {
+        const dateA = parseDate(a.feedbackDate)
+        const dateB = parseDate(b.feedbackDate)
+        return dateB - dateA
+    })
+
+    return (
+        <div className={`flex flex-col ${isMediumScreen ? "w-[95%]" : "w-[95%] mx-5"} border border-gray-300 rounded-xl p-4 bg-white`}>
+            {isInitialized &&
+                <>
+                    <h1 className="text-3xl font-semibold ml-2 mb-6">Feedback Details</h1>
+                    <nav
+                        className={`flex ${isMediumScreen ? "w-[95%] mt-4" : "w-[96%]"} justify-between font-medium list-none mt-3 border-t pb-4 pt-4`}>
+                        <li>Job Id</li>
+                        {isMediumScreen ? <>
+                            <li>Feedback Date</li>
+                            <li>Feedback</li>
+                        </>
+                            :
+                            <li className="ml-20">Feedback Date</li>
+                        }
+                        <div>
+                            <li className={`${!isMediumScreen ? "mr-6" : ""}`}>Status</li>
+                        </div>
+                    </nav>
+                    {Object.keys(sortFeedbacks).length === 0 ? <NoFeedback/> :
+                        <DisplayFeedbacks feedbacks={sortFeedbacks}/>}
+                </>
+            }
         </div>
     )
 }

@@ -122,10 +122,13 @@ const NavBar = () => {
             <NavLink to="/careerhub" className="text-3xl ml-16 text-[#367c2b] font-bold">Job Bazaar</NavLink>
             <nav className={`${isMediumScreen ? "flex space-x-5" : "hidden"}`}>
                 <NavLink to='/careerhub' className="hover:text-[#367c2b] font-medium text-lg">Home</NavLink>
-                <NavLink to='/careerhub/profile/career' className="hover:text-[#367c2b] font-medium text-lg px-2 pl-2">Career
+                <NavLink to='/careerhub/profile/career'
+                         className="hover:text-[#367c2b] font-medium text-lg px-2 pl-2">Career
                     Interests</NavLink>
-                <NavLink to='/careerhub/profile/experience' className="hover:text-[#367c2b] font-medium text-lg pl-2">My
+                <NavLink to='/careerhub/profile/experience'
+                         className="hover:text-[#367c2b] font-medium text-lg pl-2">My
                     Profile</NavLink>
+
                 <div className="flex hover:cursor-pointer" onClick={handleJobs}>
                     <p className="hover:text-[#367c2b] font-medium text-lg pl-2">Jobs</p>
                     {!jobs ? <MdArrowDropDown size={28} color="black"/> :
@@ -172,15 +175,25 @@ const NavBar = () => {
                     </>
                 )
                 }
+                {role === 'Employer' &&
+                    <NavLink to="/careerhub/available-referrals" className="hover:text-[#367c2b] font-medium text-lg">Available
+                        Referrals</NavLink>
+                }
             </nav>
             <div className="flex items-center" ref={feedBackRef}>
-                <CgMenuGridO size={30} className="mr-4 hover:cursor-pointer" onClick={handleMenuGrid}/>
-                {
-                    menuGrid && (
-                        <nav className="flex absolute right-0 mt-32 mr-24 bg-white border p-[8px] w-[220px] h-[54px] z-50">
-                            <NavLink to='/feedback/dashboard' className="w-[184px] h-[36px] ml-2">Feedback Center</NavLink>
-                        </nav>
-                    )
+                {role === 'Applicant' &&
+                    <div>
+                        <CgMenuGridO size={30} className="mr-4 hover:cursor-pointer" onClick={handleMenuGrid}/>
+                        {
+                            menuGrid && (
+                                <nav
+                                    className="flex absolute right-0 mt-6 mr-24 bg-white border p-[8px] w-[220px] h-[54px] z-50">
+                                    <NavLink to='/feedback/dashboard' className="w-[184px] h-[36px] ml-2">Feedback
+                                        Center</NavLink>
+                                </nav>
+                            )
+                        }
+                    </div>
                 }
                 <div className="flex hover:cursor-pointer text-white" onClick={handleUserSettingDropDown}>
                     <div className="bg-[#367c2b] w-12 h-12 rounded-3xl text-center text-xl"><p
@@ -205,8 +218,6 @@ const NavBar = () => {
                             {role === 'Applicant' &&
                                 <div className="flex flex-col">
                                     <NavLink to="/careerhub/explore/jobs" className="p-1">Job Search</NavLink>
-                                    <NavLink to="/careerhub/explore/projects" className="p-1">Project Search</NavLink>
-                                    <NavLink to="/careerhub/explore/courses" className="p-1">Courses Search</NavLink>
                                 </div>
                             }
                             <div className={`flex flex-col`}>

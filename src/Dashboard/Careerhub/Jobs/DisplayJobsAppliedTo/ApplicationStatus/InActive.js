@@ -92,7 +92,7 @@ const InActive = ({appliedJobs, inActiveApplications}) => {
                             >
                                 <div className="md:w-[44%]">
                                     <button onClick={() => handlePosition(application)}
-                                            className="text-[#0875e1] hover:bg-gray-100">{application.position}</button>
+                                            className="text-[#0875e1] hover:bg-gray-100 p-1">{application.position}</button>
                                 </div>
                                 {mediaQuery && (
                                     <div className="flex space-x-8 justify-end w-full mr-12">

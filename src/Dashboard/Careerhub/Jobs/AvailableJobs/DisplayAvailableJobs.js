@@ -113,7 +113,7 @@ const DisplayAvailableJobs = ({availableJobs}) => {
                 </div>
             )}
             <div className="flex h-[700px] pr-4">
-                <div className="cursor-pointer overflow-y-scroll h-screen w-[700px]">
+                <div className="cursor-pointer overflow-y-scroll h-screen w-[50%]">
                     {sortedAvailableJobs.map((job, index) => (
                         <div key={index}>
                         {job.jobStatus === 'active' &&

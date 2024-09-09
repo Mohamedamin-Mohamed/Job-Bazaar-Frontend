@@ -1,17 +1,17 @@
-import Ribbon from "../Careerhub/GenericRibbon";
 import {useEffect, useState} from "react";
-import getReferrals from "../Careerhub/Jobs/FetchJobsAndApplications/getReferrals";
-import Display404NotReferred from "./Display404NotReferred";
+import getAvailableReferrals from "../Careerhub/Jobs/FetchJobsAndApplications/getAvailableReferrals";
+import Ribbon from "../Careerhub/GenericRibbon";
 import DisplayReferrals from "./DisplayReferrals";
+import NoAvailableReferrals from "./NoAvailableReferrals";
 
-const MyReferrals = () => {
+const AvailableReferrals = () => {
     const userInfo = JSON.parse(localStorage.getItem('user'))
-    const [referrals, setReferrals] = useState({})
+    const [referrals, setReferrals] = useState([])
     const [isInitialized, setIsInitialized] = useState(false)
 
     useEffect(() => {
             const fetchReferrals = async () => {
-                const response = await getReferrals(userInfo.email, new AbortController())
+                const response = await getAvailableReferrals(userInfo.email, new AbortController())
                 if (response.ok) {
                     const data = await response.json()
                     setReferrals(data)
@@ -24,18 +24,17 @@ const MyReferrals = () => {
             })
         }, []
     )
-
-
     return (
         <>
             {isInitialized ?
                 <>
-                    <Ribbon text={"My Referrals"} height={60}/>
-                    {Object.keys(referrals).length === 0 ? <Display404NotReferred /> :
+                    <Ribbon text={"Available Referrals"} height={60}/>
+                    {Object.keys(referrals).length === 0 ?
+                        <NoAvailableReferrals/> :
                         <DisplayReferrals referrals={referrals}/>}
                 </>
                 : null}
         </>
     )
 }
-export default MyReferrals
+export default AvailableReferrals

@@ -9,7 +9,7 @@ const Resume = ()=>{
             </div>
             <div>
                 <p className="w-[78%] mb-2">Add your career information in one step.</p>
-                <button className="bg-[#ffde00] w-[140px] h-[36px] rounded-sm mt-11">Upload Resume</button>
+                <button className="bg-[#ffde00] w-[140px] h-[36px] rounded-sm mt-11 cursor-not-allowed">Upload Resume</button>
             </div>
         </div>
     )
