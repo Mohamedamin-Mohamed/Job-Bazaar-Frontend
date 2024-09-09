@@ -1,7 +1,6 @@
 import NavBar from "./NavBar";
 import Ribbon from "./Ribbon";
 import Activity from "./Activity";
-import Tasks from "./Tasks";
 import Interests from "./Interests";
 import Explore from "./Explore/Explore";
 import {useMediaQuery} from "react-responsive";
@@ -81,10 +80,7 @@ const CareerHub = () => {
                 <ToastContainer position="top-center"/>
                 {isMediumScreen ? (
                     <>
-                        <div className="flex flex-col">
-                            <Tasks/>
-                            <Activity/>
-                        </div>
+                        <Activity/>
                         <div className="flex flex-col">
                             <Interests/>
                             <Explore/>
@@ -97,8 +93,7 @@ const CareerHub = () => {
                             <Explore/>
 
                         </div>
-                        <div className="flex flex-col justify-center items-center">
-                            <Tasks/>
+                        <div className="flex justify-center items-center">
                             <Activity/>
                         </div>
                     </>
