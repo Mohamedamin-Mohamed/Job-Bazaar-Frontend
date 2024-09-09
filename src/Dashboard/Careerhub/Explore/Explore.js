@@ -9,11 +9,11 @@ const Explore = () => {
     const [arrowShow, setArrowShow] = useState(false)
     const navigate = useNavigate()
 
-    const handleExplore = (text) => {
-        if (text === 'jobs')
+    const handleExplore = (role) => {
+        if (role === 'Applicant')
             navigate('explore/jobs')
         else
-            navigate('explore/projects')
+            navigate('my/jobs/uploaded')
     }
     return (
         <div className={`"flex flex-col text-[#367c2b] mt-4 ${!isMediumScreen ? "mx-6 p-4 relative" : "flex px-4 pt-3.5"} w-full h-[280px] z-50 bg-white"`}>
