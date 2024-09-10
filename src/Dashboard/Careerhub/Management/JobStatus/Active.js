@@ -6,9 +6,11 @@ import getApplicantsPerJob from "../../Jobs/FetchJobsAndApplications/getApplican
 
 import {useMediaQuery} from "react-responsive";
 import NoApplication from "./NoApplication"
+import {ScaleLoader} from "react-spinners";
 
 const Active = ({uploadedJobs, activeJobs}) => {
     const mediaQuery = useMediaQuery({minWidth: "1050px"});
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
     const [hoveredIndex, setHoveredIndex] = useState({})
     const [showOptions, setShowOptions] = useState({})
@@ -69,6 +71,23 @@ const Active = ({uploadedJobs, activeJobs}) => {
             toast.error(`Couldn't update job: ${err.message}`)
         }
     }
+
+    const fetchApplicantsPerJob = async () => {
+        if (Object.keys(jobIds).length === 0) return//avoid fetching if no jobIds
+        setLoading(true)
+        try {
+            const response = jobIds && await getApplicantsPerJob(jobIds, new AbortController())
+            setLoading(false)
+            if (response.ok) {
+                const jobApplicationCounts = await response.json()
+                setApplicantsPerJob(jobApplicationCounts)
+            }
+        } catch (err) {
+            console.error("Couldn't fetch job applicants per job")
+            setLoading(false)
+        }
+    }
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (ref.current && !ref.current.contains(event.target)) {
@@ -89,25 +108,22 @@ const Active = ({uploadedJobs, activeJobs}) => {
     }, [uploadedJobs]);
 
     useEffect(() => {
-        const fetchApplicantsPerJob = async () => {
-            if (Object.keys(jobIds).length === 0) return //avoid fetching if no jobIds
-
-            try {
-                const response = jobIds && await getApplicantsPerJob(jobIds, new AbortController())
-                if (response.ok) {
-                    const jobApplicationCounts = await response.json()
-                    setApplicantsPerJob(jobApplicationCounts)
-                }
-            } catch (err) {
-                console.error("Couldn't fetch job applicants per job")
-            }
-        }
         fetchApplicantsPerJob().catch(err => console.error(err))
     }, [jobIds])
 
     return (
         <div className="flex flex-col border-t bg-white p-4 rounded-xl md:mb-8">
             <ToastContainer position="top-center"/>
+            {loading && (
+                <div className="fixed flex justify-center items-center inset-0 backdrop-brightness-50">
+                    <ScaleLoader
+                        color="#1c3e17"
+                        height={100}
+                        width={4}
+                    />
+                </div>
+            )}
+
             {activeJobs > 0 ? (
                 <>
                     <div className="flex justify-between border-b border-b-gray-400 pb-4">
