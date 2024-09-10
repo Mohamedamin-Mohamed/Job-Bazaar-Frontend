@@ -52,4 +52,5 @@ npm (v6 or above) or yarn
 For any inquiries or questions, feel free to reach out at:
 
 Email: mohamedamin204080@gmail.com
+
 LinkedIn: https://www.linkedin.com/in/mohamedamin-mohamed/
