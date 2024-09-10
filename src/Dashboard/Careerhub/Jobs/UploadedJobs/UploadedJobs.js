@@ -7,20 +7,24 @@ import {Outlet} from "react-router-dom";
 import Display404EmployerOrApplicant from "../DisplayJobsAppliedTo/Display404EmployerOrApplicant";
 import NoAvailableJobs from "../AvailableJobs/NoAvailableJobs";
 import countActiveJobs from "../../Management/CountJobs/countActiveJobs";
+import {ScaleLoader} from "react-spinners";
 
 const UploadedJobs = () => {
     const [uploadedJobs, setUploadedJobs] = useState([]);
     const [redirect, setRedirect] = useState(false);
     const [activeJobsCount, setActiveJobsCount] = useState(0);
     const [isInitialized, setIsInitialized] = useState(false)
+    const [loading, setLoading] = useState(false)
     const userInfo = JSON.parse(localStorage.getItem('user')) || {};
     const role = userInfo.role || '';
     const employerEmail = userInfo.email || '';
 
     const fetchUploadedJobs = useCallback(async () => {
+        setLoading(true)
         try {
             if (role === 'Employer' && employerEmail) {
                 const response = await getUploadedJobs(employerEmail, new AbortController());
+                setLoading(false)
                 if (response.ok) {
                     const jobs = await response.json();
                     setUploadedJobs(jobs);
@@ -29,7 +33,9 @@ const UploadedJobs = () => {
             }
         } catch (err) {
             console.error('Error fetching jobs:', err);
+        } finally {
             setIsInitialized(true)
+            setLoading(false)
         }
     }, [role, employerEmail]);
 
@@ -54,6 +60,16 @@ const UploadedJobs = () => {
 
     return (
         <div>
+            {loading && (
+                <div className="fixed flex justify-center items-center inset-0 backdrop-brightness-50">
+                    <ScaleLoader
+                        color="#1c3e17"
+                        height={100}
+                        width={4}
+                    />
+                </div>
+            )}
+
             {isInitialized &&
                 <>
                     <ToastContainer position="top-center"/>
