@@ -59,8 +59,11 @@ LinkedIn: https://www.linkedin.com/in/mohamedamin-mohamed/
 
 ## Scripts
   npm start: Starts the development server.
+  
   npm run build: Builds the app for production.
+  
   npm run lint: Runs ESLint to analyze code quality.
+  
   npm test: Runs the test suite.
   
 ## Contribution
