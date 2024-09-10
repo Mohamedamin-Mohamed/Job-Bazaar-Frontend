@@ -55,10 +55,13 @@ npm (v6 or above) or yarn
 │   ├── LandingPage/              # Components for the landing page
 │   ├── NotFound/                 # 404 Not Found page
 │   ├── Redux/                    # Redux state management
+
 ├── App.js                        # Main app component
 ├── index.css                     # Global styles (Tailwind CSS included)
+
 ├── index.js                      # Entry point of the application
 ├── .gitignore                    # Files and directories to be ignored by Git
+
 ├── package.json                  # Project dependencies and scripts
 ├── package-lock.json             # Lockfile for consistent dependency versions
 
