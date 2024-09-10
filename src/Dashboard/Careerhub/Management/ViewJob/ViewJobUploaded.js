@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 const ViewJobUploaded = () => {
 
     const mediaQuery = useMediaQuery({minWidth: "1100px"})
+
     const employerInfo = JSON.parse(localStorage.getItem('user'))
     const locationInfo = useSelector(state => state.locationInfo)
     const location = useLocation()
