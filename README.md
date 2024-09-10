@@ -7,9 +7,13 @@ This repository contains the frontend code for Job Bazaar, developed using JavaS
 ## Features
 ### Employers
 Post Jobs: Employers can create new job postings with detailed descriptions.
+
 Edit Jobs: Employers can modify the details of their existing job postings.
+
 Provide Feedback: Employers can leave feedback for applicants who have applied for their jobs.
+
 View Referrals: Employers can see all referrals submitted by applicants and evaluate them.
+
 Candidate Selection: Employers can review resumes and select suitable candidates based on referrals.
 
 ### Applicants
