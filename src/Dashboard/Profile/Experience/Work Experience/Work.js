@@ -47,10 +47,12 @@ const Work = () => {
                 setData(result)
             } catch (err) {
                 console.error('Error fetching data', err)
+            } finally {
+                setLoading(false)
             }
         }
         scrollHandle()
-        fetchData()
+        fetchData().catch(err => console.error(err))
         return () => {
             document.body.style.overflow = ''
             abortController.abort()
