@@ -39,14 +39,10 @@ npm (v6 or above) or yarn
 ## Project Structure
 
 ├── .idea/                        # IDE configuration files
-
 ├── node_modules/                 # Node.js dependencies
-
 ├── public/                       # Public assets and static files
-
 ├── src/
 │   ├── Authentication/           # Components related to authentication
-
 │   ├── Buttons/                  # Reusable button components
 │   ├── Dashboard/                # Main dashboard with nested sections
 │   │   ├── Address/              # Address management section
