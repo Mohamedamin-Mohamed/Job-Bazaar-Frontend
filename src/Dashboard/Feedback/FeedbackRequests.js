@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import getFeedbacks from "../Careerhub/Jobs/FetchJobsAndApplications/getFeedbacks";
 import NoFeedback from "./NoFeedback";
 import DisplayFeedbacks from "./DisplayFeedbacks";
+import {ScaleLoader} from "react-spinners";
 
 const FeedbackRequests = ({startDate, endDate}) => {
     const isMediumScreen = useMediaQuery({minWidth: 1040}); // Set the breakpoint for md screens
@@ -10,21 +11,27 @@ const FeedbackRequests = ({startDate, endDate}) => {
     const applicantEmail = userInfo.email
     const [feedbacks, setFeedbacks] = useState([])
     const [isInitialized, setIsInitialized] = useState(false)
+    const [loading, setLoading] = useState(false)
+
+    const fetchFeedbacks = async () => {
+        setLoading(true)
+        try {
+            const response = await getFeedbacks(applicantEmail, new AbortController())
+            setLoading(false)
+            if (response.ok) {
+                const data = await response.json()
+                setFeedbacks(data)
+            }
+            setIsInitialized(true)
+        } catch (err) {
+            console.error("Couldn't fetch feedbacks ", err)
+        } finally {
+            setIsInitialized(true)
+            setLoading(false)
+        }
+    }
 
     useEffect(() => {
-        const fetchFeedbacks = async () => {
-            try {
-                const response = await getFeedbacks(applicantEmail, new AbortController())
-                if (response.ok) {
-                    const data = await response.json()
-                    setFeedbacks(data)
-                }
-                setIsInitialized(true)
-            } catch (err) {
-                console.error("Couldn't fetch feedbacks ", err)
-                setIsInitialized(true)
-            }
-        }
         fetchFeedbacks().catch(err => console.error(err))
     }, []);
 
@@ -45,7 +52,18 @@ const FeedbackRequests = ({startDate, endDate}) => {
     })
 
     return (
-        <div className={`flex flex-col ${isMediumScreen ? "w-[95%]" : "w-[95%] mx-5"} border border-gray-300 rounded-xl p-4 bg-white`}>
+        <div
+            className={`flex flex-col ${isMediumScreen ? "w-[95%]" : "w-[95%] mx-5"} border border-gray-300 rounded-xl p-4 bg-white`}>
+            {loading && (
+                <div className="fixed flex justify-center items-center inset-0 backdrop-brightness-50">
+                    <ScaleLoader
+                        color="#1c3e17"
+                        height={100}
+                        width={4}
+                    />
+                </div>
+            )}
+
             {isInitialized &&
                 <>
                     <h1 className="text-3xl font-semibold ml-2 mb-6">Feedback Details</h1>
@@ -53,9 +71,9 @@ const FeedbackRequests = ({startDate, endDate}) => {
                         className={`flex ${isMediumScreen ? "w-[95%] mt-4" : "w-[96%]"} justify-between font-medium list-none mt-3 border-t pb-4 pt-4`}>
                         <li>Job Id</li>
                         {isMediumScreen ? <>
-                            <li>Feedback Date</li>
-                            <li>Feedback</li>
-                        </>
+                                <li>Feedback Date</li>
+                                <li>Feedback</li>
+                            </>
                             :
                             <li className="ml-20">Feedback Date</li>
                         }

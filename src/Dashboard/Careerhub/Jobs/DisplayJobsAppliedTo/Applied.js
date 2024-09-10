@@ -9,8 +9,10 @@ import {useMediaQuery} from "react-responsive";
 import Display404EmployerOrApplicant from "./Display404EmployerOrApplicant";
 import DisplayAppliedJobs from "./DisplayAppliedJobs";
 import updateApplicationStatus from "./ApplicationStatus/updateApplicationStatus";
+import {ScaleLoader} from "react-spinners";
 
 const Applied = () => {
+    const [loading, setLoading] = useState(false)
     const [isInitialized, setIsInitialized] = useState(false)
     const [appliedJobs, setAppliedJobs] = useState({})
     const userInfo = JSON.parse(localStorage.getItem('user'))
@@ -19,9 +21,11 @@ const Applied = () => {
     const mediaQuery = useMediaQuery({minWidth: "1464px"})
 
     const fetchAppliedJobs = useCallback(async () => {
+        setLoading(true)
         if (role === 'Applicant') {
             try {
                 const response = await getAppliedJobs(applicantEmail, new AbortController())
+                setLoading(false)
                 if (response.ok) {
                     const jobs = await response.json()
                     setAppliedJobs(jobs)
@@ -30,14 +34,18 @@ const Applied = () => {
             } catch (err) {
                 console.error("Encountered an error when fetching jobs", err)
                 setIsInitialized(true)
+                setLoading(false)
             }
         }
     }, [applicantEmail, role])
 
     useEffect(() => {
         const controller = new AbortController()
-
-        fetchAppliedJobs().catch(err => console.error("Couldn't fetch jobs: ", err))
+        fetchAppliedJobs().catch(err => {
+            console.error("Couldn't fetch jobs: ", err)
+            setLoading(false)
+            setIsInitialized(true)
+        })
         return () => {
             controller.abort()
         }
@@ -50,6 +58,16 @@ const Applied = () => {
 
     return (
         <div className="mb-10">
+            {loading && (
+                <div className="fixed flex justify-center items-center inset-0 backdrop-brightness-50">
+                    <ScaleLoader
+                        color="#1c3e17"
+                        height={100}
+                        width={4}
+                    />
+                </div>
+            )}
+
             {isInitialized &&
                 <>
                     <ToastContainer position="top-center"/>
@@ -73,7 +91,7 @@ const Applied = () => {
                             </div>
                         )}
                 </>
-                }
+            }
         </div>
     )
 }

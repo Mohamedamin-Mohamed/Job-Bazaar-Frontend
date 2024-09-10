@@ -31,7 +31,9 @@ const AvailableJobs = () => {
             setIsInitialized(true)
         } catch (err) {
             console.error('Error fetching jobs:', err);
+        } finally {
             setIsInitialized(true)
+            setLoading(false)
         }
     };
 
@@ -54,6 +56,7 @@ const AvailableJobs = () => {
                     <ScaleLoader color="#1c3e17" height={100} width={4}/>
                 </div>
             )}
+
             {isInitialized &&
                 <>
                     <ToastContainer position="top-center"/>

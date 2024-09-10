@@ -62,7 +62,7 @@ const DisplayReferrals = ({referrals}) => {
                 </div>
 
                 {sortedReferrals.map((referral, index) => (
-                    <div key={referral.fileName} className={`flex ${!mediaQuery && "flex-col"} text-lg space-x-10`}>
+                    <div key={index} className={`flex ${!mediaQuery && "flex-col"} text-lg space-x-10`}>
                         <p className={`${!mediaQuery && "absolute mt-2"}`}>{index + 1}.</p>
                         <div className="flex space-x-10 ">
                             <p>{referral.referrerName}</p>

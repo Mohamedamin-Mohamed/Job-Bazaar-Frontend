@@ -25,7 +25,7 @@ import ApplicationDescription
     from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/JobDescription/ApplicationDescription";
 import ViewApplication from "./Dashboard/Careerhub/Jobs/DisplayJobsAppliedTo/ViewApplication/ViewApplication";
 import ManagementHub from "./Dashboard/Careerhub/Management/ManagementHub";
-import ViewJob from "./Dashboard/Careerhub/Management/View Job/ViewJob";
+import ViewJob from "./Dashboard/Careerhub/Management/ViewJob/ViewJob";
 import JobDescription from "./Dashboard/Careerhub/Management/Description/JobDescription";
 import ApplicationConfirmation from "./Dashboard/Careerhub/Confirmation/ApplicationConfirmation";
 import View from "./Dashboard/Careerhub/Management/ViewApplicants/View";

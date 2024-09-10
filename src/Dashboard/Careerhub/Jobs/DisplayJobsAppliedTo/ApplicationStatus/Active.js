@@ -4,10 +4,12 @@ import NoApplication from "./NoApplication";
 import {useEffect, useRef, useState} from "react";
 import {ToastContainer} from "react-toastify";
 import updateApplication from "../../FetchJobsAndApplications/updateApplication";
+import {ScaleLoader} from "react-spinners";
 
 const Active = ({appliedJobs, activeApplications}) => {
     const mediaQuery = useMediaQuery({minWidth: "1080px"});
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false)
     const [hoveredIndex, setHoveredIndex] = useState({})
     const [showOptions, setShowOptions] = useState({})
     const ref = useRef(null)
@@ -45,9 +47,11 @@ const Active = ({appliedJobs, activeApplications}) => {
     }
 
     const handleWithdrawApplication = async (application) => {
+        setLoading(true)
         try {
             const applicationStatus = 'Candidate Withdrew Interest'
             const updateResponse = await updateApplication(application.applicantEmail, application.jobId, applicationStatus, new AbortController())
+            setLoading(false)
             if (!updateResponse.ok) {
                 const data = await updateResponse.json()
                 throw new Error(data)
@@ -56,6 +60,7 @@ const Active = ({appliedJobs, activeApplications}) => {
             }
         } catch (err) {
             console.error(err)
+            setLoading(false)
         }
     }
     useEffect(() => {
@@ -74,6 +79,12 @@ const Active = ({appliedJobs, activeApplications}) => {
 
     return (
         <div>
+            {loading && (
+                <div className="fixed flex justify-center items-center inset-0 backdrop-brightness-50">
+                    <ScaleLoader color="#1c3e17" height={100} width={4}/>
+                </div>
+            )}
+
             <ToastContainer position="top-center"/>
             {activeApplications > 0 ? (
                 <>

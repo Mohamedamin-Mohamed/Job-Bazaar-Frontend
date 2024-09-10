@@ -7,7 +7,6 @@ import countInactiveApplications from "./CountApplications/countInactiveApplicat
 
 const DisplayAppliedJobs = ({appliedJobs}) => {
     const mediaQuery = useMediaQuery({minWidth: "1100px"})
-
     const [activeButton, setActiveButton] = useState('active');
     const activeApplications = countActiveApplications(appliedJobs)
     const inActiveApplications = countInactiveApplications(appliedJobs)
