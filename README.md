@@ -29,7 +29,6 @@ Redux: A state management tool used to manage and centralize application state.
 Tailwind CSS: A utility-first CSS framework for building responsive and visually appealing designs.
 
 # Getting Started
-
 ## Prerequisites
 
 To run this project locally, you need to have the following installed:
