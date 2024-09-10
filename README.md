@@ -36,35 +36,6 @@ To run this project locally, you need to have the following installed:
 Node.js (v14 or above)
 npm (v6 or above) or yarn
 
-## Project Structure
-
-├── .idea/                        # IDE configuration files
-├── node_modules/                 # Node.js dependencies
-├── public/                       # Public assets and static files
-├── src/
-│   ├── Authentication/           # Components related to authentication
-│   ├── Buttons/                  # Reusable button components
-│   ├── Dashboard/                # Main dashboard with nested sections
-│   │   ├── Address/              # Address management section
-│   │   ├── Careerhub/            # Career hub section for managing career interests
-│   │   ├── Feedback/             # Section for viewing feedback
-│   │   ├── Profile/              # User profile management
-│   │   ├── Referrals/            # Manage and submit referrals
-│   │   ├── Settings/             # User settings management
-│   ├── Images/                   # Images used in the application
-│   ├── LandingPage/              # Components for the landing page
-│   ├── NotFound/                 # 404 Not Found page
-│   ├── Redux/                    # Redux state management
-
-├── App.js                        # Main app component
-├── index.css                     # Global styles (Tailwind CSS included)
-
-├── index.js                      # Entry point of the application
-├── .gitignore                    # Files and directories to be ignored by Git
-
-├── package.json                  # Project dependencies and scripts
-├── package-lock.json             # Lockfile for consistent dependency versions
-
 ## Contact
 For any inquiries or questions, feel free to reach out at:
 
