@@ -4,7 +4,7 @@ import NavBar from "../../NavBar";
 
 const NoAvailableJobs = ({role}) => {
     return (
-        <>
+        <div>
             <NavBar/>
             <div className="flex flex-col justify-center items-center mt-12">
                 <div>
@@ -23,7 +23,7 @@ const NoAvailableJobs = ({role}) => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 export default NoAvailableJobs
