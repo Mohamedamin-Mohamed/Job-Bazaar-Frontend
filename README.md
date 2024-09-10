@@ -1,5 +1,6 @@
 # Job Bazaar - Frontend
 ## Overview
+
 Job Bazaar is a dynamic job board application where employers and job seekers can connect and collaborate. Employers can manage job postings, provide feedback to applicants, and select candidates based on referrals. Job seekers can apply for jobs, refer other candidates, track their applications, and view employer feedback.
 
 This repository contains the frontend code for Job Bazaar, developed using JavaScript, React, Redux, and Tailwind CSS.
