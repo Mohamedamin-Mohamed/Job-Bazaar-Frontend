@@ -47,6 +47,7 @@ const Education = () => {
                 setData(result)
             } catch (err) {
                 console.error('Error fetching data', err)
+                setLoading(false)
             }
         }
         scrollHandle()
