@@ -40,6 +40,8 @@ Redux: A state management tool used to manage and centralize application state.
 
 Tailwind CSS: A utility-first CSS framework for building responsive and visually appealing designs.
 
+JWT (JSON Web Tokens): For secure authentication and user session management.
+
 # Getting Started
 ## Prerequisites
 
