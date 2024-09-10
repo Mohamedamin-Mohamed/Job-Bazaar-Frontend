@@ -57,6 +57,11 @@ Email: mohamedamin204080@gmail.com
 
 LinkedIn: https://www.linkedin.com/in/mohamedamin-mohamed/
 
+## Scripts
+npm start: Starts the development server.
+npm run build: Builds the app for production.
+npm run lint: Runs ESLint to analyze code quality.
+npm test: Runs the test suite.
 ## Contribution
 We welcome contributions to improve the Job Bazaar frontend. To contribute:
 
