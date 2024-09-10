@@ -1,11 +1,9 @@
-import NavBar from "../../NavBar";
 import ViewApplicants from "./ViewApplicants";
 
-const View = ()=>{
+const View = () => {
     return (
         <div className="flex flex-col">
-            <NavBar />
-            <ViewApplicants />
+            <ViewApplicants/>
         </div>
     )
 }
