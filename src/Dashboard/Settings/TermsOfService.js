@@ -14,9 +14,9 @@ const TermsOfService = ({open, handleOpen})=>{
         }
     }, [open]);
     return(
-        <div className={!open ? 'hidden' : 'fixed flex justify-center inset-0 items-center text-black backdrop-brightness-50'}>
+        <div className={!open ? 'hidden' : 'fixed flex justify-center inset-0 items-center text-black backdrop-brightness-50 z-50'}>
             <div
-                className="flex flex-col p-7 text-black rounded-xl bg-white w-[600px] border h-[540px] ease-in-out duration-500">
+                className="flex flex-col p-7 text-black rounded-xl bg-white w-[70%] border overflow-y-scroll ease-in-out duration-500">
                 <div className="flex mt-3">
                     <div>
                         <h1 className="text-3xl font-semibold mb-6">Terms of Services</h1>
@@ -25,7 +25,7 @@ const TermsOfService = ({open, handleOpen})=>{
                         <IoClose size={25} className="ml-auto text-gray-700 hover:cursor-pointer hover:rounded-full hover:border hover:bg-gray-300" onClick={handleOpen}/>
                     </div>
                 </div>
-                <div className="flex-col overflow-y-scroll h-[500px] w-[565px] text-center flex justify-center text-2xl italic">
+                <div className="flex-col overflow-y-scroll w-full text-center flex justify-center text-2xl italic">
                     <div className="mx-6">
                     <p>The terms of service are currently unavailable. Please check back later.</p>
                     <p>We apologize for the inconvenience. Our legal team is diligently working to finalize the terms of service.</p>
