@@ -50,7 +50,7 @@ LinkedIn: https://www.linkedin.com/in/mohamedamin-mohamed/
   npm test: Runs the test suite.
   
 ## Contribution
-We welcome contributions to improve the Job Bazaar frontend. To contribute:
+I welcome contributions to improve the Job Bazaar frontend. To contribute:
 
 1. Fork the repository.
 2. Create a new branch (git checkout -b feature-branch-name).
